@@ -1,60 +1,62 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
+description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build or refine web UI while keeping the result aligned with the repo's local design system instead of generic AI defaults.
 license: Complete terms in LICENSE.txt
 ---
 
-This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
+# Frontend Design
 
-The user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.
+Skill này hướng dẫn tạo UI chất lượng cao, có chủ đích, không rơi vào kiểu “AI slop”. Nó không áp sẵn một brand cũ hay bộ màu cứng cho repo này.
 
+## Design Principles
 
-English Version: Frontend Strategic Proposals
+1. Bắt đầu từ design system đang có trong codebase: tokens, spacing scale, typography, radius, shadows, motion.
+2. Nếu repo chưa có visual system rõ, tạo một hướng thẩm mỹ nhất quán thay vì vá từng component rời rạc.
+3. Ưu tiên hierarchy, spacing và rhythm trước khi thêm hiệu ứng.
+4. Visual direction phải phục vụ đúng loại màn hình: marketing, dashboard, settings, data-heavy UI, onboarding, v.v.
 
-1. Aesthetic Direction: "Modern Edutech - Gamified Precision" :
-The core vision is to blend a high-end, professional productivity tool aesthetic (like Linear or Vercel) with the high-energy feedback of a game.
+## Visual Guidance
 
-Typography Strategy:
-- Learning Content: Use Lexend, a variable font specifically designed to reduce visual stress and improve reading proficiency—ideal for a vocabulary app.
-- Interface Accents: Pair it with a modern Serif like Fraunces to add a "premium editorial" feel, making the experience feel curated and high-quality.
-- Color & Theme : use color like my colors.css; High-Impact Accents: Reserve vibrant colors strictly for success states (correct answers, level ups) to create a strong psychological reward.
+### Typography
 
-## Layout & Components Guidelines
+- Ưu tiên font stack hoặc token đã được repo định nghĩa.
+- Không áp font “fancy” chỉ vì đẹp nếu nó làm lệch tính cách sản phẩm.
+- Dùng contrast giữa heading, body, label và metadata để tạo hierarchy rõ.
 
-### Bento Grid Dashboard
-- Redesign dashboard using **Bento Grid** layout
-- Apply **Glassmorphism** effect with backdrop blur
-- Use **ultra-thin borders** (`0.5px`) for sophisticated look
+### Color
 
-### Motion & Animation
-- Use `tailwindcss-animate` for CSS-based animations
-- Focus on **high-impact moments**: page load, state transitions
-- Implement **staggered reveals** with `animation-delay`
+- Ưu tiên semantic tokens hoặc CSS variables đang có trong repo.
+- Không hard-code palette mới nếu hệ thống hiện tại đã có token.
+- Nếu cần thêm màu, thêm theo tinh thần của hệ token hiện tại.
 
-### FSRS Feedback Animation
-- Animate "Memory Lifecycle" when FSRS algorithm schedules a word
-- **Hard grade**: slow, heavy exit animation
-- **Easy grade**: quick, snappy card fly-out
+### Layout
+
+- Chọn layout phù hợp với nhiệm vụ của màn hình.
+- Tránh các pattern AI mặc định như 3 cột bằng nhau lặp lại vô nghĩa, hero vô danh trên gradient chung chung, hoặc card grid không có nhịp điệu.
+- Với màn hình data-heavy, độ rõ ràng và scanability quan trọng hơn trang trí.
+
+### Motion
+
+- Chỉ animate các thời điểm có ý nghĩa: page reveal, state transition, feedback, panel open/close.
+- Motion nên làm rõ trạng thái, không phải gây nhiễu.
 
 ## Component Styling Rules
 
-1. **Use Radix UI primitives** from `components/ui/`
-2. **Apply colors** from `styles/colors.css` CSS variables
-3. **Support dark/light mode** via `next-themes`
-4. **Maintain consistency** with existing design system
+1. Ưu tiên reuse primitives trong `components/ui`.
+2. Tôn trọng dark mode hoặc theme switching nếu repo đã hỗ trợ.
+3. Không tạo visual language mâu thuẫn với phần còn lại của ứng dụng.
+4. Ưu tiên `min-h-dvh` hoặc `min-h-[100dvh]` cho full-height mobile sections khi phù hợp.
 
-## Do's and Don'ts
+## Do
 
-### ✅ Do
-- Use OKLCH color space from `colors.css`
-- Apply semantic colors (`--success`, `--error`, `--warning`)
-- Reserve vibrant colors for success states (reward feedback)
-- Use `--primary` for interactive elements
-- Use `min-h-[100dvh]` (or `min-h-dvh`) for full-screen sections — avoids layout jump from the mobile address bar (iOS Safari)
+- Bám local tokens khi chúng đã tồn tại.
+- Tạo hierarchy bằng type, spacing, density và contrast.
+- Thiết kế loading, empty, error và disabled states đồng bộ với màn hình chính.
+- Giữ UI nhất quán giữa desktop và mobile.
 
-### ❌ Don't
-- Hardcode color values
-- Use generic fonts (Arial, Inter, Roboto)
-- Create purple gradients on white backgrounds
-- Ignore dark mode support
-- Use `100vh` / `h-screen` for full-screen sections (causes jump on iOS Safari)
+## Don't
+
+- Không áp brand cũ, palette cũ hay font cũ từ project khác.
+- Không hard-code hiệu ứng hào nhoáng làm giảm readability.
+- Không dùng defaults chung chung khiến UI trông interchangeable.
+- Không hy sinh accessibility để đổi lấy “đẹp”.

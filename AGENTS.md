@@ -1,53 +1,62 @@
-# AGENTS.md — English Vocabulary App
+# AGENTS.md — Next.js Starter Architecture
 
-**MANDATORY trước khi viết/sửa code trong project này:**
+`AGENTS.md` là hướng dẫn vận hành chính cho repo này. Nếu có mâu thuẫn giữa các file AI docs, ưu tiên file này và cây `.agents/**`.
 
-1. Đọc file này.
-2. Xác định loại task → đọc `using-agent-skills` để route tới skill đúng TRƯỚC khi đề xuất code.
-3. Tuân thủ mọi rule trong skill đó. Nếu skill xung đột với yêu cầu user, hỏi lại — không tự ý vi phạm.
+## Quy trình bắt buộc
 
----
+1. Đọc file này trước khi sửa code hoặc docs quan trọng.
+2. Route task qua [.agents/skills/using-agent-skills/SKILL.md](.agents/skills/using-agent-skills/SKILL.md).
+3. Nếu task chạm vào logic/code, đọc thêm skill phù hợp được meta-skill chỉ ra.
+4. Nếu task liên quan SSR với React Query, đọc thêm [.agents/docs/ssr-react-query-setup.md](.agents/docs/ssr-react-query-setup.md).
+5. Nếu user yêu cầu trái với skill hoặc hard rule, dừng lại và làm rõ trước khi sửa.
 
-## Skill routing — nguồn duy nhất
+## Nguồn sự thật
 
-Mọi quyết định "task này dùng skill nào" → đọc [.codex/skills/using-agent-skills/SKILL.md](.codex/skills/using-agent-skills/SKILL.md). Nếu agent/runtime không dùng `.codex`, dùng bản mirror tại [.agents/skills/using-agent-skills/SKILL.md](.agents/skills/using-agent-skills/SKILL.md). Đây là meta-skill chứa decision tree đầy đủ 10 skill của project (interview-me, idea-refine, spec-driven-development, code-conventions, frontend-design, frontend-ui-engineering, vercel-composition-patterns, vercel-react-best-practices, web-design-guidelines) + phần **Core Operating Behaviors** (surface assumptions, manage confusion, push back, enforce simplicity, scope discipline, verify) áp dụng xuyên suốt.
+- Hướng dẫn vận hành chính: `AGENTS.md`
+- Skills chính: `.agents/skills/**`
+- Docs chính: `.agents/docs/**`
+- Compatibility mirror: `CLAUDE.md` và `.claude/**`
 
-Không duy trì bảng route ở nơi khác — `using-agent-skills` là nguồn duy nhất. Không lấy skill hoặc docs từ nguồn cũ nữa.
+Không duy trì policy trùng lặp ở nhiều nơi. Nếu cần cập nhật hướng dẫn, cập nhật ở `.agents/**` trước.
 
-## External skill: `design-taste-frontend` — quy tắc dùng
+## Skill routing
 
-Skill ngoài duy nhất (lock trong `skills-lock.json`, source GitHub). **Không bật mặc định.** Nó ép aesthetic/font/màu riêng → sẽ xung đột với design system của project (amber `colors.css`, Apple font, `--radius: 0.8rem`, skill nội bộ `frontend-design`).
+Mọi quyết định "task này nên dùng skill nào" phải đi qua:
 
-| Khi nào dùng | Khi nào KHÔNG dùng |
-|---|---|
-| Chỉ cho trang `(public)/` (landing, marketing). Mượn **bố cục + nguyên tắc a11y/UX**, KHÔNG mượn bảng màu/font. | Trang `(app)/` (product UI: datasets, settings, dashboard...) và `(auth)/`. Skill tự khai báo "not for dashboards/product UI". |
+- [.agents/skills/using-agent-skills/SKILL.md](.agents/skills/using-agent-skills/SKILL.md)
 
-**Hard rule bất biến:** khi dùng skill này, **design system của project (AGENTS.md + `colors.css` + `frontend-design`) luôn thắng**. Chỉ cho mượn *bố cục, motion pattern, nguyên tắc chống lỗi a11y* (contrast WCAG, label-above-input, không placeholder-as-label, `min-h-[100dvh]`, đủ loading/empty/error state) — KHÔNG cho mượn *màu/font/radius*. Nếu xung đột với màu amber hoặc font Apple → giữ project, bỏ skill.
+Không tự dựng route table ở file khác.
 
-## Docs registry
+## External skill: `design-taste-frontend`
 
-- SSR + React Query setup: [.codex/docs/ssr-react-query-setup.md](.codex/docs/ssr-react-query-setup.md) hoặc mirror [.agents/docs/ssr-react-query-setup.md](.agents/docs/ssr-react-query-setup.md)
+Đây là skill ngoài, chỉ nên dùng khi bài toán thực sự cần tăng chất lượng thẩm mỹ hoặc exploratory design. Không bật mặc định.
 
----
+Hard rule:
+- Skill ngoài phải nhường cho design system, token, component patterns và constraints đang tồn tại trong repo hiện tại.
+- Có thể mượn layout thinking, motion principles, a11y/UX checks.
+- Không áp aesthetic, font, màu, radius hay visual language từ skill ngoài nếu repo local đã có quy ước riêng.
 
-## Hard rules (không bao giờ skip, kể cả khi skill không nhắc)
+## Hard rules
 
-- **i18n**: không hardcode user-facing strings. Dùng `useTranslations` từ `next-intl`. Cập nhật cả `messages/en.json` và `messages/vi.json`, key dùng kebab-case.
-- **File naming**: kebab-case cho mọi file/folder (`user-profile.tsx`, `use-auth.ts`, `auth.service.ts`).
-- **Logging**: dùng `devLog` từ `@/lib/utils/devLog`, không dùng `console.log`.
-- **File references trong reply (IDE)**: dùng markdown link `[file.ts:42](path/file.ts#L42)`, không dùng backticks ` cho path.
-- **Cross-feature imports**: chỉ qua public API (vd `@features/pvp`), không deep import.
-- **Intra-feature imports**: relative path (`../../hooks/...`), không dùng alias `@features/...` bên trong cùng feature.
-- **Output validation**: dùng `validateResponse` từ `@/lib/utils/validate-response` chỉ cho endpoints có blast radius cao — auth/identity (`getMe`, `login`, `register`), payment, feature flags. Không áp dụng cho list/pagination endpoints. Schemas đặt ở `lib/schemas/`.
-- **No `any`**: không dùng `any` cho type chưa rõ (payload từ API, socket, external response). Dùng `unknown` thay thế, sau đó narrow type hoặc định nghĩa interface cụ thể khi biết shape.
-- **Router**: luôn dùng `useRouter` từ `@/i18n/navigation`, không dùng `next/navigation`.
+- File và folder dùng `kebab-case`.
+- Ưu tiên App Router patterns hiện tại của Next.js.
+- Shared UI primitives nằm trong `components/ui`.
+- Shared reusable UI khác nằm trong `components/shared` hoặc `components/layouts` khi phù hợp.
+- Hạ tầng dùng chung, config, providers, helpers đặt trong `lib/`.
+- Services/API layer đặt trong `services/`.
+- Không dùng `any` nếu chưa rõ type. Dùng `unknown` rồi narrow sau.
+- Chỉ dùng `validateResponse` cho endpoint có blast radius cao nếu utility đó thực sự đang được dùng trong repo.
+- Khi cần log cho development, ưu tiên utility nội bộ của repo thay vì thêm pattern logging mới.
+- Khi trả lời user với file local, dùng markdown link có path rõ ràng.
 
----
+## Scope của starter này
 
-## Quy trình mỗi turn làm việc
+Repo này là một starter tổng quát cho Next.js, không gắn với domain cũ. Đừng giả định:
 
-1. Đọc AGENTS.md (file này) — bắt buộc.
-2. Đọc `using-agent-skills` để route tới skill đúng theo task type (decision tree trong đó).
-3. Nếu task chạm SSR / React Query → đọc thêm `.codex/docs/ssr-react-query-setup.md` hoặc mirror `.agents/docs/ssr-react-query-setup.md`.
-4. Thực thi task theo skill rules + hard rules + Core Operating Behaviors.
-5. Nếu user yêu cầu trái với skill → hỏi lại trước khi code.
+- có i18n
+- có feature-based architecture bắt buộc
+- có route groups cố định
+- có auth/payment/search flow mặc định
+- có visual identity cố định
+
+Chỉ dựa vào cấu trúc và code đang tồn tại trong workspace hiện tại.
