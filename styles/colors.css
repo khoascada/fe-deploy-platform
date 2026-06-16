@@ -1,0 +1,250 @@
+/* Custom color definitions for TailwindCSS v4 */
+/* These colors can be used with utilities like: bg-primary, text-texthead, border-gray-200, etc. */
+
+:root {
+  /* Light mode colors */
+  /* Nền trắng ám nhẹ hue primary (amber ~92) để có điểm nhấn, lightness gần tối đa */
+  --background: oklch(97.303% 0.00812 91.494);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-border: oklch(0.7 0.015 250);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+
+  --primary: oklch(0.71 0.16 84);
+  --primary-foreground: oklch(0.3 0.095 57.708);
+
+  --secondary: oklch(0.47 0.2 320);
+  --secondary-foreground: oklch(1 0 0);
+
+  --error: oklch(0.53 0.2 25);
+  --warning: oklch(0.65 0.18 55);
+  --info: oklch(0.55 0.14 230);
+  --success: oklch(0.5 0.14 145);
+  --streak: oklch(42.647% 0.16987 30.226);
+
+  --text-primary: oklch(0.27 0 0);
+  --text-secondary: oklch(0.45 0 0);
+  --text-disabled: oklch(0.62 0 0);
+
+  /* Other colors */
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.59 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --accent-hover: oklch(0.93 0 0);
+  --border: oklch(0.88 0 0);
+  --divider: oklch(0.88 0 0);
+  --input: oklch(0.77 0 0);
+  --ring: oklch(0.852 0.199 91.936);
+
+  /* Chart colors */
+  --chart-1: oklch(0.905 0.182 98.111);
+  --chart-2: oklch(0.795 0.184 86.047);
+  --chart-3: oklch(0.681 0.162 75.834);
+  --chart-4: oklch(0.554 0.135 66.442);
+  --chart-5: oklch(0.476 0.114 61.907);
+
+  /* Sidebar colors */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(88.592% 0.04666 86.455);
+  --sidebar-primary-foreground: oklch(53.013% 0.12112 62.439);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.852 0.199 91.936);
+
+  /* Reset colors */
+  --reset: oklch(0.55 0.02 250);
+  --text-reset: oklch(1 0 0);
+}
+
+.dark {
+  /* Dark mode colors */
+  --background: oklch(0% 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(14.574% 0.00429 285.807);
+  --card-border: oklch(0.32 0.015 250);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(14.574% 0.00429 285.807);
+  --popover-foreground: oklch(1 0 0);
+
+  /* Primary colors  */
+  --primary: oklch(0.795 0.184 86.047);
+  --primary-foreground: oklch(0.38 0.095 57.708);
+
+  /* Secondary colors */
+  --secondary: oklch(0.6 0.2 320);
+  --secondary-foreground: oklch(1 0 0);
+
+  /* Semantic colors */
+  --error: oklch(0.704 0.191 22.216);
+  --warning: oklch(0.78 0.14 65);
+  --info: oklch(0.72 0.12 230);
+  --success: oklch(0.7 0.13 145);
+  --streak: oklch(62.041% 0.22139 31.004);
+
+  /* Text colors */
+  --text-primary: oklch(1 0 0);
+  --text-secondary: oklch(0.85 0 0);
+  --text-disabled: oklch(0.7 0 0);
+
+  /* Other colors */
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.59 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --divider: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.421 0.095 57.708);
+
+  /* Chart colors */
+  --chart-1: oklch(0.905 0.182 98.111);
+  --chart-2: oklch(0.795 0.184 86.047);
+  --chart-3: oklch(0.681 0.162 75.834);
+  --chart-4: oklch(0.554 0.135 66.442);
+  --chart-5: oklch(0.476 0.114 61.907);
+  --sidebar: oklch(0.21 0.006 285.885);
+
+  /* Sidebar colors */
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.795 0.184 86.047);
+  --sidebar-primary-foreground: oklch(0.987 0.026 102.212);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.421 0.095 57.708);
+
+  /* Reset colors */
+  --reset: oklch(0.7 0.015 250);
+  --text-reset: oklch(1 0 0);
+}
+
+@theme inline {
+  /* Base colors - mapped from CSS variables */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Primary colors */
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: oklch(0.35 0.14 255);
+
+  /* Secondary colors */
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  /* Semantic colors */
+  --color-error: var(--error);
+  --color-error-light: var(--error-light);
+  --color-error-dark: var(--error-dark);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-warning-dark: var(--warning-dark);
+  --color-info: var(--info);
+  --color-info-light: var(--info-light);
+  --color-info-dark: var(--info-dark);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-success-dark: var(--success-dark);
+  --color-streak: var(--streak);
+  --color-streak-light: var(--streak-light);
+  --color-streak-dark: var(--streak-dark);
+
+  /* Text colors */
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+  --color-text-title: oklch(0.35 0.02 250);
+  --color-texthead: oklch(0.45 0.18 25);
+
+  /* Other colors */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Chart colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-hover: var(--sidebar-primary-hover);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-text-primary: var(--sidebar-text-primary);
+
+  /* Gray Scale */
+  --color-gray-50: oklch(0.985 0 0);
+  --color-gray-100: oklch(0.97 0 0);
+  --color-gray-200: oklch(0.93 0 0);
+  --color-gray-300: oklch(0.87 0 0);
+  --color-gray-400: oklch(0.7 0.015 250);
+  --color-gray-500: oklch(0.55 0.02 250);
+  --color-gray-600: oklch(0.45 0.02 250);
+  --color-gray-700: oklch(0.37 0.015 250);
+  --color-gray-800: oklch(0.28 0.015 250);
+  --color-gray-900: oklch(0.21 0.01 250);
+
+  /* Slate Scale */
+  --color-slate-50: oklch(0.984 0.003 247);
+  --color-slate-100: oklch(0.968 0.007 247);
+  --color-slate-200: oklch(0.929 0.013 255);
+  --color-slate-300: oklch(0.869 0.022 252);
+  --color-slate-400: oklch(0.704 0.04 256);
+  --color-slate-500: oklch(0.554 0.046 257);
+  --color-slate-600: oklch(0.446 0.043 257);
+  --color-slate-700: oklch(0.372 0.044 257);
+  --color-slate-800: oklch(0.279 0.041 260);
+  --color-slate-900: oklch(0.208 0.042 265);
+  --color-slate-950: oklch(0.129 0.042 264);
+
+  /* Additional Semantic Colors */
+  --color-remind: oklch(0.98 0.03 70);
+  --color-border-remind: oklch(0.88 0.08 70);
+  --color-mark: oklch(0.7 0.18 45);
+  --color-select: oklch(0.62 0.16 245);
+  --color-danger: oklch(0.59 0.22 25);
+
+  /* Action Colors */
+  --color-add: oklch(0.62 0.17 255);
+  --color-edit: oklch(0.7 0.18 45);
+  --color-delete: oklch(0.59 0.22 25);
+  --color-save: oklch(0.67 0.17 145);
+  --color-cancel: oklch(0.55 0.02 250);
+
+  /* Reset colors */
+  --color-reset: var(--reset);
+  --color-text-reset: var(--text-reset);
+}
