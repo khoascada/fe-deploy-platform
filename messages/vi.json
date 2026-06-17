@@ -1,7 +1,12 @@
 {
   "common": {
     "login": "Đăng nhập",
-    "register": "Đăng ký"
+    "register": "Đăng ký",
+    "settings": "Cài đặt",
+    "logout": "Đăng xuất",
+    "guest": "Khách",
+    "guestEmail": "guest@example.com",
+    "user": "Người dùng"
   },
   "seo": {
     "title": "Starter App",
@@ -45,6 +50,100 @@
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu.",
       "passwordNotMatch": "Mật khẩu xác nhận không khớp.",
       "roleRequired": "Vui lòng chọn vai trò."
+    }
+  },
+  "header": {
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "toggleMenu": "Mở hoặc đóng menu",
+    "logoAlt": "Logo nền tảng deploy"
+  },
+  "navigation": {
+    "menuTitle": "Menu điều hướng",
+    "menuDescription": "Duyệt các khu vực chính của nền tảng deploy."
+  },
+  "sidebar": {
+    "sections": {
+      "workspace": "Không gian làm việc",
+      "admin": "Quản trị"
+    },
+    "menu": {
+      "projects": "Dự án",
+      "logs": "Nhật ký",
+      "dashboard": "Bảng điều khiển"
+    }
+  },
+  "language": {
+    "codeEn": "EN",
+    "codeVi": "VI",
+    "switchToVietnamese": "Chuyển sang tiếng Việt",
+    "switchToEnglish": "Chuyển sang tiếng Anh"
+  },
+  "theme": {
+    "toggleTheme": "Chuyển giao diện",
+    "light": "Sáng",
+    "dark": "Tối"
+  },
+  "pages": {
+    "projects": {
+      "title": "Dự án",
+      "description": "Quản lý các dự án deploy, môi trường, và luồng phát hành của bạn tại đây.",
+      "toolbar": {
+        "searchPlaceholder": "Tìm kiếm dự án...",
+        "filter": "Bộ lọc",
+        "gridView": "Chế độ lưới",
+        "listView": "Chế độ danh sách",
+        "addNew": "Thêm mới"
+      },
+      "summary": {
+        "totalProjects": "{count} dự án trong trang hiện tại"
+      },
+      "meta": {
+        "app": "Ứng dụng",
+        "webhook": "Webhook",
+        "latestDeploy": "Deploy gần nhất",
+        "deployments": "Số lần deploy:",
+        "notAvailable": "Chưa có",
+        "notDeployed": "Chưa có lần deploy nào"
+      },
+      "actions": {
+        "viewDetail": "Xem chi tiết",
+        "deployNow": "Deploy ngay",
+        "viewLogs": "Xem logs"
+      },
+      "states": {
+        "errorTitle": "Không thể tải danh sách dự án",
+        "errorDescription": "Đã có lỗi xảy ra khi tải trang dự án hiện tại.",
+        "retry": "Thử lại",
+        "emptyTitle": "Chưa có dự án nào",
+        "emptyDescription": "Dự án sẽ xuất hiện ở đây sau khi bạn kết nối repository đầu tiên.",
+        "noResultsTitle": "Không tìm thấy dự án phù hợp",
+        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa bộ tìm kiếm hiện tại."
+      },
+      "status": {
+        "PENDING": "Đang chờ",
+        "BUILDING": "Đang build",
+        "SUCCESS": "Thành công",
+        "FAILED": "Thất bại",
+        "notDeployed": "Chưa deploy"
+      },
+      "trigger": {
+        "manual": "thủ công",
+        "webhook": "webhook"
+      },
+      "webhook": {
+        "CONNECTED": "Đã kết nối",
+        "MISSING": "Chưa cấu hình",
+        "ERROR": "Lỗi"
+      }
+    },
+    "logs": {
+      "title": "Nhật ký",
+      "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng."
+    },
+    "dashboard": {
+      "title": "Bảng điều khiển",
+      "description": "Xem nhanh tình trạng nền tảng, mức sử dụng, và hoạt động gần đây."
     }
   }
 }

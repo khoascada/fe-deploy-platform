@@ -1,7 +1,12 @@
 {
   "common": {
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "settings": "Settings",
+    "logout": "Logout",
+    "guest": "Guest",
+    "guestEmail": "guest@example.com",
+    "user": "User"
   },
   "seo": {
     "title": "Starter App",
@@ -45,6 +50,100 @@
       "confirmPasswordRequired": "Please confirm your password.",
       "passwordNotMatch": "Passwords do not match.",
       "roleRequired": "Please select a role."
+    }
+  },
+  "header": {
+    "register": "Register",
+    "login": "Login",
+    "toggleMenu": "Toggle menu",
+    "logoAlt": "Deploy platform logo"
+  },
+  "navigation": {
+    "menuTitle": "Navigation menu",
+    "menuDescription": "Browse core areas of the deploy platform."
+  },
+  "sidebar": {
+    "sections": {
+      "workspace": "Workspace",
+      "admin": "Admin"
+    },
+    "menu": {
+      "projects": "Projects",
+      "logs": "Logs",
+      "dashboard": "Dashboard"
+    }
+  },
+  "language": {
+    "codeEn": "EN",
+    "codeVi": "VI",
+    "switchToVietnamese": "Switch to Vietnamese",
+    "switchToEnglish": "Switch to English"
+  },
+  "theme": {
+    "toggleTheme": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "pages": {
+    "projects": {
+      "title": "Projects",
+      "description": "Manage your deployed projects, environments, and delivery workflow here.",
+      "toolbar": {
+        "searchPlaceholder": "Search projects...",
+        "filter": "Filters",
+        "gridView": "Grid view",
+        "listView": "List view",
+        "addNew": "Add New"
+      },
+      "summary": {
+        "totalProjects": "{count} projects in this view"
+      },
+      "meta": {
+        "app": "App",
+        "webhook": "Webhook",
+        "latestDeploy": "Latest deploy",
+        "deployments": "Deployments:",
+        "notAvailable": "Not available yet",
+        "notDeployed": "No deployments yet"
+      },
+      "actions": {
+        "viewDetail": "View Detail",
+        "deployNow": "Deploy Now",
+        "viewLogs": "View Logs"
+      },
+      "states": {
+        "errorTitle": "Could not load projects",
+        "errorDescription": "Something went wrong while loading the current page of projects.",
+        "retry": "Try again",
+        "emptyTitle": "No projects yet",
+        "emptyDescription": "Projects will appear here after your first repository is connected.",
+        "noResultsTitle": "No matching projects",
+        "noResultsDescription": "Try another keyword or clear the current search."
+      },
+      "status": {
+        "PENDING": "Pending",
+        "BUILDING": "Building",
+        "SUCCESS": "Success",
+        "FAILED": "Failed",
+        "notDeployed": "Not deployed"
+      },
+      "trigger": {
+        "manual": "manual",
+        "webhook": "webhook"
+      },
+      "webhook": {
+        "CONNECTED": "Connected",
+        "MISSING": "Missing",
+        "ERROR": "Error"
+      }
+    },
+    "logs": {
+      "title": "Logs",
+      "description": "Inspect build output, runtime logs, and operational events across your platform."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "View a high-level overview of platform health, usage, and recent activity."
     }
   }
 }

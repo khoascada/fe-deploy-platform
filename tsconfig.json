@@ -30,7 +30,8 @@
       "@assets/*": ["./assets/*"],
       "@mock/*": ["./mock/*"],
       "@public/*": ["./public/*"],
-      "@/*": ["./*"],
+      "@features/*": ["./features/*"],
+      "@/*": ["./*"]
     }
   },
   "include": [
