@@ -1,0 +1,50 @@
+{
+  "common": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "seo": {
+    "title": "Starter App",
+    "description": "A reusable Next.js starter application.",
+    "og-image-alt": "Starter application preview"
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "welcomeMessage": "Sign in to continue to your workspace.",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "loginButton": "Login",
+    "loginFailed": "Login failed",
+    "loginFormAriaLabel": "Login form",
+    "loginSubmitAriaLabel": "Submit login form",
+    "registerTitle": "Create your account",
+    "registerDescription": "Set up your account to start using the app.",
+    "haveAccount": "Already have an account?",
+    "registerButton": "Create account",
+    "registerFailed": "Registration failed",
+    "registerFormAriaLabel": "Registration form",
+    "registerSubmitAriaLabel": "Submit registration form",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full name",
+    "confirmPassword": "Confirm password",
+    "changing": "Processing...",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "placeholder": {
+      "email": "Enter your email",
+      "password": "Enter your password",
+      "name": "Enter your full name",
+      "createPassword": "Create a password",
+      "confirmPassword": "Confirm your password"
+    },
+    "validation": {
+      "emailInvalid": "Please enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "nameRequired": "Full name is required.",
+      "passwordMin": "Password must be at least 6 characters.",
+      "confirmPasswordRequired": "Please confirm your password.",
+      "passwordNotMatch": "Passwords do not match.",
+      "roleRequired": "Please select a role."
+    }
+  }
+}

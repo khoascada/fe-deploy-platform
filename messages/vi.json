@@ -1,0 +1,50 @@
+{
+  "common": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký"
+  },
+  "seo": {
+    "title": "Starter App",
+    "description": "Bộ khung Next.js có thể tái sử dụng.",
+    "og-image-alt": "Ảnh xem trước của ứng dụng starter"
+  },
+  "auth": {
+    "loginTitle": "Chào mừng quay lại",
+    "welcomeMessage": "Đăng nhập để tiếp tục vào không gian làm việc của bạn.",
+    "forgotPassword": "Quên mật khẩu?",
+    "noAccount": "Chưa có tài khoản?",
+    "loginButton": "Đăng nhập",
+    "loginFailed": "Đăng nhập thất bại",
+    "loginFormAriaLabel": "Biểu mẫu đăng nhập",
+    "loginSubmitAriaLabel": "Gửi biểu mẫu đăng nhập",
+    "registerTitle": "Tạo tài khoản",
+    "registerDescription": "Thiết lập tài khoản để bắt đầu sử dụng ứng dụng.",
+    "haveAccount": "Đã có tài khoản?",
+    "registerButton": "Tạo tài khoản",
+    "registerFailed": "Đăng ký thất bại",
+    "registerFormAriaLabel": "Biểu mẫu đăng ký",
+    "registerSubmitAriaLabel": "Gửi biểu mẫu đăng ký",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "name": "Họ và tên",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "changing": "Đang xử lý...",
+    "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "placeholder": {
+      "email": "Nhập email của bạn",
+      "password": "Nhập mật khẩu",
+      "name": "Nhập họ và tên",
+      "createPassword": "Tạo mật khẩu",
+      "confirmPassword": "Nhập lại mật khẩu"
+    },
+    "validation": {
+      "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ.",
+      "passwordRequired": "Mật khẩu là bắt buộc.",
+      "nameRequired": "Họ và tên là bắt buộc.",
+      "passwordMin": "Mật khẩu phải có ít nhất 6 ký tự.",
+      "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu.",
+      "passwordNotMatch": "Mật khẩu xác nhận không khớp.",
+      "roleRequired": "Vui lòng chọn vai trò."
+    }
+  }
+}

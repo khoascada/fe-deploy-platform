@@ -24,6 +24,8 @@
       "@services/*": ["./services/*"],
       "@styles/*": ["./styles/*"],
       "@lib/*": ["./lib/*"],
+      "@i18n/*": ["./i18n/*"],
+      "@messages/*": ["./messages/*"],
       "@/types/*": ["./types/*"],
       "@assets/*": ["./assets/*"],
       "@mock/*": ["./mock/*"],

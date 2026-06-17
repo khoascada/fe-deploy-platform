@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@i18n/navigation';
 import { Button, Typography } from '@components/ui';
 
 export default function ForbiddenPage() {

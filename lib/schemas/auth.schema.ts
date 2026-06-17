@@ -1,0 +1,39 @@
+import { z } from 'zod';
+
+const RoleSchema = z.object({
+    role_id: z.number(),
+    role_name: z.string(),
+    role_description: z.string(),
+});
+
+const SettingSchema = z.object({
+    id: z.number(),
+    theme: z.enum(['light', 'dark']).nullable(),
+    language: z.enum(['VN', 'EN']).nullable(),
+});
+
+export const UserSchema = z.object({
+    id: z.number(),
+    user_name: z.string(),
+    email: z.email(),
+    avt_url: z.string().nullable(),
+    roles: z.array(RoleSchema),
+    setting: SettingSchema.nullable(),
+    is_verified: z.boolean(),
+});
+
+export const AuthResponseSchema = z.object({
+    user: UserSchema
+});
+
+export const MeSchema = z.object({
+    id: z.number(),
+    email: z.email(),
+    avt_url: z.string().nullable(),
+    full_name: z.string(),
+    phone_number: z.string().nullable().nullable(),
+    last_checkin_date: z.coerce.date().nullable(),
+    roles: z.array(z.string()),
+    setting: SettingSchema.nullable(),
+    is_verified: z.boolean(),
+});

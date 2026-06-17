@@ -6,7 +6,10 @@ type RouteConfig = {
   exact?: boolean;
 };
 
-export const ROUTES: Record<string, RouteConfig> = {};
+export const ROUTES: Record<string, RouteConfig> = {
+  LOGIN: { path: '/login', access: 'auth-only' },
+  REGISTER: { path: '/register', access: 'auth-only' },
+};
 
 export const PathnameUtils = {
   getPathnameWithoutLocale: (pathname: string): string => {

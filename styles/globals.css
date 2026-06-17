@@ -2,7 +2,6 @@
 @import 'driver.js/dist/driver.css';
 @import './colors.css';
 @import './fonts.css';
-@import '../features/onboarding/onboarding-tour.css';
 
 @plugin 'tailwindcss-animate';
 
