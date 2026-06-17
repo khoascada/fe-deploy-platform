@@ -8,8 +8,10 @@ export function ProjectsPageClient() {
 
   return (
     <ProjectsPageView
+      canCreateProject={projectsPage.canCreateProject}
       currentPage={projectsPage.currentPage}
       errorMessage={projectsPage.errorMessage}
+      githubConnected={projectsPage.githubConnected}
       hasSearchQuery={projectsPage.hasSearchQuery}
       isError={projectsPage.isError}
       isLoading={projectsPage.isLoading}

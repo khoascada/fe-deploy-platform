@@ -1,5 +1,6 @@
 'use client';
 
+import { useGetMe } from '@/features/auth/hooks';
 import { useGetProject } from '@/features/projects/hooks/actions';
 import type { ProjectsViewMode } from '@/features/projects/types';
 import { usePathname, useRouter } from '@i18n/navigation';
@@ -37,16 +38,24 @@ export function useProjectsPage() {
     setViewMode(currentView);
   }, [currentView]);
 
-  const query = useGetProject({
+  const {
+    data: listProjects,
+    error,
+    isError,
+    isLoading,
+    refetch,
+  } = useGetProject({
     page: currentPage,
     limit: DEFAULT_LIMIT,
     search: '',
   });
+  const { data: me } = useGetMe();
+  const githubConnected = me?.github_connected !== false;
 
   const deferredSearch = useDeferredValue(searchQuery.trim().toLowerCase());
 
   const filteredProjects = useMemo(() => {
-    const projects = query.data?.projects ?? [];
+    const projects = listProjects?.projects ?? [];
 
     if (!deferredSearch) {
       return projects;
@@ -58,7 +67,7 @@ export function useProjectsPage() {
         .toLowerCase()
         .includes(deferredSearch);
     });
-  }, [deferredSearch, query.data?.projects]);
+  }, [deferredSearch, listProjects?.projects]);
 
   const updateParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -93,19 +102,21 @@ export function useProjectsPage() {
   };
 
   return {
+    canCreateProject: githubConnected,
     currentPage,
-    errorMessage: query.error?.message,
+    errorMessage: error?.message,
     filteredProjects,
+    githubConnected,
     hasSearchQuery: deferredSearch.length > 0,
-    isError: query.isError,
-    isLoading: query.isLoading,
+    isError,
+    isLoading,
     onPageChange: handlePageChange,
-    onRetry: () => void query.refetch(),
+    onRetry: () => void refetch(),
     onSearchChange: handleSearchChange,
     onViewModeChange: handleViewModeChange,
     searchQuery,
-    totalPages: query.data?.totalPage ?? 0,
-    totalProjects: query.data?.total ?? 0,
+    totalPages: listProjects?.totalPage ?? 0,
+    totalProjects: listProjects?.total ?? 0,
     viewMode,
   };
 }

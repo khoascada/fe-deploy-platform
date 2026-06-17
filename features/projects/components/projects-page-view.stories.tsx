@@ -9,8 +9,10 @@ const meta: Meta<typeof ProjectsPageView> = {
   component: ProjectsPageView,
   tags: ['autodocs'],
   args: {
+    canCreateProject: true,
     currentPage: 1,
     errorMessage: null,
+    githubConnected: true,
     hasSearchQuery: false,
     isError: false,
     isLoading: false,
@@ -58,5 +60,12 @@ export const Loading: Story = {
     projects: [],
     totalPages: 0,
     totalProjects: 0,
+  },
+};
+
+export const GithubDisconnected: Story = {
+  args: {
+    canCreateProject: false,
+    githubConnected: false,
   },
 };

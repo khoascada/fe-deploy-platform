@@ -32,8 +32,12 @@ export const MeSchema = z.object({
     avt_url: z.string().nullable(),
     full_name: z.string(),
     phone_number: z.string().nullable().nullable(),
-    last_checkin_date: z.coerce.date().nullable(),
     roles: z.array(z.string()),
     setting: SettingSchema.nullable(),
     is_verified: z.boolean(),
+    // github
+    github_connected: z.boolean(),
+    github_username: z.string().nullable(),
+    github_avt_url: z.string().nullable()
+
 });

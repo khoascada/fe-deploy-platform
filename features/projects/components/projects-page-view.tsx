@@ -1,16 +1,18 @@
 'use client';
 
-import type { ProjectListItem } from '@/types/project';
 import type { ProjectsViewMode } from '@/features/projects/types';
+import type { ProjectListItem } from '@/types/project';
 import { AppPagination, Button, Card, CardContent, Input, Skeleton } from '@components/ui';
 import { cn } from '@lib/utils';
-import { Grid2x2, List, Plus, Search, SlidersHorizontal } from 'lucide-react';
+import { AlertTriangle, Grid2x2, List, Plus, Search, SlidersHorizontal } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { ProjectCard } from './project-card';
 
 interface ProjectsPageViewProps {
+  canCreateProject: boolean;
   currentPage: number;
   errorMessage?: string | null;
+  githubConnected: boolean;
   hasSearchQuery: boolean;
   isError?: boolean;
   isLoading?: boolean;
@@ -32,7 +34,7 @@ function ProjectsSkeleton({ viewMode }: { viewMode: ProjectsViewMode }) {
   return (
     <div className={wrapperClassName}>
       {Array.from({ length: 6 }).map((_, index) => (
-        <Card key={index} className="rounded-2xl border-border/60">
+        <Card key={index} className="border-border/60 rounded-2xl">
           <CardContent className="space-y-4 p-5">
             <div className="space-y-2">
               <Skeleton className="h-5 w-40" />
@@ -53,8 +55,10 @@ function ProjectsSkeleton({ viewMode }: { viewMode: ProjectsViewMode }) {
 }
 
 export function ProjectsPageView({
+  canCreateProject,
   currentPage,
   errorMessage,
+  githubConnected,
   hasSearchQuery,
   isError = false,
   isLoading = false,
@@ -74,6 +78,23 @@ export function ProjectsPageView({
 
   return (
     <section className="space-y-6">
+      {!githubConnected && (
+        <Card className="border-warning/30 bg-warning/8 rounded-2xl">
+          <CardContent className="flex flex-col gap-3 p-5 md:flex-row md:items-center md:justify-between">
+            <div className="flex gap-3">
+              <div className="bg-warning/15 text-warning flex h-10 w-10 shrink-0 items-center justify-center rounded-full">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <div className="space-y-1">
+                <h2 className="text-base font-semibold">{t('githubWarning.title')}</h2>
+                <p className="text-muted-foreground text-sm">{t('githubWarning.description')}</p>
+              </div>
+            </div>
+            <Button color="primary">{t('githubWarning.connect')}</Button>
+          </CardContent>
+        </Card>
+      )}
+
       <div className="flex flex-col gap-4">
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">{t('title')}</h1>
@@ -118,7 +139,7 @@ export function ProjectsPageView({
               </Button>
             </div>
 
-            <Button variant="outline" disabled>
+            <Button variant="outline" disabled={!canCreateProject}>
               <Plus className="h-4 w-4" />
               {t('toolbar.addNew')}
             </Button>
@@ -133,11 +154,13 @@ export function ProjectsPageView({
       {isLoading ? (
         <ProjectsSkeleton viewMode={viewMode} />
       ) : isError ? (
-        <Card className="rounded-2xl border-border/60">
-          <CardContent className="space-y-4 p-8 text-center">
+        <Card className="border-border/60 rounded-2xl pt-4">
+          <CardContent className="space-y-4 text-center">
             <div className="space-y-1">
               <h2 className="text-lg font-semibold">{t('states.errorTitle')}</h2>
-              <p className="text-muted-foreground">{errorMessage || t('states.errorDescription')}</p>
+              <p className="text-muted-foreground">
+                {errorMessage || t('states.errorDescription')}
+              </p>
             </div>
             <div className="flex justify-center">
               <Button onClick={onRetry}>{t('states.retry')}</Button>
@@ -145,7 +168,7 @@ export function ProjectsPageView({
           </CardContent>
         </Card>
       ) : projects.length === 0 ? (
-        <Card className="rounded-2xl border-border/60">
+        <Card className="border-border/60 rounded-2xl">
           <CardContent className="space-y-2 p-10 text-center">
             <h2 className="text-lg font-semibold">
               {hasSearchQuery ? t('states.noResultsTitle') : t('states.emptyTitle')}
@@ -163,7 +186,11 @@ export function ProjectsPageView({
             ))}
           </div>
 
-          <AppPagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+          <AppPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
         </div>
       )}
     </section>

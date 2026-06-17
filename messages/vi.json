@@ -95,6 +95,12 @@
         "listView": "Chế độ danh sách",
         "addNew": "Thêm mới"
       },
+      "githubWarning": {
+        "title": "Hãy kết nối GitHub trước khi tạo project",
+        "description": "Nền tảng deploy này cần tài khoản GitHub đã kết nối để liên kết repository và tạo project mới.",
+        "helper": "Hãy vào phần cài đặt tài khoản để kết nối GitHub rồi quay lại.",
+        "connect": "Kết nối"
+      },
       "summary": {
         "totalProjects": "{count} dự án trong trang hiện tại"
       },

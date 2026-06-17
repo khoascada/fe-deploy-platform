@@ -95,6 +95,12 @@
         "listView": "List view",
         "addNew": "Add New"
       },
+      "githubWarning": {
+        "title": "Connect GitHub before creating a project",
+        "description": "This deploy platform needs a connected GitHub account before it can link repositories and create new projects.",
+        "helper": "Connect GitHub from your account settings to continue.",
+        "connect": "Connect"
+      },
       "summary": {
         "totalProjects": "{count} projects in this view"
       },
