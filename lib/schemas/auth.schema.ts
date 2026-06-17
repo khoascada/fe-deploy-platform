@@ -1,11 +1,5 @@
 import { z } from 'zod';
 
-const RoleSchema = z.object({
-    role_id: z.number(),
-    role_name: z.string(),
-    role_description: z.string(),
-});
-
 const SettingSchema = z.object({
     id: z.number(),
     theme: z.enum(['light', 'dark']).nullable(),
@@ -17,7 +11,7 @@ export const UserSchema = z.object({
     user_name: z.string(),
     email: z.email(),
     avt_url: z.string().nullable(),
-    roles: z.array(RoleSchema),
+    role: z.enum(['USER', 'ADMIN']),
     setting: SettingSchema.nullable(),
     is_verified: z.boolean(),
 });
@@ -32,7 +26,7 @@ export const MeSchema = z.object({
     avt_url: z.string().nullable(),
     full_name: z.string(),
     phone_number: z.string().nullable().nullable(),
-    roles: z.array(z.string()),
+    roles: z.enum(['USER', 'ADMIN']),
     setting: SettingSchema.nullable(),
     is_verified: z.boolean(),
     // github
