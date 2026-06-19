@@ -51,7 +51,7 @@ export function useProjectsPage() {
     search: '',
   });
   const { data: me } = useGetMe();
-  const githubConnected = me?.github_connected !== false;
+  const githubConnected = me?.githubConnection.isConnected !== false;
 
   const deferredSearch = useDeferredValue(searchQuery.trim().toLowerCase());
 
@@ -121,3 +121,5 @@ export function useProjectsPage() {
     viewMode,
   };
 }
+
+

@@ -10,9 +10,9 @@ import * as authHooks from '../hooks';
 // ============================================================================
 
 /**
- * Mock các hooks được sử dụng bởi RegisterForm
- * - useRegister: Hook xử lý đăng ký tài khoản
- * - useGetRoles: Hook lấy danh sách roles từ API
+ * Mock cÃ¡c hooks Ä‘Æ°á»£c sá»­ dá»¥ng bá»Ÿi RegisterForm
+ * - useRegister: Hook xá»­ lÃ½ Ä‘Äƒng kÃ½ tÃ i khoáº£n
+ * - useGetRoles: Hook láº¥y danh sÃ¡ch roles tá»« API
  */
 vi.mock('../hooks', () => ({
   useRegister: vi.fn(),
@@ -29,8 +29,8 @@ describe('RegisterForm', () => {
   const mockUseGetRoles = authHooks.useGetRoles as ReturnType<typeof vi.fn>;
 
   /**
-   * Mock data cho danh sách roles
-   * Được sử dụng để populate Select dropdown
+   * Mock data cho danh sÃ¡ch roles
+   * ÄÆ°á»£c sá»­ dá»¥ng Ä‘á»ƒ populate Select dropdown
    */
   const mockRoles = [
     { id: 1, name: 'Student' },
@@ -38,7 +38,7 @@ describe('RegisterForm', () => {
   ];
 
   /**
-   * Valid form data - dùng cho các test case thành công
+   * Valid form data - dÃ¹ng cho cÃ¡c test case thÃ nh cÃ´ng
    */
   const validFormData = {
     email: 'test@example.com',
@@ -48,43 +48,43 @@ describe('RegisterForm', () => {
   };
 
   // ============================================================================
-  // BEFORE EACH - Reset mocks trước mỗi test
+  // BEFORE EACH - Reset mocks trÆ°á»›c má»—i test
   // ============================================================================
 
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Mock useRegister với trạng thái mặc định (không loading, không error)
+    // Mock useRegister vá»›i tráº¡ng thÃ¡i máº·c Ä‘á»‹nh (khÃ´ng loading, khÃ´ng error)
     mockUseRegister.mockReturnValue({
       register: mockRegister,
       isPending: false,
       error: null,
     });
 
-    // Mock useGetRoles với danh sách roles mẫu
+    // Mock useGetRoles vá»›i danh sÃ¡ch roles máº«u
     mockUseGetRoles.mockReturnValue({
       data: mockRoles,
     });
   });
 
   // ============================================================================
-  // RENDERING TESTS - Kiểm tra form render đúng các elements
+  // RENDERING TESTS - Kiá»ƒm tra form render Ä‘Ãºng cÃ¡c elements
   // ============================================================================
 
   describe('Rendering', () => {
     /**
      * Test: Verify form renders correctly with all required elements
-     * Purpose: Đảm bảo register form hiển thị đầy đủ các input fields và submit button
+     * Purpose: Äáº£m báº£o register form hiá»ƒn thá»‹ Ä‘áº§y Ä‘á»§ cÃ¡c input fields vÃ  submit button
      * What it checks:
-     * - Form container tồn tại
-     * - Email, name, password, confirm password inputs tồn tại
-     * - Role select dropdown tồn tại
-     * - Submit button tồn tại
+     * - Form container tá»“n táº¡i
+     * - Email, name, password, confirm password inputs tá»“n táº¡i
+     * - Role select dropdown tá»“n táº¡i
+     * - Submit button tá»“n táº¡i
      */
     it('renders register form with all input fields', () => {
       render(<RegisterForm />);
 
-      // ✅ Sử dụng data-testid - không phụ thuộc vào text/translations
+      // âœ… Sá»­ dá»¥ng data-testid - khÃ´ng phá»¥ thuá»™c vÃ o text/translations
       expect(screen.getByTestId('register-form')).toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
       expect(screen.getByTestId('name-input')).toBeInTheDocument();
@@ -96,7 +96,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify form renders without API error initially
-     * Purpose: Đảm bảo không hiển thị error message khi form mới load
+     * Purpose: Äáº£m báº£o khÃ´ng hiá»ƒn thá»‹ error message khi form má»›i load
      */
     it('does not show error message on initial render', () => {
       render(<RegisterForm />);
@@ -106,25 +106,25 @@ describe('RegisterForm', () => {
   });
 
   // ============================================================================
-  // USER INTERACTION TESTS - Kiểm tra tương tác người dùng
+  // USER INTERACTION TESTS - Kiá»ƒm tra tÆ°Æ¡ng tÃ¡c ngÆ°á»i dÃ¹ng
   // ============================================================================
 
   describe('User Interactions', () => {
     /**
      * Test: Verify user can type in text input fields
-     * Purpose: Đảm bảo các input fields nhận và hiển thị đúng giá trị người dùng nhập
+     * Purpose: Äáº£m báº£o cÃ¡c input fields nháº­n vÃ  hiá»ƒn thá»‹ Ä‘Ãºng giÃ¡ trá»‹ ngÆ°á»i dÃ¹ng nháº­p
      * What it checks:
-     * - User có thể type vào email field
-     * - User có thể type vào name field
-     * - User có thể type vào password field
-     * - User có thể type vào confirm password field
-     * - Giá trị được cập nhật đúng sau khi typing
+     * - User cÃ³ thá»ƒ type vÃ o email field
+     * - User cÃ³ thá»ƒ type vÃ o name field
+     * - User cÃ³ thá»ƒ type vÃ o password field
+     * - User cÃ³ thá»ƒ type vÃ o confirm password field
+     * - GiÃ¡ trá»‹ Ä‘Æ°á»£c cáº­p nháº­t Ä‘Ãºng sau khi typing
      */
     it('allows typing in all text input fields', async () => {
       const user = userEvent.setup();
       render(<RegisterForm />);
 
-      // Lấy các input elements bằng data-testid
+      // Láº¥y cÃ¡c input elements báº±ng data-testid
       const emailInput = screen.getByTestId('email-input');
       const nameInput = screen.getByTestId('name-input');
       const passwordInput = screen.getByTestId('password-input');
@@ -145,7 +145,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify role select dropdown is accessible
-     * Purpose: Đảm bảo role select có thể được interact
+     * Purpose: Äáº£m báº£o role select cÃ³ thá»ƒ Ä‘Æ°á»£c interact
      */
     it('renders role select dropdown', () => {
       render(<RegisterForm />);
@@ -156,15 +156,15 @@ describe('RegisterForm', () => {
   });
 
   // ============================================================================
-  // FORM SUBMISSION TESTS - Kiểm tra submit form
+  // FORM SUBMISSION TESTS - Kiá»ƒm tra submit form
   // ============================================================================
 
   describe('Form Submission', () => {
     /**
      * Test: Verify form submission with valid data
-     * Purpose: Đảm bảo form gọi register function với đúng data
-     * Note: Test này bị skip vì Select component cần interaction phức tạp hơn
-     *       Nên dùng E2E test cho full form submission với role selection
+     * Purpose: Äáº£m báº£o form gá»i register function vá»›i Ä‘Ãºng data
+     * Note: Test nÃ y bá»‹ skip vÃ¬ Select component cáº§n interaction phá»©c táº¡p hÆ¡n
+     *       NÃªn dÃ¹ng E2E test cho full form submission vá»›i role selection
      */
     it.skip('calls register function with credentials on submit', async () => {
       const user = userEvent.setup();
@@ -180,73 +180,73 @@ describe('RegisterForm', () => {
       await waitFor(() => {
         expect(mockRegister).toHaveBeenCalledWith({
           email: validFormData.email,
-          full_name: validFormData.name,
+          name: validFormData.name,
           password: validFormData.password,
-          role_id: expect.any(Number),
+          roleId: expect.any(Number),
         });
       });
     });
   });
 
   // ============================================================================
-  // VALIDATION TESTS - Kiểm tra validation errors
+  // VALIDATION TESTS - Kiá»ƒm tra validation errors
   // ============================================================================
 
   describe('Validation', () => {
     /**
-     * Test: Integration test - Component hiển thị validation errors
+     * Test: Integration test - Component hiá»ƒn thá»‹ validation errors
      * Purpose: Verify component integrates correctly with schema validation
-     * Note: Chi tiết validation rules đã được test trong register.schema.test.ts
+     * Note: Chi tiáº¿t validation rules Ä‘Ã£ Ä‘Æ°á»£c test trong register.schema.test.ts
      */
     it('shows validation error when some fields are invalid', async () => {
       const user = userEvent.setup();
       render(<RegisterForm />);
 
-      // Submit form rỗng sẽ trigger validation errors
+      // Submit form rá»—ng sáº½ trigger validation errors
       await user.click(screen.getByTestId('register-submit-button'));
 
       await waitFor(() => {
-        // ✅ Verify: Có ít nhất 1 error message được hiển thị
+        // âœ… Verify: CÃ³ Ã­t nháº¥t 1 error message Ä‘Æ°á»£c hiá»ƒn thá»‹
         const alertElements = screen.getAllByRole('alert');
         expect(alertElements.length).toBeGreaterThan(0);
       });
     });
 
     /**
-     * Test: Integration test - Form không submit khi có validation error
+     * Test: Integration test - Form khÃ´ng submit khi cÃ³ validation error
      * Purpose: Verify form prevents submission when validation fails
-     * Note: Chi tiết validation rules đã được test trong register.schema.test.ts
+     * Note: Chi tiáº¿t validation rules Ä‘Ã£ Ä‘Æ°á»£c test trong register.schema.test.ts
      */
     it('form should not be submit when some fields are invalid', async () => {
       const user = userEvent.setup();
       render(<RegisterForm />);
 
-      // Submit form với data không hợp lệ (email sai format)
+      // Submit form vá»›i data khÃ´ng há»£p lá»‡ (email sai format)
       await user.type(screen.getByTestId('email-input'), 'invalid-email');
       await user.click(screen.getByTestId('register-submit-button'));
 
       await waitFor(() => {
-        // ✅ Verify: register function KHÔNG được gọi
+        // âœ… Verify: register function KHÃ”NG Ä‘Æ°á»£c gá»i
         expect(mockRegister).not.toHaveBeenCalled();
       });
     });
   });
 
   // ============================================================================
-  // LOADING STATE TESTS - Kiểm tra trạng thái loading
+  // LOADING STATE TESTS - Kiá»ƒm tra tráº¡ng thÃ¡i loading
   // ============================================================================
 
   describe('Loading State', () => {
     /**
      * Test: Verify form is disabled during registration API call
-     * Purpose: Đảm bảo UI ngăn user tương tác trong khi đang xử lý đăng ký
+     * Purpose: Äáº£m báº£o UI ngÄƒn user tÆ°Æ¡ng tÃ¡c trong khi Ä‘ang xá»­ lÃ½ Ä‘Äƒng kÃ½
      * What it checks:
-     * - Email input bị disabled khi isPending = true
-     * - Name input bị disabled khi isPending = true
-     * - Password input bị disabled khi isPending = true
-     * - Confirm password input bị disabled khi isPending = true
-     * - Role select bị disabled khi isPending = true
-     * - Submit button bị disabled để ngăn submit nhiều lần
+     * - Email input bá»‹ disabled khi isPending = true
+     * - Name input bá»‹ disabled khi isPending = true
+     * - Password input bá»‹ disabled khi isPending = true
+     * - Confirm password input bá»‹ disabled khi isPending = true
+     * - Role select bá»‹ disabled khi isPending = true
+     * - Submit button bá»‹ disabled Ä‘á»ƒ ngÄƒn submit nhiá»u láº§n
      */
     it('disables all form fields when loading', () => {
       // Mock loading state
@@ -258,7 +258,7 @@ describe('RegisterForm', () => {
 
       render(<RegisterForm />);
 
-      // ✅ Verify tất cả fields bị disabled
+      // âœ… Verify táº¥t cáº£ fields bá»‹ disabled
       expect(screen.getByTestId('email-input')).toBeDisabled();
       expect(screen.getByTestId('name-input')).toBeDisabled();
       expect(screen.getByTestId('password-input')).toBeDisabled();
@@ -269,12 +269,12 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify form fields are enabled when not loading
-     * Purpose: Đảm bảo form có thể tương tác khi không ở trạng thái loading
+     * Purpose: Äáº£m báº£o form cÃ³ thá»ƒ tÆ°Æ¡ng tÃ¡c khi khÃ´ng á»Ÿ tráº¡ng thÃ¡i loading
      */
     it('enables all form fields when not loading', () => {
       render(<RegisterForm />);
 
-      // ✅ Verify tất cả fields có thể tương tác
+      // âœ… Verify táº¥t cáº£ fields cÃ³ thá»ƒ tÆ°Æ¡ng tÃ¡c
       expect(screen.getByTestId('email-input')).not.toBeDisabled();
       expect(screen.getByTestId('name-input')).not.toBeDisabled();
       expect(screen.getByTestId('password-input')).not.toBeDisabled();
@@ -285,18 +285,18 @@ describe('RegisterForm', () => {
   });
 
   // ============================================================================
-  // ERROR HANDLING TESTS - Kiểm tra xử lý lỗi từ API
+  // ERROR HANDLING TESTS - Kiá»ƒm tra xá»­ lÃ½ lá»—i tá»« API
   // ============================================================================
 
   describe('Error Handling', () => {
     /**
      * Test: Verify API error message is displayed to user
-     * Purpose: Đảm bảo server/API errors được hiển thị trong UI
+     * Purpose: Äáº£m báº£o server/API errors Ä‘Æ°á»£c hiá»ƒn thá»‹ trong UI
      * What it checks:
-     * - Khi có error từ useRegister hook, error được render
-     * - Error message từ API/server được hiển thị đúng
-     * - Error có proper accessibility role (alert)
-     * - User có thể thấy được lỗi xảy ra
+     * - Khi cÃ³ error tá»« useRegister hook, error Ä‘Æ°á»£c render
+     * - Error message tá»« API/server Ä‘Æ°á»£c hiá»ƒn thá»‹ Ä‘Ãºng
+     * - Error cÃ³ proper accessibility role (alert)
+     * - User cÃ³ thá»ƒ tháº¥y Ä‘Æ°á»£c lá»—i xáº£y ra
      */
     it('displays error message when API returns error', () => {
       const errorMessage = 'Email already exists';
@@ -310,7 +310,7 @@ describe('RegisterForm', () => {
 
       render(<RegisterForm />);
 
-      // ✅ Verify error element tồn tại và hiển thị đúng message
+      // âœ… Verify error element tá»“n táº¡i vÃ  hiá»ƒn thá»‹ Ä‘Ãºng message
       const errorElement = screen.getByTestId('register-error-message');
       expect(errorElement).toBeInTheDocument();
       expect(errorElement).toHaveTextContent(errorMessage);
@@ -319,7 +319,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify no error message when there's no error
-     * Purpose: Đảm bảo không hiển thị error khi hook không trả về error
+     * Purpose: Äáº£m báº£o khÃ´ng hiá»ƒn thá»‹ error khi hook khÃ´ng tráº£ vá» error
      */
     it('does not display error message when error is null', () => {
       // Default mock already has error: null
@@ -330,7 +330,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify error message displays fallback when message is empty
-     * Purpose: Đảm bảo có fallback message khi error không có message
+     * Purpose: Äáº£m báº£o cÃ³ fallback message khi error khÃ´ng cÃ³ message
      */
     it('displays fallback error message when error.message is empty', () => {
       // Mock error without message
@@ -344,19 +344,19 @@ describe('RegisterForm', () => {
 
       const errorElement = screen.getByTestId('register-error-message');
       expect(errorElement).toBeInTheDocument();
-      // Component có fallback 'Register failed'
+      // Component cÃ³ fallback 'Register failed'
       expect(errorElement).toHaveTextContent('Register failed');
     });
   });
 
   // ============================================================================
-  // ACCESSIBILITY TESTS - Kiểm tra accessibility
+  // ACCESSIBILITY TESTS - Kiá»ƒm tra accessibility
   // ============================================================================
 
   describe('Accessibility', () => {
     /**
      * Test: Verify form has proper labels for screen readers
-     * Purpose: Đảm bảo form accessible cho screen reader users
+     * Purpose: Äáº£m báº£o form accessible cho screen reader users
      */
     it('has labels associated with inputs', () => {
       render(<RegisterForm />);
@@ -370,7 +370,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify submit button has aria-label
-     * Purpose: Đảm bảo submit button có aria-label cho screen readers
+     * Purpose: Äáº£m báº£o submit button cÃ³ aria-label cho screen readers
      */
     it('submit button has aria-label', () => {
       render(<RegisterForm />);
@@ -381,7 +381,7 @@ describe('RegisterForm', () => {
 
     /**
      * Test: Verify validation errors have alert role
-     * Purpose: Đảm bảo error messages được announce bởi screen readers
+     * Purpose: Äáº£m báº£o error messages Ä‘Æ°á»£c announce bá»Ÿi screen readers
      */
     it('validation errors have alert role for screen readers', async () => {
       const user = userEvent.setup();
@@ -400,3 +400,4 @@ describe('RegisterForm', () => {
     });
   });
 });
+

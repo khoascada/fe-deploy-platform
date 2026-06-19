@@ -3,8 +3,9 @@
  * Returns the refreshed access token when the backend supports `/auth/refresh`.
  */
 export const refreshTokenService = async () => {
+  console.log("CALLL")
   const apiClient = (await import('./api-client')).default;
-  const response = await apiClient.get('/auth/refresh');
+  const response = await apiClient.post('/auth/refresh');
 
   return response.data.data.accessToken as string;
 };

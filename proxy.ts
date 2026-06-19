@@ -16,6 +16,7 @@ export default function middleware(request: NextRequest) {
     : pathname;
 
   const hasRefreshToken = request.cookies.has('refresh_token');
+
   const userRoles = request.cookies.get('permission')?.value || '[]';
 
   const isAdminUser = isAdmin(userRoles);
@@ -41,7 +42,7 @@ export default function middleware(request: NextRequest) {
     hasRefreshToken &&
     (isAuthRoute(pathnameWithoutLocale) || isLandingRoute(pathnameWithoutLocale))
   ) {
-    return NextResponse.redirect(new URL(`/${preferredLocale}/home`, request.url));
+    return NextResponse.redirect(new URL(`/${preferredLocale}/projects`, request.url));
   }
 
   if (!isAdminUser && isAdminRoute(pathnameWithoutLocale)) {

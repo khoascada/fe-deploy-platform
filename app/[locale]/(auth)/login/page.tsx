@@ -1,3 +1,4 @@
+import { LoginForm } from '@/features/auth';
 import {
   Card,
   CardContent,
@@ -6,10 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui/card';
-import { LoginForm } from '@/features/auth';
 import { Link } from '@i18n/navigation';
 import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
 import { SessionExpiredHandler } from './session-expire-handler';
 
 export default async function LoginPage() {
@@ -20,9 +19,6 @@ export default async function LoginPage() {
     <div className="flex min-h-[100dvh] items-center justify-center overflow-hidden">
       <Card className="border-border/50 z-10 w-full max-w-xl shadow-xl backdrop-blur-xl">
         <CardHeader className="space-y-3 text-center">
-          <div className="mx-auto mb-2">
-            <Image src="/bee.svg" alt="Wordy Bee" width={80} height={107} priority />
-          </div>
           <CardTitle className="text-2xl font-bold tracking-tight">{t('loginTitle')}</CardTitle>
           <CardDescription>{t('welcomeMessage')}</CardDescription>
         </CardHeader>

@@ -13,23 +13,24 @@ export function useUploadAvatar() {
   const uploadAvatar = async (data: FormData) => {
     try {
       const response = await mutation.mutateAsync(data);
-      const avt_url = response?.url;
+      const avatarUrl = response?.url;
 
-      if (avt_url) {
+      if (avatarUrl) {
         queryClient.setQueryData<Me>(['me'], (oldData) => {
           if (!oldData) return oldData;
           return {
             ...oldData,
-            avt_url: avt_url,
+            avatarUrl,
           } as Me;
         });
-        return avt_url;
+        return avatarUrl;
       }
     } catch (err) {
       console.error(err);
       throw err;
     }
   };
+
   return {
     ...mutation,
     uploadAvatar,

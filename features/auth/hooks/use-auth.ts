@@ -5,7 +5,7 @@ export function useCurrentUser() {
   return useAuthStore((state) => state.user);
 }
 
-export const useIsOwner = (ownerId: number) => {
+export const useIsOwner = (ownerId: string) => {
   const user = useAuthStore((state) => state.user);
   const isOwner = user?.id === ownerId;
   return isOwner;

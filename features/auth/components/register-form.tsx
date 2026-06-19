@@ -1,17 +1,17 @@
 'use client';
 
-import { useRegister } from '../hooks';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
-import { PasswordInput } from '@components/ui/password-input';
 import { Label } from '@components/ui/label';
+import { PasswordInput } from '@components/ui/password-input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { useRegister } from '../hooks';
 
+import { useTranslateError } from '@lib/hooks';
 import { ArrowRightIcon, Loader2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { useTranslateError } from '@lib/hooks';
 import { createRegisterSchema, type RegisterFormData } from '../validations';
 
 export default function RegisterForm() {
@@ -21,7 +21,6 @@ export default function RegisterForm() {
   const { resolvedTheme } = useTheme();
   const { getErrorMessage } = useTranslateError();
 
-  // Create schema with translations
   const registerSchema = createRegisterSchema(t);
 
   const {
@@ -31,11 +30,11 @@ export default function RegisterForm() {
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      full_name: '',
+      name: '',
       email: '',
       password: '',
       confirmPassword: '',
-      role_id: undefined,
+      roleId: undefined,
     },
   });
 
@@ -44,9 +43,9 @@ export default function RegisterForm() {
       await register({
         email: data.email,
         password: data.password,
-        full_name: data.full_name,
-        theme: (resolvedTheme as 'light' | 'dark') ?? 'light',
-        language: locale === 'en' ? 'EN' : 'VN',
+        name: data.name,
+        theme: resolvedTheme === 'dark' ? 'DARK' : 'LIGHT',
+        language: locale === 'en' ? 'EN' : 'VI',
       });
     } catch (err) {
       console.error('Registration error:', err);
@@ -57,7 +56,7 @@ export default function RegisterForm() {
     <div className="grid gap-6">
       {error && (
         <div
-          className="rounded-md bg-destructive/15 p-3 text-sm text-destructive"
+          className="bg-destructive/15 text-destructive rounded-md p-3 text-sm"
           data-testid="register-error-message"
           role="alert"
         >
@@ -71,32 +70,30 @@ export default function RegisterForm() {
         data-testid="register-form"
         aria-label={t('registerFormAriaLabel')}
       >
-        {/* Name Field */}
         <div className="grid gap-2">
-          <Label htmlFor="full_name">{t('name')}</Label>
+          <Label htmlFor="name">{t('name')}</Label>
           <Controller
-            name="full_name"
+            name="name"
             control={control}
             render={({ field }) => (
               <Input
-                id="full_name"
+                id="name"
                 {...field}
                 type="text"
                 placeholder={t('placeholder.name')}
                 disabled={isPending}
                 data-testid="name-input"
-                className={errors.full_name ? 'border-destructive focus-visible:ring-destructive' : ''}
+                className={errors.name ? 'border-destructive focus-visible:ring-destructive' : ''}
               />
             )}
           />
-          {errors.full_name?.message && (
-            <p className="text-xs text-destructive" role="alert">
-              {errors.full_name.message}
+          {errors.name?.message && (
+            <p className="text-destructive text-xs" role="alert">
+              {errors.name.message}
             </p>
           )}
         </div>
 
-        {/* Email Field */}
         <div className="grid gap-2">
           <Label htmlFor="email">{t('email')}</Label>
           <Controller
@@ -115,13 +112,12 @@ export default function RegisterForm() {
             )}
           />
           {errors.email?.message && (
-            <p className="text-xs text-destructive" role="alert">
+            <p className="text-destructive text-xs" role="alert">
               {errors.email.message}
             </p>
           )}
         </div>
 
-        {/* Password Field */}
         <div className="grid gap-2">
           <Label htmlFor="password">{t('password')}</Label>
           <Controller
@@ -134,18 +130,19 @@ export default function RegisterForm() {
                 placeholder={t('placeholder.createPassword')}
                 disabled={isPending}
                 data-testid="password-input"
-                className={errors.password ? 'border-destructive focus-visible:ring-destructive' : ''}
+                className={
+                  errors.password ? 'border-destructive focus-visible:ring-destructive' : ''
+                }
               />
             )}
           />
           {errors.password?.message && (
-            <p className="text-xs text-destructive" role="alert">
+            <p className="text-destructive text-xs" role="alert">
               {errors.password.message}
             </p>
           )}
         </div>
 
-        {/* Confirm Password Field */}
         <div className="grid gap-2">
           <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
           <Controller
@@ -158,12 +155,14 @@ export default function RegisterForm() {
                 placeholder={t('placeholder.confirmPassword')}
                 disabled={isPending}
                 data-testid="confirm-password-input"
-                className={errors.confirmPassword ? 'border-destructive focus-visible:ring-destructive' : ''}
+                className={
+                  errors.confirmPassword ? 'border-destructive focus-visible:ring-destructive' : ''
+                }
               />
             )}
           />
           {errors.confirmPassword?.message && (
-            <p className="text-xs text-destructive" role="alert">
+            <p className="text-destructive text-xs" role="alert">
               {errors.confirmPassword.message}
             </p>
           )}

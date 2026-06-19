@@ -19,7 +19,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const isMobile = useIsMobile();
   const { resolvedTheme } = useTheme();
   // đặt noti-obser và invi-obser, sse ở đây vì nó chỉ obser khi user đăng nhập.
-  useSseConnection();
+  // useSseConnection();
 
   useEffect(() => {
     setMounted(true);

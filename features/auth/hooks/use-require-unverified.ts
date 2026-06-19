@@ -4,18 +4,18 @@ import { useEffect } from 'react';
 import { useGetMe } from './use-get-me';
 
 /**
- * Guard cho các page verify (/check-email, /verify-email).
- * Nguồn sự thật là getMe (KHÔNG đọc verify từ zustand auth store).
- * - Đang load getMe → isChecking = true (page render <Loading />).
- * - User đã verify → đẩy về /home.
- * Case chưa login đã được middleware chặn (route 'protected'); getMe lỗi session
- * sẽ do interceptor trong api-client tự xử lý logout/redirect.
+ * Guard cho cÃ¡c page verify (/check-email, /verify-email).
+ * Nguá»“n sá»± tháº­t lÃ  getMe (KHÃ”NG Ä‘á»c verify tá»« zustand auth store).
+ * - Äang load getMe â†’ isChecking = true (page render <Loading />).
+ * - User Ä‘Ã£ verify â†’ Ä‘áº©y vá» /home.
+ * Case chÆ°a login Ä‘Ã£ Ä‘Æ°á»£c middleware cháº·n (route 'protected'); getMe lá»—i session
+ * sáº½ do interceptor trong api-client tá»± xá»­ lÃ½ logout/redirect.
  */
 export function useRequireUnverified() {
   const router = useRouter();
   const { data, isLoading } = useGetMe();
 
-  const isVerified = data?.is_verified === true;
+  const isVerified = data?.isVerified === true;
 
   useEffect(() => {
     if (isVerified) {
@@ -23,8 +23,9 @@ export function useRequireUnverified() {
     }
   }, [isVerified, router]);
 
-  // Đã verify thì vẫn giữ Loading trong lúc chờ redirect để tránh flash nội dung
+  // ÄÃ£ verify thÃ¬ váº«n giá»¯ Loading trong lÃºc chá» redirect Ä‘á»ƒ trÃ¡nh flash ná»™i dung
   const isChecking = isLoading || isVerified;
 
   return { isChecking };
 }
+
