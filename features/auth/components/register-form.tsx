@@ -11,6 +11,7 @@ import { Label } from '@components/ui/label';
 import { ArrowRightIcon, Loader2 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
+import { useTranslateError } from '@lib/hooks';
 import { createRegisterSchema, type RegisterFormData } from '../validations';
 
 export default function RegisterForm() {
@@ -18,7 +19,7 @@ export default function RegisterForm() {
   const t = useTranslations('auth');
   const locale = useLocale();
   const { resolvedTheme } = useTheme();
-
+  const { getErrorMessage } = useTranslateError();
 
   // Create schema with translations
   const registerSchema = createRegisterSchema(t);
@@ -60,7 +61,7 @@ export default function RegisterForm() {
           data-testid="register-error-message"
           role="alert"
         >
-          {error?.message || t('registerFailed')}
+          {getErrorMessage(error) || t('registerFailed')}
         </div>
       )}
 

@@ -10,7 +10,6 @@ export function translateErrorCode(
     return fallbackMessage || 'An unexpected error occurred';
   }
 
-  // Check if errCode exists in ERROR_CODES
   const isValidErrorCode = (Object.values(ERROR_CODES) as string[]).includes(errCode);
 
   if (!isValidErrorCode) {
@@ -24,6 +23,18 @@ export function translateErrorCode(
   }
 }
 
+export function getApiErrorCode(error: ApiError | null | undefined): string | undefined {
+  return error?.error.code;
+}
+
+export function getApiErrorMessage(error: ApiError | null | undefined): string {
+  return error?.error.message || 'An unexpected error occurred';
+}
+
+export function getApiErrorStatusCode(error: ApiError | null | undefined): number | undefined {
+  return error?.statusCode ?? error?.error.statusCode;
+}
+
 export function getTranslatedErrorMessage(
   error: ApiError | null | undefined,
   t: (key: string) => string
@@ -32,12 +43,12 @@ export function getTranslatedErrorMessage(
     return 'An unexpected error occurred';
   }
 
-  // If errCode exists, translate it
-  if (error.errCode) {
-    const translated = translateErrorCode(error.errCode, t, error.message);
-    return translated;
+  const errCode = getApiErrorCode(error);
+  const fallbackMessage = getApiErrorMessage(error);
+
+  if (errCode) {
+    return translateErrorCode(errCode, t, fallbackMessage);
   }
 
-  // Fallback to error.message from BE
-  return error.message || 'An unexpected error occurred';
+  return fallbackMessage;
 }

@@ -28,25 +28,25 @@ export default function middleware(request: NextRequest) {
         ? (cookieLocale as Locale)
         : routing.defaultLocale;
 
-  // 1. If no RT and trying to access protected route → redirect to login
-  // if (!hasRefreshToken && isProtectedRoute(pathnameWithoutLocale)) {
-  //   const loginUrl = new URL(`/${preferredLocale}/login`, request.url);
-  //   // Save redirect URL (kèm query string) để quay lại sau login — giữ token verify-email
-  //   loginUrl.searchParams.set('redirect', pathnameWithoutLocale + request.nextUrl.search);
-  //   return NextResponse.redirect(loginUrl);
-  // }
 
-  // // 2. If has RT and on auth page, landing page → redirect to home (already logged in)
-  // if (
-  //   hasRefreshToken &&
-  //   (isAuthRoute(pathnameWithoutLocale) || isLandingRoute(pathnameWithoutLocale))
-  // ) {
-  //   return NextResponse.redirect(new URL(`/${preferredLocale}/home`, request.url));
-  // }
+  if (!hasRefreshToken && isProtectedRoute(pathnameWithoutLocale)) {
+    const loginUrl = new URL(`/${preferredLocale}/login`, request.url);
+    // Save redirect URL (kèm query string) để quay lại sau login — giữ token verify-email
+    loginUrl.searchParams.set('redirect', pathnameWithoutLocale + request.nextUrl.search);
+    return NextResponse.redirect(loginUrl);
+  }
 
-  // if (!isAdminUser && isAdminRoute(pathnameWithoutLocale)) {
-  //   return NextResponse.rewrite(new URL(`/${preferredLocale}/403`, request.url));
-  // }
+  // 2. If has RT and on auth page, landing page → redirect to home (already logged in)
+  if (
+    hasRefreshToken &&
+    (isAuthRoute(pathnameWithoutLocale) || isLandingRoute(pathnameWithoutLocale))
+  ) {
+    return NextResponse.redirect(new URL(`/${preferredLocale}/home`, request.url));
+  }
+
+  if (!isAdminUser && isAdminRoute(pathnameWithoutLocale)) {
+    return NextResponse.rewrite(new URL(`/${preferredLocale}/403`, request.url));
+  }
 
   if (!isValidLocale && preferredLocale !== routing.defaultLocale) {
     return NextResponse.redirect(new URL(`/${preferredLocale}${pathnameWithoutLocale}`, request.url));

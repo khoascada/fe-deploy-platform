@@ -3,6 +3,7 @@
 import { useGetMe } from '@/features/auth/hooks';
 import { useGetProject } from '@/features/projects/hooks/actions';
 import type { ProjectsViewMode } from '@/features/projects/types';
+import { getApiErrorMessage } from '@lib/utils/error';
 import { usePathname, useRouter } from '@i18n/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react';
@@ -104,7 +105,7 @@ export function useProjectsPage() {
   return {
     canCreateProject: githubConnected,
     currentPage,
-    errorMessage: error?.message,
+    errorMessage: getApiErrorMessage(error),
     filteredProjects,
     githubConnected,
     hasSearchQuery: deferredSearch.length > 0,

@@ -151,5 +151,25 @@
       "title": "Bảng điều khiển",
       "description": "Xem nhanh tình trạng nền tảng, mức sử dụng, và hoạt động gần đây."
     }
+  },
+  "errors": {
+    "BAD_REQUEST": "Yêu cầu không hợp lệ.",
+    "UNAUTHORIZED": "Bạn cần đăng nhập để tiếp tục.",
+    "FORBIDDEN": "Bạn không có quyền thực hiện hành động này.",
+    "NOT_FOUND": "Không tìm thấy tài nguyên được yêu cầu.",
+    "CONFLICT": "Dữ liệu đang bị trùng hoặc xung đột với bản ghi đã tồn tại.",
+    "VALIDATION_ERROR": "Dữ liệu gửi lên không hợp lệ. Vui lòng kiểm tra và thử lại.",
+    "TOO_MANY_REQUESTS": "Bạn thao tác quá nhanh. Vui lòng thử lại sau.",
+    "INTERNAL_ERROR": "Hệ thống đang gặp sự cố. Vui lòng thử lại sau.",
+    "DATABASE_ERROR": "Đã xảy ra lỗi dữ liệu. Vui lòng thử lại sau.",
+    "EMAIL_ALREADY_EXISTS": "Email này đã được đăng ký.",
+    "INVALID_CREDENTIALS": "Email hoặc mật khẩu không đúng.",
+    "REFRESH_TOKEN_MISSING": "Phiên đăng nhập thiếu thông tin làm mới. Vui lòng đăng nhập lại.",
+    "INVALID_REFRESH_TOKEN": "Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại.",
+    "REFRESH_TOKEN_REVOKED": "Phiên đăng nhập đã bị thu hồi. Vui lòng đăng nhập lại.",
+    "TOKEN_REVOKED": "Quyền truy cập đã bị thu hồi. Vui lòng đăng nhập lại.",
+    "INVALID_REQUEST_ORIGIN": "Nguồn gửi request không được phép.",
+    "INSUFFICIENT_ROLE": "Tài khoản của bạn không đủ quyền để thực hiện hành động này.",
+    "USER_NOT_FOUND": "Không tìm thấy người dùng."
   }
 }

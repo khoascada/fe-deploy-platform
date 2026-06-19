@@ -1,9 +1,9 @@
-import { ERROR_CODES, type ErrorCode } from '@lib/constants/error-code';
+import { env } from '@/env';
+import { ERROR_CODES } from '@lib/constants/error-code';
 import type { ApiError } from '@lib/types/base';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
-import { logoutInvalid } from './auth-session';
-import { env } from '@/env';
 import { refreshTokenService } from './auth-refresh';
+import { logoutInvalid } from './auth-session';
 
 // Create axios instance - Direct call to Backend
 export const apiClient = axios.create({
@@ -34,6 +34,29 @@ const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue = [];
 };
 
+const createApiError = ({
+  code = ERROR_CODES.INTERNAL_ERROR,
+  details,
+  message,
+  statusCode,
+}: {
+  code?: string;
+  details?: unknown;
+  message: string;
+  statusCode: number;
+}): ApiError => {
+  return {
+    success: false,
+    error: {
+      code,
+      message,
+      statusCode,
+      ...(details !== undefined ? { details } : {}),
+    },
+    statusCode,
+  };
+};
+
 // Request interceptor - Add Access Token from Zustand
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
@@ -56,56 +79,46 @@ apiClient.interceptors.response.use(
   async (error: AxiosError<ApiError>) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
-    const mapStatusCodeToErrCode = (statusCode: number): ErrorCode | null => {
-      switch (statusCode) {
-        case 400:
-          return ERROR_CODES.BAD_REQUEST;
-        case 401:
-          return ERROR_CODES.UNAUTHORIZE;
-        case 403:
-          return ERROR_CODES.FORBIDDEN;
-        case 404:
-          return ERROR_CODES.NOT_FOUND;
-        case 500:
-        case 502:
-        case 503:
-        case 504:
-          return ERROR_CODES.INTERNAL_SERVER_ERROR;
-        default:
-          return null;
-      }
-    };
-
-    // Handle different error scenarios
     if (error.response) {
-      // Check if response is HTML (404 page) instead of JSON
       const contentType = error.response.headers['content-type'];
       const isHtmlResponse = contentType?.includes('text/html');
+      const statusCode = error.response.status;
 
-      // Extract API error from response data
       let apiError: ApiError;
 
       if (isHtmlResponse || typeof error.response.data === 'string') {
-        // Backend returned HTML or string (e.g. 404 page)
+        apiError = createApiError({
+          code: ERROR_CODES.INTERNAL_ERROR,
+          message: `API endpoint not found or server error (Status: ${statusCode})`,
+          statusCode,
+        });
+      } else if (error.response.data?.error) {
         apiError = {
-          message: `API endpoint not found or server error (Status: ${error.response.status})`,
-          statusCode: error.response.status,
-          errCode:
-            mapStatusCodeToErrCode(error.response.status) || ERROR_CODES.INTERNAL_SERVER_ERROR,
+          ...error.response.data,
+          // Do a light normalization in case the backend response misses some fields.
+          success: false,
+          statusCode: error.response.data.statusCode ?? statusCode,
+          error: {
+            ...error.response.data.error,
+            code: error.response.data.error.code || ERROR_CODES.INTERNAL_ERROR,
+            message: error.response.data.error.message || 'An unexpected error occurred',
+            statusCode: error.response.data.error.statusCode ?? statusCode,
+          },
         };
       } else {
-        // Backend returned JSON error response
-        apiError = error.response.data || {
+        apiError = createApiError({
+          code: ERROR_CODES.INTERNAL_ERROR,
           message: 'An unexpected error occurred',
-          statusCode: error.response.status,
-        };
-
-        // Ensure statusCode is set from response
-        apiError.statusCode = error.response.status;
+          statusCode,
+        });
       }
 
+      const errorStatusCode = apiError.statusCode ?? apiError.error.statusCode;
+      const errorCode = apiError.error.code;
+      const errorMessage = apiError.error.message;
+
       // Handle 401 Unauthorized - Token refresh
-      if (error.response.status === 401 && !originalRequest._retry) {
+      if (errorStatusCode === 401 && errorCode !== ERROR_CODES.INVALID_CREDENTIALS && !originalRequest._retry) {
         // Check if this is a refresh request (avoid infinite loop)
         if (originalRequest.url?.includes('/auth/refresh')) {
           if (typeof window !== 'undefined') {
@@ -130,16 +143,12 @@ apiClient.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          // Call centralized refresh service
           const accessToken = await refreshTokenService();
 
-          // Process queued requests
           processQueue(null, accessToken);
 
-          // Retry original request
           return apiClient(originalRequest);
         } catch (refreshError) {
-          // Refresh failed - logout
           processQueue(refreshError, null);
 
           if (typeof window !== 'undefined') {
@@ -151,41 +160,39 @@ apiClient.interceptors.response.use(
         }
       }
 
-      // Handle specific status codes
-      switch (error.response.status) {
+      switch (errorStatusCode) {
         case 403:
-          // Forbidden
-          console.error('Access forbidden');
+          console.error(errorCode, errorMessage);
           break;
         case 404:
-          // Not found
-          console.error('Resource not found');
+          console.error(errorCode, errorMessage);
           break;
         case 500:
-          // Server error
-          console.error('Server error');
+          console.error(errorCode, errorMessage);
           break;
       }
 
       return Promise.reject(apiError);
-    } else if (error.request) {
-      // Request was made but no response (network error, timeout, etc.)
-      const apiError: ApiError = {
+    }
+
+    if (error.request) {
+      const apiError = createApiError({
+        code: ERROR_CODES.INTERNAL_ERROR,
         message: 'No response from server',
         statusCode: 0,
-        errCode: ERROR_CODES.INTERNAL_SERVER_ERROR,
-      };
-      return Promise.reject(apiError);
-    } else {
-      // Something else happened (request setup error, etc.)
-      const apiError: ApiError = {
-        message: error.message || 'An unexpected error occurred',
-        statusCode: 0,
-        errCode: ERROR_CODES.BAD_REQUEST,
-      };
+      });
       return Promise.reject(apiError);
     }
+
+    const apiError = createApiError({
+      code: ERROR_CODES.BAD_REQUEST,
+      message: error.message || 'An unexpected error occurred',
+      statusCode: 0,
+    });
+
+    return Promise.reject(apiError);
   }
 );
 
 export default apiClient;
+

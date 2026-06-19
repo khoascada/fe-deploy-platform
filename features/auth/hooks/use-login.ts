@@ -38,7 +38,7 @@ export function useLogin() {
       // remove cho chắc xD
       localStorage.removeItem('recent-views-storage');
 
-      const targetPath = redirectUrl || '/home';
+      const targetPath = redirectUrl || '/projects';
       router.replace(targetPath, { locale: targetLocale });
     } catch (error) {
       console.error(error);
