@@ -22,12 +22,12 @@ let failedQueue: Array<{
   reject: (reason?: unknown) => void;
 }> = [];
 
-const processQueue = (error: unknown, token: string | null = null) => {
+const processQueue = (error: unknown) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
     } else {
-      prom.resolve(token);
+      prom.resolve();
     }
   });
 
@@ -143,13 +143,13 @@ apiClient.interceptors.response.use(
         isRefreshing = true;
 
         try {
-          const accessToken = await refreshTokenService();
+          await refreshTokenService();
 
-          processQueue(null, accessToken);
+          processQueue(null);
 
           return apiClient(originalRequest);
         } catch (refreshError) {
-          processQueue(refreshError, null);
+          processQueue(refreshError);
 
           if (typeof window !== 'undefined') {
             await logoutInvalid();
@@ -195,4 +195,3 @@ apiClient.interceptors.response.use(
 );
 
 export default apiClient;
-

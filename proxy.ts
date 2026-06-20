@@ -7,7 +7,7 @@ import { isAdmin } from './lib/utils/role';
 const intlMiddleware = createIntlMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
-  const { isAuthRoute, isProtectedRoute, isAdminRoute, isLandingRoute } = RouteHelpers;
+  const { isAuthRoute, isProtectedRoute, isAdminRoute, isPublicRoute } = RouteHelpers;
   const { pathname } = request.nextUrl;
   const pathnameLocale = pathname.split('/')[1];
   const isValidLocale = routing.locales.includes(pathnameLocale as Locale);
@@ -40,7 +40,7 @@ export default function middleware(request: NextRequest) {
   // 2. If has RT and on auth page, landing page → redirect to home (already logged in)
   if (
     hasRefreshToken &&
-    (isAuthRoute(pathnameWithoutLocale) || isLandingRoute(pathnameWithoutLocale))
+    (isAuthRoute(pathnameWithoutLocale) || isPublicRoute(pathnameWithoutLocale))
   ) {
     return NextResponse.redirect(new URL(`/${preferredLocale}/projects`, request.url));
   }

@@ -40,6 +40,7 @@ Hard rule:
 ## Hard rules
 
 - File và folder dùng `kebab-case`.
+- File JSON, nhất là `messages/*.json`, phải lưu dạng UTF-8 không BOM.
 - Ưu tiên App Router patterns hiện tại của Next.js.
 - Với page client có logic riêng:
   - Nếu page đủ dài hoặc có nhiều state/handlers/derived state, ưu tiên tách thành 3 phần: `use-*-page.ts` cho logic, `*-page-view.tsx` cho UI, và `*-page-client.tsx` để nối hook với view.

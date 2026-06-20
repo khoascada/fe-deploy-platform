@@ -17,7 +17,7 @@
     "loginTitle": "Welcome back",
     "welcomeMessage": "Sign in to continue to your workspace.",
     "forgotPassword": "Forgot password?",
-    "noAccount": "Don\u0027t have an account?",
+    "noAccount": "Don't have an account?",
     "loginButton": "Login",
     "loginFailed": "Login failed",
     "loginFormAriaLabel": "Login form",
@@ -100,6 +100,31 @@
         "description": "This deploy platform needs a connected GitHub account before it can link repositories and create new projects.",
         "helper": "Connect GitHub from your account settings to continue.",
         "connect": "Connect"
+      },
+      "githubConnectStatus": {
+        "dismiss": "Dismiss GitHub connection status",
+        "connected": {
+          "title": "GitHub connected successfully",
+          "description": "Your GitHub account is now connected. You can continue linking repositories and creating projects."
+        },
+        "cancelled": {
+          "title": "GitHub connection was cancelled",
+          "description": "No changes were made to your GitHub connection. You can try again whenever you are ready."
+        },
+        "error": {
+          "title": "GitHub connection failed",
+          "description": "We could not complete the GitHub connection. Please try again or check the integration settings.",
+          "reasons": {
+            "access_denied": "You denied GitHub access, so the connection was not completed.",
+            "invalid_state": "The GitHub authorization request is no longer valid. Please try connecting again.",
+            "user_not_found": "We could not find your account in the system. Please sign in again and retry.",
+            "already_connected": "Your account is already connected to GitHub.",
+            "account_in_use": "This GitHub account is already linked to another user.",
+            "authorization_expired": "The GitHub authorization code expired before it could be completed. Please try again.",
+            "oauth_configuration_error": "The GitHub integration is currently misconfigured. Please check the integration settings.",
+            "connection_failed": "We could not complete the GitHub connection. Please try again in a moment."
+          }
+        }
       },
       "summary": {
         "totalProjects": "{count} projects in this view"

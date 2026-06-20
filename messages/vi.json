@@ -101,6 +101,31 @@
         "helper": "Hãy vào phần cài đặt tài khoản để kết nối GitHub rồi quay lại.",
         "connect": "Kết nối"
       },
+      "githubConnectStatus": {
+        "dismiss": "Đóng thông báo trạng thái kết nối GitHub",
+        "connected": {
+          "title": "Kết nối GitHub thành công",
+          "description": "Tài khoản GitHub của bạn đã được kết nối. Bây giờ bạn có thể liên kết repository và tạo project mới."
+        },
+        "cancelled": {
+          "title": "Bạn đã hủy kết nối GitHub",
+          "description": "Không có thay đổi nào được áp dụng cho kết nối GitHub. Bạn có thể thử lại bất cứ lúc nào."
+        },
+        "error": {
+          "title": "Kết nối GitHub thất bại",
+          "description": "Hệ thống chưa thể hoàn tất việc kết nối GitHub. Hãy thử lại hoặc kiểm tra cấu hình tích hợp.",
+          "reasons": {
+            "access_denied": "Bạn đã từ chối quyền truy cập GitHub nên kết nối chưa được hoàn tất.",
+            "invalid_state": "Yêu cầu xác thực GitHub không còn hợp lệ. Hãy thử kết nối lại.",
+            "user_not_found": "Không tìm thấy tài khoản của bạn trong hệ thống. Vui lòng đăng nhập lại rồi thử tiếp.",
+            "already_connected": "Tài khoản của bạn đã được kết nối với GitHub rồi.",
+            "account_in_use": "Tài khoản GitHub này đang được liên kết với một người dùng khác.",
+            "authorization_expired": "Mã xác thực GitHub đã hết hạn trước khi hoàn tất. Hãy thử lại.",
+            "oauth_configuration_error": "Cấu hình tích hợp GitHub hiện chưa chính xác. Hãy kiểm tra lại phần cấu hình.",
+            "connection_failed": "Chưa thể hoàn tất kết nối GitHub lúc này. Hãy thử lại sau ít phút."
+          }
+        }
+      },
       "summary": {
         "totalProjects": "{count} dự án trong trang hiện tại"
       },

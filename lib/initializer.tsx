@@ -15,9 +15,10 @@ export function AppInitializer({ children }: AppInitializerProps) {
 
   const pathnameWithoutLocale = PathnameUtils.getPathnameWithoutLocale(pathname);
   const isAuthPage = RouteHelpers.isAuthRoute(pathnameWithoutLocale);
+  const isPublicPage = RouteHelpers.isPublicRoute(pathnameWithoutLocale);
   const isProtectedPage = RouteHelpers.isProtectedRoute(pathnameWithoutLocale);
 
-  const { isLoading } = useInitAuth(!isAuthPage);
+  const { isLoading } = useInitAuth(!(isAuthPage || isPublicPage));
 
   if (isProtectedPage && isLoading) {
     return <Loading />;
