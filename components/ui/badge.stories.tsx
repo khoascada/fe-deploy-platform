@@ -8,7 +8,7 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'secondary', 'destructive', 'outline'],
+      options: ['default', 'primary', 'secondary', 'destructive', 'outline'],
     },
   },
 };
@@ -20,6 +20,13 @@ export const Default: Story = {
   args: {
     children: 'Badge',
     variant: 'default',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: 'Primary',
+    variant: 'primary',
   },
 };
 

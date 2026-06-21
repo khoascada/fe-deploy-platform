@@ -38,10 +38,10 @@ export default function AppHeader({
   const { isLoading: isAuthPending } = useInitAuth(true);
 
   return (
-    <header className="bg-background/30 border-card-border sticky top-0 z-50 flex flex-col border-b px-8 backdrop-blur">
+    <header className="bg-background/80 border-border sticky top-0 z-50 flex flex-col border-b px-6 backdrop-blur-xl md:px-8">
       <div className="flex h-[64px] w-full items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <Link href="/" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <Link href="/" className="text-lg font-semibold text-foreground">
             <Image
               src="/bee.svg"
               alt={t('logoAlt')}
@@ -59,7 +59,7 @@ export default function AppHeader({
               className="md:hidden"
               aria-label={t('toggleMenu')}
             >
-              <PanelLeft className="text-gray-700 dark:text-gray-300" />
+              <PanelLeft className="text-foreground" />
             </Button>
           )}
         </div>

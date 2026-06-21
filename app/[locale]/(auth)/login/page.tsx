@@ -40,7 +40,7 @@ export default async function LoginPage() {
           {t('noAccount')}{' '}
           <Link
             href="/register"
-            className="text-primary hover:text-primary/80 ml-1 font-medium hover:underline"
+            className="text-tertiary hover:text-tertiary/80 ml-1 font-medium hover:underline"
           >
             {tCommon('register')}
           </Link>

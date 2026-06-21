@@ -13,7 +13,7 @@ type MenuItem = {
 };
 
 type MenuSection = {
-  title: string;
+  title: string | null;
   items: MenuItem[];
 };
 
@@ -23,9 +23,9 @@ export const SidebarContent = () => {
   const router = useRouter();
   const t = useTranslations('sidebar');
 
-  const menuSections: MenuSection[] = [
+  const menuSectionsForUser: MenuSection[] = [
     {
-      title: isAdmin ? t('sections.admin') : t('sections.workspace'),
+      title: null ,
       items: [
         {
           label: t('menu.projects'),
@@ -46,6 +46,31 @@ export const SidebarContent = () => {
     },
   ];
 
+  const menuSectionsForAdmin: MenuSection[] = [
+    {
+      title: t('sections.workspace') ,
+      items: [
+        {
+          label: t('menu.projects'),
+          icon: <FolderKanban size={18} />,
+          path: '/projects',
+        },
+        {
+          label: t('menu.logs'),
+          icon: <Logs size={18} />,
+          path: '/logs',
+        },
+        {
+          label: t('menu.dashboard'),
+          icon: <LayoutDashboard size={18} />,
+          path: '/dashboard',
+        },
+      ],
+    },
+  ];
+
+  const menuSections = isAdmin ? menuSectionsForAdmin :   menuSectionsForUser;
+
   const handleNavigation = (path: string) => {
     router.push(path);
   };
@@ -56,11 +81,13 @@ export const SidebarContent = () => {
     <div className="flex-grow p-2">
       {menuSections.map((section, sectionIndex) => (
         <div key={sectionIndex} className="mb-3">
-          <div className="flex items-center gap-1.5 px-2 py-1">
-            <Typography variant="caption" textColor="primary" className="uppercase">
-              {section.title}
-            </Typography>
-          </div>
+          {section?.title && (
+            <div className="flex items-center gap-1.5 px-2 py-1">
+              <Typography variant="caption" textColor="primary" className="uppercase">
+                {section.title}
+              </Typography>
+            </div>
+          )}
           <ul className="p-0">
             {section.items.map((item, itemIndex) => {
               const active = isActive(item.path);
@@ -77,14 +104,14 @@ export const SidebarContent = () => {
                   >
                     <div
                       className={`flex min-w-[30px] items-center ${
-                        active ? 'text-sidebar-primary-foreground' : ''
+                        active ? 'text-sidebar-primary-foreground' : 'text-text-secondary'
                       }`}
                     >
                       {item.icon}
                     </div>
                     <span
                       className={`text-sm ${
-                        active ? 'text-sidebar-primary-foreground font-semibold' : 'font-medium'
+                        active ? 'text-sidebar-primary-foreground font-semibold' : 'text-text-secondary font-medium'
                       }`}
                     >
                       {item.label}

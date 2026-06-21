@@ -62,13 +62,25 @@ const buttonVariants = cva(
       {
         variant: 'default',
         color: 'destructive',
-        class: 'bg-destructive text-white hover:bg-destructive/90',
+        class: 'bg-destructive text-primary-foreground hover:bg-destructive/90',
       },
-      { variant: 'default', color: 'success', class: 'bg-success text-white hover:bg-success/90' },
-      { variant: 'default', color: 'warning', class: 'bg-warning text-white hover:bg-warning/90' },
-      { variant: 'default', color: 'info', class: 'bg-info text-white hover:bg-info/90' },
+      {
+        variant: 'default',
+        color: 'success',
+        class: 'bg-success text-primary-foreground hover:bg-success/90',
+      },
+      {
+        variant: 'default',
+        color: 'warning',
+        class: 'bg-warning text-primary-foreground hover:bg-warning/90',
+      },
+      { variant: 'default', color: 'info', class: 'bg-info text-primary-foreground hover:bg-info/90' },
       { variant: 'default', color: 'reset', class: 'bg-reset text-text-reset hover:bg-reset/90' },
-      { variant: 'default', color: 'cancel', class: 'bg-cancel text-white hover:bg-cancel/90' },
+      {
+        variant: 'default',
+        color: 'cancel',
+        class: 'bg-cancel text-primary-foreground hover:bg-cancel/90',
+      },
 
       // variant: outline
       {
