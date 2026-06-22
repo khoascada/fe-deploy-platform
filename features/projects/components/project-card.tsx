@@ -163,7 +163,7 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
           </CardContent>
         </div>
 
-        <CardFooter className="flex flex-wrap gap-2 p-5 pt-0 lg:flex-col lg:pt-5">
+        <CardFooter className="flex flex-wrap gap-2 p-5 pt-0 lg:flex-col">
           <Button variant="outline" className="flex-1 lg:w-full" disabled>
             {t('actions.viewDetail')}
           </Button>

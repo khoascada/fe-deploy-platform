@@ -244,9 +244,7 @@ export function ProjectsPageView({
           <CardContent className="space-y-4 text-center">
             <div className="space-y-1">
               <h2 className="text-lg font-semibold">{t('states.errorTitle')}</h2>
-              <p className="text-muted-foreground">
-                {errorMessage || t('states.errorDescription')}
-              </p>
+              <p className="text-muted-foreground">{t('states.errorDescription')}</p>
             </div>
             <div className="flex justify-center">
               <Button onClick={onRetry}>{t('states.retry')}</Button>

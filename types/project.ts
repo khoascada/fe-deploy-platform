@@ -29,7 +29,7 @@ export interface ProjectListItem {
 }
 
 export interface ProjectListResponse {
-    projects: ProjectListItem[],
+    items: ProjectListItem[],
     total: number,
     totalPage: number
 }

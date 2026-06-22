@@ -165,7 +165,8 @@
       "webhook": {
         "CONNECTED": "Đã kết nối",
         "MISSING": "Chưa cấu hình",
-        "ERROR": "Lỗi"
+        "ERROR": "Lỗi",
+        "undefined": "Không xác định"
       }
     },
     "logs": {

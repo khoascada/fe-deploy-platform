@@ -165,7 +165,8 @@
       "webhook": {
         "CONNECTED": "Connected",
         "MISSING": "Missing",
-        "ERROR": "Error"
+        "ERROR": "Error",
+        "undefined": "Undefined"
       }
     },
     "logs": {

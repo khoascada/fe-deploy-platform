@@ -83,7 +83,7 @@ export function useProjectsPage() {
   const deferredSearch = useDeferredValue(searchQuery.trim().toLowerCase());
 
   const filteredProjects = useMemo(() => {
-    const projects = listProjects?.projects ?? [];
+    const projects = listProjects?.items ?? [];
 
     if (!deferredSearch) {
       return projects;
@@ -95,7 +95,7 @@ export function useProjectsPage() {
         .toLowerCase()
         .includes(deferredSearch);
     });
-  }, [deferredSearch, listProjects?.projects]);
+  }, [deferredSearch, listProjects?.items]);
 
   const updateParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
