@@ -149,7 +149,7 @@
         "emptyTitle": "Chưa có dự án nào",
         "emptyDescription": "Dự án sẽ xuất hiện ở đây sau khi bạn kết nối repository đầu tiên.",
         "noResultsTitle": "Không tìm thấy dự án phù hợp",
-        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa bộ tìm kiếm hiện tại."
+        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa từ khóa tìm kiếm hiện tại."
       },
       "status": {
         "PENDING": "Đang chờ",
@@ -175,6 +175,100 @@
     "dashboard": {
       "title": "Bảng điều khiển",
       "description": "Xem nhanh tình trạng nền tảng, mức sử dụng, và hoạt động gần đây."
+    },
+    "newProject": {
+      "back": "Quay lại danh sách dự án",
+      "title": "Tạo project",
+      "description": "Liên kết repository GitHub, chọn nhánh deploy, và cấu hình build/runtime cho lần deploy tiếp theo của bạn.",
+      "formAriaLabel": "Biểu mẫu tạo project",
+      "card": {
+        "title": "Thiết lập project",
+        "description": "Bắt đầu từ repository, sau đó kiểm tra cấu hình build và runtime trước khi tạo project."
+      },
+      "sections": {
+        "repository": {
+          "title": "Repository",
+          "description": "Chọn repository sẽ dùng cho project này và xác nhận thông tin nhận diện của project."
+        },
+        "build": {
+          "title": "Cấu hình build",
+          "description": "Các đường dẫn tùy chọn giúp bạn hỗ trợ monorepo hoặc bố cục Docker tùy chỉnh."
+        },
+        "runtime": {
+          "title": "Runtime",
+          "description": "Thiết lập port và hành vi deploy sẽ được dùng khi container chạy."
+        }
+      },
+      "repositories": {
+        "errorTitle": "Không thể tải danh sách repository GitHub",
+        "retry": "Thử lại",
+        "empty": "Chưa có repository nào. Hãy kết nối GitHub hoặc tạo repository trước.",
+        "emptySearch": "Không có repository nào khớp với từ khóa hiện tại.",
+        "private": "Riêng tư",
+        "public": "Công khai",
+        "refresh": "Làm mới danh sách repository"
+      },
+      "fields": {
+        "githubRepoId": {
+          "label": "Repository GitHub",
+          "description": "Tìm theo owner, tên repo, hoặc nhánh mặc định.",
+          "placeholder": "Tìm repository..."
+        },
+        "name": {
+          "label": "Tên project",
+          "description": "Tên này sẽ hiển thị trong danh sách project và màn hình deploy.",
+          "placeholder": "my-next-app"
+        },
+        "deployBranch": {
+          "label": "Nhánh deploy",
+          "description": "Chọn một branch khả dụng từ repository đã chọn.",
+          "placeholder": "Chọn branch..."
+        },
+        "rootDirectory": {
+          "label": "Thư mục gốc",
+          "description": "Tùy chọn. Hữu ích khi app nằm trong một thư mục con của monorepo.",
+          "placeholder": "apps/web"
+        },
+        "dockerfilePath": {
+          "label": "Đường dẫn Dockerfile",
+          "description": "Tùy chọn. Ghi đè vị trí Dockerfile mặc định.",
+          "placeholder": "Dockerfile"
+        },
+        "buildContext": {
+          "label": "Build context",
+          "description": "Tùy chọn. Chọn context build riêng nếu Docker cần build từ đường dẫn khác.",
+          "placeholder": "."
+        },
+        "containerPort": {
+          "label": "Container port",
+          "description": "Tùy chọn. Để trống để backend dùng port mặc định của nó.",
+          "placeholder": "3000"
+        },
+        "hostPort": {
+          "label": "Host port",
+          "description": "Tùy chọn. Để trống nếu platform tự gán hoặc không lưu host port.",
+          "placeholder": "8080"
+        },
+        "autoDeploy": {
+          "label": "Bật auto deploy",
+          "description": "Tự động trigger deploy khi có commit mới trên nhánh đã chọn."
+        }
+      },
+      "actions": {
+        "cancel": "Quay lại danh sách dự án",
+        "submit": "Tạo project",
+        "submitting": "Đang tạo project..."
+      },
+      "validation": {
+        "githubRepoIdRequired": "Vui lòng chọn một GitHub repository.",
+        "nameRequired": "Tên project là bắt buộc.",
+        "deployBranchRequired": "Nhánh deploy là bắt buộc."
+      },
+      "branches": {
+        "empty": "Không có branch nào khả dụng cho repository này.",
+        "selectRepositoryFirst": "Hãy chọn repository trước để tải danh sách branch.",
+        "refresh": "Làm mới danh sách branch"
+      }
     }
   },
   "errors": {
@@ -195,6 +289,8 @@
     "TOKEN_REVOKED": "Quyền truy cập đã bị thu hồi. Vui lòng đăng nhập lại.",
     "INVALID_REQUEST_ORIGIN": "Nguồn gửi request không được phép.",
     "INSUFFICIENT_ROLE": "Tài khoản của bạn không đủ quyền để thực hiện hành động này.",
-    "USER_NOT_FOUND": "Không tìm thấy người dùng."
+    "USER_NOT_FOUND": "Không tìm thấy người dùng.",
+    "NOT_CONNECTED_GITHUB_YET": "Bạn chưa connect với Github",
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!"
   }
 }

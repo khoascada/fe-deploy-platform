@@ -7,8 +7,9 @@
 1. Đọc file này trước khi sửa code hoặc docs quan trọng.
 2. Route task qua [.agents/skills/using-agent-skills/SKILL.md](.agents/skills/using-agent-skills/SKILL.md).
 3. Nếu task chạm vào logic/code, đọc thêm skill phù hợp được meta-skill chỉ ra.
-4. Nếu task liên quan SSR với React Query, đọc thêm [.agents/docs/ssr-react-query-setup.md](.agents/docs/ssr-react-query-setup.md).
-5. Nếu user yêu cầu trái với skill hoặc hard rule, dừng lại và làm rõ trước khi sửa.
+
+5. Nếu task chạm vào messages/*.json, đọc thêm [.agents/docs/messages-json-editing.md](.agents/docs/messages-json-editing.md) trước khi sửa.
+6. Nếu user yêu cầu trái với skill hoặc hard rule, dừng lại và làm rõ trước khi sửa.
 
 ## Nguồn sự thật
 
@@ -40,7 +41,9 @@ Hard rule:
 ## Hard rules
 
 - File và folder dùng `kebab-case`.
-- File JSON, nhất là `messages/*.json`, phải lưu dạng UTF-8 không BOM.
+
+- Với messages/*.json, coi text tiếng Việt bị lỗi kiểu Ä, Ã, Â, á» là dữ liệu đã hỏng; không được tiếp tục copy, normalize, hay save đè từ nguồn đó.
+- Không round-trip nội dung messages/*.json qua terminal output hay tool có encoding mơ hồ; sau khi sửa phải spot-check lại các ký tự tiếng Việt và xác nhận file vẫn là UTF-8 không BOM.
 - Ưu tiên App Router patterns hiện tại của Next.js.
 - Với page client có logic riêng:
   - Nếu page đủ dài hoặc có nhiều state/handlers/derived state, ưu tiên tách thành 3 phần: `use-*-page.ts` cho logic, `*-page-view.tsx` cho UI, và `*-page-client.tsx` để nối hook với view.

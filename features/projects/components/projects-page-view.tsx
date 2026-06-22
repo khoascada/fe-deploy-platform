@@ -40,6 +40,7 @@ interface ProjectsPageViewProps {
   isError?: boolean;
   isLoading?: boolean;
   onConnectGithub: () => void;
+  onCreateNew: () => void;
   onDismissGithubConnectStatus: () => void;
   onPageChange: (page: number) => void;
   onRetry: () => void;
@@ -95,6 +96,7 @@ export function ProjectsPageView({
   onViewModeChange,
   onConnectGithub,
   onDismissGithubConnectStatus,
+  onCreateNew,
   projects,
   searchQuery,
   totalPages,
@@ -223,7 +225,7 @@ export function ProjectsPageView({
               </Button>
             </div>
 
-            <Button variant="outline" disabled={!canCreateProject}>
+            <Button variant="outline" disabled={!canCreateProject} onClick={onCreateNew}>
               <Plus className="h-4 w-4" />
               {t('toolbar.addNew')}
             </Button>

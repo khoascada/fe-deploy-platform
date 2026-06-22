@@ -19,6 +19,7 @@ export function useGetProject(params: ProjectListParams = {}, options?: GetProje
   return useAppQuery({
     queryKey: ['projects', page, limit, search],
     queryFn: () => projectApi.getProjects({ page, limit, search }),
+    enabled: false,
     ...options,
   });
 }

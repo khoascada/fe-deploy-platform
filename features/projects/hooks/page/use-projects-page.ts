@@ -133,6 +133,10 @@ export function useProjectsPage() {
     window.location.assign(`${env.NEXT_PUBLIC_API_URL}/github/oauth/login`);
   };
 
+  const handleCreateNew = () => {
+    router.push('/new');
+  };
+
   const handleDismissGithubConnectStatus = () => {
     updateParams({ connectGithub: null, reason: null });
   };
@@ -149,6 +153,7 @@ export function useProjectsPage() {
     isError,
     isLoading,
     onConnectGithub: handleConnectGithub,
+    onCreateNew: handleCreateNew,
     onDismissGithubConnectStatus: handleDismissGithubConnectStatus,
     onPageChange: handlePageChange,
     onRetry: () => void refetch(),

@@ -24,11 +24,11 @@ export function translateErrorCode(
 }
 
 export function getApiErrorCode(error: ApiError | null | undefined): string | undefined {
-  return error?.error.code;
+  return error?.error?.code;
 }
 
 export function getApiErrorMessage(error: ApiError | null | undefined): string {
-  return error?.error.message || 'An unexpected error occurred';
+  return error?.error?.message || 'An unexpected error occurred';
 }
 
 export function getApiErrorStatusCode(error: ApiError | null | undefined): number | undefined {

@@ -1,6 +1,6 @@
-import apiClient from '@lib/api/api-client';
+﻿import apiClient from '@lib/api/api-client';
 import type { ApiResponse } from '@lib/types/base';
-import type { ProjectListParams, ProjectListResponse } from '@/types/project';
+import type { CreateProjectRequest, ProjectListParams, ProjectListResponse } from '@/types/project';
 
 export const projectApi = {
   async getProjects(params: ProjectListParams = {}): Promise<ProjectListResponse> {
@@ -12,6 +12,11 @@ export const projectApi = {
       },
     });
 
+    return response.data.data;
+  },
+
+  async createProject(payload: CreateProjectRequest) {
+    const response = await apiClient.post<ApiResponse<{ id: string }>>('/projects', payload);
     return response.data.data;
   },
 };

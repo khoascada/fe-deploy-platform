@@ -18,6 +18,7 @@ export function ProjectsPageClient() {
       isError={projectsPage.isError}
       isLoading={projectsPage.isLoading}
       onConnectGithub={projectsPage.onConnectGithub}
+      onCreateNew={projectsPage.onCreateNew}
       onDismissGithubConnectStatus={projectsPage.onDismissGithubConnectStatus}
       onPageChange={projectsPage.onPageChange}
       onRetry={projectsPage.onRetry}

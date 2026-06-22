@@ -40,6 +40,23 @@ export interface ProjectListParams {
     search?: string;
 }
 
+export interface CreateProjectRequest {
+    githubRepoId: string;
+    repoFullName: string;
+    repoOwner: string;
+    repoName: string;
+    repoUrl: string;
+    githubDefaultBranch: string;
+    name: string;
+    deployBranch: string;
+    rootDirectory?: string;
+    dockerfilePath?: string;
+    buildContext?: string;
+    containerPort?: number;
+    hostPort: number | null;
+    autoDeploy?: boolean;
+}
+
 // Dùng cho trang Project Detail (GET /projects/:id) — chi tiết 1 project
 export interface ProjectDetail {
     id: string;

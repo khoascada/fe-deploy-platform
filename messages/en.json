@@ -175,6 +175,100 @@
     "dashboard": {
       "title": "Dashboard",
       "description": "View a high-level overview of platform health, usage, and recent activity."
+    },
+    "newProject": {
+      "back": "Back to projects",
+      "title": "Create project",
+      "description": "Link a GitHub repository, choose the deploy branch, and configure the build/runtime settings for your next deployment.",
+      "formAriaLabel": "Create project form",
+      "card": {
+        "title": "Project setup",
+        "description": "Start with the repository, then review the build and runtime settings before creating the project."
+      },
+      "sections": {
+        "repository": {
+          "title": "Repository",
+          "description": "Pick the repository that will back this project and confirm the project identity."
+        },
+        "build": {
+          "title": "Build configuration",
+          "description": "Optional paths let you adapt this project to monorepos or custom Docker layouts."
+        },
+        "runtime": {
+          "title": "Runtime",
+          "description": "Set the ports and deployment behavior that should be used when the container runs."
+        }
+      },
+      "repositories": {
+        "errorTitle": "Could not load GitHub repositories",
+        "retry": "Try again",
+        "empty": "No repositories are available yet. Connect GitHub or create a repository first.",
+        "emptySearch": "No repositories match the current keyword.",
+        "private": "Private",
+        "public": "Public",
+        "refresh": "Refresh repositories"
+      },
+      "fields": {
+        "githubRepoId": {
+          "label": "GitHub repository",
+          "description": "Search by owner, repo name, or default branch.",
+          "placeholder": "Search repositories..."
+        },
+        "name": {
+          "label": "Project name",
+          "description": "This name is shown in your project list and deployment views.",
+          "placeholder": "my-next-app"
+        },
+        "deployBranch": {
+          "label": "Deploy branch",
+          "description": "Choose one of the available branches from the selected repository.",
+          "placeholder": "Select branch..."
+        },
+        "rootDirectory": {
+          "label": "Root directory",
+          "description": "Optional. Useful when the app lives in a subfolder of a monorepo.",
+          "placeholder": "apps/web"
+        },
+        "dockerfilePath": {
+          "label": "Dockerfile path",
+          "description": "Optional. Override the default Dockerfile location.",
+          "placeholder": "Dockerfile"
+        },
+        "buildContext": {
+          "label": "Build context",
+          "description": "Optional. Choose a custom build context if Docker should build from another path.",
+          "placeholder": "."
+        },
+        "containerPort": {
+          "label": "Container port",
+          "description": "Optional. Leave empty to let the backend use its default port.",
+          "placeholder": "3000"
+        },
+        "hostPort": {
+          "label": "Host port",
+          "description": "Optional. Leave empty to let the platform assign or persist no host port.",
+          "placeholder": "8080"
+        },
+        "autoDeploy": {
+          "label": "Enable auto deploy",
+          "description": "Automatically trigger deployments when new commits land on the selected branch."
+        }
+      },
+      "actions": {
+        "cancel": "Back to projects",
+        "submit": "Create project",
+        "submitting": "Creating project..."
+      },
+      "validation": {
+        "githubRepoIdRequired": "Please select a GitHub repository.",
+        "nameRequired": "Project name is required.",
+        "deployBranchRequired": "Deploy branch is required."
+      },
+      "branches": {
+        "empty": "No branches are available for this repository.",
+        "selectRepositoryFirst": "Select a repository to load branches first.",
+        "refresh": "Refresh branches"
+      }
     }
   },
   "errors": {
@@ -195,6 +289,8 @@
     "TOKEN_REVOKED": "Your access has been revoked. Please sign in again.",
     "INVALID_REQUEST_ORIGIN": "This request origin is not allowed.",
     "INSUFFICIENT_ROLE": "Your account does not have the required permissions.",
-    "USER_NOT_FOUND": "User not found."
+    "USER_NOT_FOUND": "User not found.",
+    "NOT_CONNECTED_GITHUB_YET": "You are not connect Github yet",
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!"
   }
 }
