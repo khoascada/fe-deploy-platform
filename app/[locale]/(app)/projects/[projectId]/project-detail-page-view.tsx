@@ -10,8 +10,11 @@ import { FutureSectionCard } from './components/future-section-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
 import { ProjectOverviewCard } from './components/project-overview-card';
 import { WebhookInfoCard } from './components/webhook-info-card';
+import { ApiError } from '@lib/types/base';
+import NotFoundPage from '@components/status-page/not-found';
 
 interface ProjectDetailPageViewProps {
+  error: ApiError | null
   errorMessage?: string;
   isError: boolean;
   isLoading: boolean;
@@ -20,6 +23,7 @@ interface ProjectDetailPageViewProps {
 }
 
 export function ProjectDetailPageView({
+  error,
   errorMessage,
   isError,
   isLoading,
@@ -27,6 +31,10 @@ export function ProjectDetailPageView({
   project,
 }: ProjectDetailPageViewProps) {
   const t = useTranslations('pages.projectDetail');
+
+  if(error?.statusCode === 404 || error?.error.statusCode === 404) {
+    return <NotFoundPage />
+  }
 
   if (isLoading) {
     return <ProjectDetailSkeleton />;
@@ -74,9 +82,6 @@ export function ProjectDetailPageView({
               {project.repoFullName}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{project.name}</h1>
-            <p className="text-muted-foreground max-w-2xl text-sm leading-6 sm:text-base">
-              {t('description')}
-            </p>
           </div>
         </div>
         <Button variant="outline" asChild className="w-full sm:w-auto">

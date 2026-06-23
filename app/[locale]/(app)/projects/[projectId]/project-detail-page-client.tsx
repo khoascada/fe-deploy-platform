@@ -14,6 +14,7 @@ export function ProjectDetailPageClient({ projectId }: ProjectDetailPageClientPr
   return (
     <ProjectDetailPageView
       project={data}
+      error={error}
       errorMessage={getApiErrorMessage(error)}
       isError={isError}
       isLoading={isLoading}

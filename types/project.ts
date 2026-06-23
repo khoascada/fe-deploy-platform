@@ -87,7 +87,7 @@ export interface ProjectDetail {
     imageName: string | null;
     autoDeploy: boolean;
     webhookId: string | null;
-    webhookSecretEncrypted: string | null;
+    latestDeploy: LatestDeploy | null;
     status: ProjectStatus;
     createdAt: string;
     updatedAt: string;

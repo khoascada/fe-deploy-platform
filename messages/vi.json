@@ -168,6 +168,139 @@
         "unconnected": "Chưa kết nối webhook"
       }
     },
+    "projectDetail": {
+      "back": "Quay lại dự án",
+      "description": "Xem dự án này đang deploy từ đâu, trạng thái deploy gần nhất ra sao, và vị trí các phần observability sẽ xuất hiện ở phase sau.",
+      "actions": {
+        "openRepository": "Mở repository"
+      },
+      "states": {
+        "errorTitle": "Không thể tải chi tiết dự án",
+        "errorDescription": "Đã có lỗi xảy ra khi tải trang chi tiết dự án.",
+        "retry": "Thử lại"
+      },
+      "status": {
+        "QUEUED": "Đang xếp hàng",
+        "PULLING": "Đang kéo source",
+        "BUILDING": "Đang build",
+        "DEPLOYING": "Đang deploy",
+        "SUCCESS": "Đang hoạt động",
+        "FAILED": "Thất bại",
+        "CANCELED": "Đã hủy"
+      },
+      "trigger": {
+        "manual": "Thủ công",
+        "webhook": "Webhook"
+      },
+      "projectStatus": {
+        "ACTIVE": "Hoạt động",
+        "PAUSED": "Tạm dừng",
+        "ARCHIVED": "Lưu trữ"
+      },
+      "runnerType": {
+        "LOCAL": "Local runner",
+        "SSH": "SSH runner"
+      },
+      "deploymentStatus": {
+        "eyebrow": "Deploy hiện tại",
+        "title": "Trạng thái deployment",
+        "description": "Tóm tắt gọn lần deploy gần nhất để người dùng hiểu ngay bản chạy hiện tại đang ở trạng thái nào.",
+        "emptyTitle": "Chưa có lần deploy nào",
+        "emptyDescription": "Project đã sẵn sàng về mặt kết nối, nhưng luồng chạy deployment sẽ được nối ở phase tiếp theo.",
+        "primaryAction": "Deploy ngay",
+        "secondaryAction": "Mở deployment run",
+        "metrics": {
+          "commit": "Commit",
+          "started": "Bắt đầu",
+          "finished": "Hoàn tất"
+        },
+        "progressLabel": "Tiến độ deploy gần nhất",
+        "inProgress": "Đang chạy",
+        "noCommitMessage": "Chưa có commit message cho lần deploy này.",
+        "cards": {
+          "commit": {
+            "title": "Tóm tắt commit"
+          },
+          "started": {
+            "title": "Thời điểm bắt đầu"
+          },
+          "action": {
+            "title": "Trạng thái hoàn tất",
+            "pending": "Thời điểm hoàn tất sẽ hiển thị tại đây khi deployment kết thúc."
+          }
+        }
+      },
+      "overview": {
+        "eyebrow": "Project overview",
+        "title": "Project này đang deploy từ đâu",
+        "description": "Tập hợp các cấu hình source, build, và runtime quan trọng để người dùng nhìn nhanh là hiểu repository, branch, và runner đang gắn với project.",
+        "unset": "Chưa cấu hình",
+        "autoDeployEnabled": "Đã bật",
+        "autoDeployDisabled": "Đang tắt",
+        "fields": {
+          "repository": "Repository",
+          "deployBranch": "Nhánh deploy",
+          "rootDirectory": "Thư mục gốc",
+          "buildContext": "Build context",
+          "dockerfile": "Đường dẫn Dockerfile",
+          "imageName": "Image name",
+          "autoDeploy": "Auto deploy",
+          "createdAt": "Thời điểm tạo",
+          "updatedAt": "Cập nhật lần cuối"
+        },
+        "runtime": {
+          "title": "Runtime target",
+          "description": "Thông tin nối container và host mà platform sẽ dùng khi phase deployment execution được bật lên.",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "containerName": "Container name"
+        }
+      },
+      "webhook": {
+        "eyebrow": "Webhook info",
+        "title": "Webhook của repository",
+        "connected": "Đã kết nối",
+        "notConnected": "Chưa kết nối",
+        "summaryTitle": "Trạng thái provisioning",
+        "summaryConnected": "Project này đã có webhook ID nên repository event có thể map vào project.",
+        "summaryPending": "Webhook vẫn chưa được provision xong nên repository event chưa thể nối vào deployment.",
+        "fields": {
+          "webhookId": "Webhook ID",
+          "secret": "Webhook secret"
+        },
+        "notAvailable": "Chưa có dữ liệu",
+        "secretStored": "Đã lưu secret dạng mã hóa",
+        "secretMissing": "Chưa có secret",
+        "nextStepTitle": "Bước tiếp theo",
+        "nextStepConnected": "Khi phase deployment hoàn thiện, card này có thể mở rộng để hiển thị health và hoạt động webhook gần đây.",
+        "nextStepPending": "Sau khi backend provision xong webhook, khu vực này có thể hiển thị ID và sức khỏe nhận event.",
+        "notAvailableShort": "Đang chờ"
+      },
+      "future": {
+        "shared": {
+          "previewTitle": "Đã chừa sẵn layout",
+          "previewDescription": "Section này đã được đặt đúng flow để các tính năng deployment sau này có thể cắm vào mà không cần đập lại toàn bộ page.",
+          "placeholderTitle": "Ghi chú phase",
+          "placeholderDescription": "Nội dung hiện giữ ở mức nhẹ vì phase này tập trung vào khung trang chi tiết dự án."
+        },
+        "history": {
+          "eyebrow": "Deployment history",
+          "title": "Lịch sử deployment",
+          "description": "Khu vực riêng cho timeline deploy, kết quả release, và các bộ lọc sẽ bổ sung ở phase tiếp theo.",
+          "helperTitle": "Timeline deploy sẽ nằm ở đây",
+          "helperDescription": "Mình chừa sẵn một block ổn định cho thẻ deployment, phân trang, và lịch sử theo commit khi bước sang phase deployment.",
+          "action": "Xem toàn bộ lịch sử"
+        },
+        "logs": {
+          "eyebrow": "Realtime logs",
+          "title": "Realtime logs",
+          "description": "Bề mặt log trong tương lai cho build và runtime output mà không làm page đầu tiên bị quá nặng.",
+          "helperTitle": "Khung log stream đã sẵn sàng",
+          "helperDescription": "Layout này được chừa kích thước phù hợp cho terminal stream, filter, và tail controls ở phase kế tiếp.",
+          "action": "Mở live logs"
+        }
+      }
+    },
     "logs": {
       "title": "Nhật ký",
       "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng."

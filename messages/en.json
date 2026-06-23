@@ -167,6 +167,139 @@
         "unconnected": "unconnect webhook"
       }
     },
+    "projectDetail": {
+      "back": "Back to projects",
+      "description": "See where this project deploys from, what the latest deployment looks like, and where deployment observability will appear next.",
+      "actions": {
+        "openRepository": "Open repository"
+      },
+      "states": {
+        "errorTitle": "Could not load this project",
+        "errorDescription": "Something went wrong while loading the project detail page.",
+        "retry": "Try again"
+      },
+      "status": {
+        "QUEUED": "Queued",
+        "PULLING": "Pulling source",
+        "BUILDING": "Building",
+        "DEPLOYING": "Deploying",
+        "SUCCESS": "Live",
+        "FAILED": "Failed",
+        "CANCELED": "Canceled"
+      },
+      "trigger": {
+        "manual": "Manual",
+        "webhook": "Webhook"
+      },
+      "projectStatus": {
+        "ACTIVE": "Active",
+        "PAUSED": "Paused",
+        "ARCHIVED": "Archived"
+      },
+      "runnerType": {
+        "LOCAL": "Local runner",
+        "SSH": "SSH runner"
+      },
+      "deploymentStatus": {
+        "eyebrow": "Current deployment",
+        "title": "Deployment status",
+        "description": "A focused summary of the most recent deploy so users can immediately understand what is running now.",
+        "emptyTitle": "No deployments have run yet",
+        "emptyDescription": "This project is connected and ready, but deployment execution has not been wired into this phase yet.",
+        "primaryAction": "Deploy now",
+        "secondaryAction": "Open deployment run",
+        "metrics": {
+          "commit": "Commit",
+          "started": "Started",
+          "finished": "Finished"
+        },
+        "progressLabel": "Latest deployment progress",
+        "inProgress": "Still running",
+        "noCommitMessage": "No commit message was captured for this deployment.",
+        "cards": {
+          "commit": {
+            "title": "Commit summary"
+          },
+          "started": {
+            "title": "Started at"
+          },
+          "action": {
+            "title": "Run completion",
+            "pending": "Finish time will appear here once the deploy completes."
+          }
+        }
+      },
+      "overview": {
+        "eyebrow": "Project overview",
+        "title": "Where this project deploys from",
+        "description": "Key source, build, and runtime settings so a user can quickly understand what repository, branch, and runner are attached to this project.",
+        "unset": "Not configured yet",
+        "autoDeployEnabled": "Enabled",
+        "autoDeployDisabled": "Disabled",
+        "fields": {
+          "repository": "Repository",
+          "deployBranch": "Deploy branch",
+          "rootDirectory": "Root directory",
+          "buildContext": "Build context",
+          "dockerfile": "Dockerfile path",
+          "imageName": "Image name",
+          "autoDeploy": "Auto deploy",
+          "createdAt": "Created at",
+          "updatedAt": "Last updated"
+        },
+        "runtime": {
+          "title": "Runtime target",
+          "description": "Container and host wiring that the platform will use when deployment execution is turned on.",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "containerName": "Container name"
+        }
+      },
+      "webhook": {
+        "eyebrow": "Webhook info",
+        "title": "Repository webhook",
+        "connected": "Connected",
+        "notConnected": "Not connected",
+        "summaryTitle": "Provisioning state",
+        "summaryConnected": "This project already has a webhook identifier, so repository events can be mapped to it.",
+        "summaryPending": "Webhook provisioning has not completed yet, so repository events are not connected to deployments.",
+        "fields": {
+          "webhookId": "Webhook ID",
+          "secret": "Webhook secret"
+        },
+        "notAvailable": "Not available yet",
+        "secretStored": "Encrypted secret is stored",
+        "secretMissing": "Secret is not available yet",
+        "nextStepTitle": "Next step",
+        "nextStepConnected": "When deployment execution is added, this card can expand with delivery health and recent webhook activity.",
+        "nextStepPending": "Once the backend finishes provisioning a webhook, the ID and delivery health can live here.",
+        "notAvailableShort": "Pending"
+      },
+      "future": {
+        "shared": {
+          "previewTitle": "Layout reserved",
+          "previewDescription": "This section is already placed in the page flow so future deployment features can plug in without reshaping the whole screen.",
+          "placeholderTitle": "Phase note",
+          "placeholderDescription": "Content intentionally stays lightweight for now because this phase focuses on project detail structure."
+        },
+        "history": {
+          "eyebrow": "Deployment history",
+          "title": "Deployment history",
+          "description": "A dedicated area for chronological deploy runs, release outcomes, and future filtering controls.",
+          "helperTitle": "History timeline will land here",
+          "helperDescription": "We are reserving a stable block for deployment cards, pagination, and commit-level history once the deployment phase starts.",
+          "action": "View full history"
+        },
+        "logs": {
+          "eyebrow": "Realtime logs",
+          "title": "Realtime logs",
+          "description": "A future log surface for streaming build and runtime output without crowding the first release of this page.",
+          "helperTitle": "Log stream container is ready",
+          "helperDescription": "This layout is intentionally sized for a terminal-like stream, filters, and tail controls in the next phase.",
+          "action": "Open live logs"
+        }
+      }
+    },
     "logs": {
       "title": "Logs",
       "description": "Inspect build output, runtime logs, and operational events across your platform."
