@@ -72,7 +72,7 @@ export const createCreateProjectSchema = (t: (key: string) => string) =>
     buildContext: optionalTrimmedString,
     containerPort: optionalPortNumber,
     hostPort: nullablePortNumber,
-    autoDeploy: z.boolean().default(false),
+    autoDeploy: z.boolean().default(true),
   });
 
 export type CreateProjectFormValues = z.infer<ReturnType<typeof createCreateProjectSchema>>;

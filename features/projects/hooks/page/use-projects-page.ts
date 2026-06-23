@@ -90,7 +90,7 @@ export function useProjectsPage() {
     }
 
     return projects.filter((project) => {
-      return [project.name, project.repoFullName, project.appUrl ?? '']
+      return [project.name, project.repoFullName, project.repoUrl ?? '']
         .join(' ')
         .toLowerCase()
         .includes(deferredSearch);
@@ -160,8 +160,8 @@ export function useProjectsPage() {
     onSearchChange: handleSearchChange,
     onViewModeChange: handleViewModeChange,
     searchQuery,
-    totalPages: listProjects?.totalPage ?? 0,
-    totalProjects: listProjects?.total ?? 0,
+    totalPages: listProjects?.meta.totalPage ?? 0,
+    totalProjects: listProjects?.meta.total ?? 0,
     viewMode,
   };
 }

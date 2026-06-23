@@ -1,6 +1,6 @@
 'use client';
 
-import type { DeployStatus, ProjectListItem, WebhookStatus } from '@/types/project';
+import type { DeployStatus, ProjectListItem } from '@/types/project';
 import {
   Badge,
   Button,
@@ -38,13 +38,11 @@ function getDeployBadgeClassName(status: DeployStatus) {
   }
 }
 
-function getWebhookBadgeClassName(status: WebhookStatus) {
+function getWebhookBadgeClassName(status: boolean) {
   switch (status) {
-    case 'CONNECTED':
+    case true:
       return 'border-success/30 bg-success/15 text-success';
-    case 'ERROR':
-      return 'border-destructive/30 bg-destructive/15 text-destructive';
-    case 'MISSING':
+    case false:
     default:
       return 'border-warning/30 bg-warning/15 text-warning';
   }
@@ -83,6 +81,16 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
                   >
                     {latestDeploy ? t(`status.${latestDeploy.status}`) : t('status.notDeployed')}
                   </Badge>
+                  {/* webhook status */}
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      'rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase',
+                      getWebhookBadgeClassName(project.isWebhookProvisioned)
+                    )}
+                  >
+                    {project.isWebhookProvisioned ? t(`webhook.connected`) : t('webhook.unconnected')}
+                  </Badge>
                 </div>
 
                 {/*  repo name */}
@@ -94,39 +102,29 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
                   <span>&middot;</span>
                   <span className="inline-flex items-center gap-1.5">
                     <GitBranch className="h-4 w-4" />
-                    {project.branch}
+                    {project.deployBranch}
                   </span>
                 </div>
               </div>
-              {/* webhook status */}
-              <Badge
-                variant="outline"
-                className={cn(
-                  'rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase',
-                  getWebhookBadgeClassName(project.webhookStatus)
-                )}
-              >
-                {t(`webhook.${project.webhookStatus}`)}
-              </Badge>
             </div>
           </CardHeader>
 
           <CardContent className="space-y-4 p-5 pt-0">
-            <div className=" gap-3 text-sm">
+            <div className="gap-3 text-sm">
               <div className="border-border/60 bg-background/60 rounded-xl border p-3">
                 <div className="text-muted-foreground mb-1 flex items-center gap-2 text-xs font-medium uppercase">
                   <Globe className="h-3.5 w-3.5" />
                   {t('meta.app')}
                 </div>
 
-                {project.appUrl ? (
+                {project.repoUrl ? (
                   <a
-                    href={project.appUrl}
+                    href={project.repoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className=" inline-flex items-center gap-1 text-sm font-medium break-all hover:underline"
+                    className="inline-flex items-center gap-1 text-sm font-medium break-all hover:underline"
                   >
-                    {project.appUrl}
+                    {project.repoUrl}
                     <ExternalLink className="h-3.5 w-3.5" />
                   </a>
                 ) : (
@@ -135,6 +133,7 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
               </div>
             </div>
 
+            {/* last deploy */}
             <div className="border-border/60 bg-background/60 rounded-xl border p-3">
               <div className="text-muted-foreground mb-2 flex items-center gap-2 text-xs font-medium uppercase">
                 <Rocket className="h-3.5 w-3.5" />
@@ -145,9 +144,9 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
                 <p className="text-sm leading-6">
                   <span className="font-semibold">{t(`status.${latestDeploy.status}`)}</span>
                   <span className="text-muted-foreground"> {' - '} </span>
-                <span className="font-mono">{latestDeploy.commitSha.slice(0, 7)}</span>
+                  <span className="font-mono">{latestDeploy.commitSha.slice(0, 7)}</span>
                   <span className="text-muted-foreground"> {' - '} </span>
-                  <span>{t(`trigger.${latestDeploy.triggeredBy}`)}</span>
+                  <span>{t(`trigger.${latestDeploy.trigger}`)}</span>
                   <span className="text-muted-foreground"> {' - '} </span>
                   <span>{relativeTime}</span>
                 </p>

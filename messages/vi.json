@@ -137,6 +137,7 @@
         "notAvailable": "Chưa có",
         "notDeployed": "Chưa có lần deploy nào"
       },
+
       "actions": {
         "viewDetail": "Xem chi tiết",
         "deployNow": "Deploy ngay",
@@ -163,10 +164,8 @@
         "webhook": "webhook"
       },
       "webhook": {
-        "CONNECTED": "Đã kết nối",
-        "MISSING": "Chưa cấu hình",
-        "ERROR": "Lỗi",
-        "undefined": "Không xác định"
+        "connected": "Đã kết nối webhook",
+        "unconnected": "Chưa kết nối webhook"
       }
     },
     "logs": {

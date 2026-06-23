@@ -158,7 +158,7 @@ export function NewProjectPageView({
   } = useForm<CreateProjectFormInput, unknown, CreateProjectFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      autoDeploy: false,
+      autoDeploy: true,
       buildContext: undefined,
       containerPort: undefined,
       deployBranch: '',

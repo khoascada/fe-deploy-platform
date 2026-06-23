@@ -16,7 +16,7 @@ export const mockProjects: ProjectListItem[] = [
       triggeredBy: 'manual',
     },
     deployCount: 12,
-    appUrl: 'http://14.xxx.xxx.xxx:3001',
+    repoUrl: 'http://14.xxx.xxx.xxx:3001',
     webhookStatus: 'CONNECTED',
   },
   {
@@ -34,7 +34,7 @@ export const mockProjects: ProjectListItem[] = [
       triggeredBy: 'webhook',
     },
     deployCount: 27,
-    appUrl: 'http://14.xxx.xxx.xxx:4000',
+    repoUrl: 'http://14.xxx.xxx.xxx:4000',
     webhookStatus: 'CONNECTED',
   },
   {
@@ -52,7 +52,7 @@ export const mockProjects: ProjectListItem[] = [
       triggeredBy: 'manual',
     },
     deployCount: 9,
-    appUrl: null,
+    repoUrl: null,
     webhookStatus: 'ERROR',
   },
   {
@@ -62,7 +62,7 @@ export const mockProjects: ProjectListItem[] = [
     branch: 'main',
     latestDeploy: null,
     deployCount: 0,
-    appUrl: null,
+    repoUrl: null,
     webhookStatus: 'MISSING',
   },
 ];

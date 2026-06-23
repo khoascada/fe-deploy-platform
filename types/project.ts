@@ -1,18 +1,17 @@
 // types/project.ts
 
-export type DeployStatus = "PENDING" | "BUILDING" | "SUCCESS" | "FAILED";
+export type DeployStatus = "BUILDING" | "SUCCESS" | "FAILED" | "CANCELED" | "QUEUED" | "PULLING" | "DEPLOYING";
 
-export type WebhookStatus = "CONNECTED" | "MISSING" | "ERROR"
 // Thông tin deploy gần nhất, nhúng trong Project (cho list view)
 export interface LatestDeploy {
     id: string;
     status: DeployStatus;
     commitSha: string;       // full sha, FE tự cắt 7 ký tự khi hiển thị, thông tin commit 
-    commitMsg: string | null;
+    commitMessage: string | null;
     createdAt: string;       // ISO string, FE format bằng dayjs/date-fns
     finishedAt: string | null;
 
-    triggeredBy: "manual" | "webhook";
+    trigger: 'MANUAL' | 'GITHUB_PUSH';
 }
 
 // Dùng cho trang Dashboard (GET /projects) — list nhiều project
@@ -20,18 +19,22 @@ export interface ProjectListItem {
     id: string;
     name: string;
     repoFullName: string;    // "owner/repo"
-    branch: string;
+    deployBranch: string;
     latestDeploy: LatestDeploy | null; // null nếu project mới tạo, chưa deploy lần nào
     deployCount: number;     // tổng số lần deploy, hiển thị nhỏ ở card
-    appUrl: string | null;
-
-    webhookStatus: WebhookStatus
+    repoUrl: string | null;
+    webhookId: string | null;
+    isWebhookProvisioned: boolean;
 }
 
 export interface ProjectListResponse {
     items: ProjectListItem[],
-    total: number,
-    totalPage: number
+    meta: {
+        page: number,
+        limit: number,
+        total: number,
+        totalPage: number
+    }
 }
 
 export interface ProjectListParams {
@@ -42,11 +45,6 @@ export interface ProjectListParams {
 
 export interface CreateProjectRequest {
     githubRepoId: string;
-    repoFullName: string;
-    repoOwner: string;
-    repoName: string;
-    repoUrl: string;
-    githubDefaultBranch: string;
     name: string;
     deployBranch: string;
     rootDirectory?: string;

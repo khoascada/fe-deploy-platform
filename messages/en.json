@@ -163,10 +163,8 @@
         "webhook": "webhook"
       },
       "webhook": {
-        "CONNECTED": "Connected",
-        "MISSING": "Missing",
-        "ERROR": "Error",
-        "undefined": "Undefined"
+        "connected": "connected webhook",
+        "unconnected": "unconnect webhook"
       }
     },
     "logs": {

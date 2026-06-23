@@ -19,7 +19,6 @@ export function useNewProjectPage() {
   const [branchSearch, setBranchSearch] = useState('');
   const [selectedRepositoryOwner, setSelectedRepositoryOwner] = useState('');
   const [selectedRepositoryName, setSelectedRepositoryName] = useState('');
-  const [selectedRepositoryId, setSelectedRepositoryId] = useState('');
   const [refreshRepositoriesErrorMessage, setRefreshRepositoriesErrorMessage] = useState('');
   const [refreshBranchesErrorMessage, setRefreshBranchesErrorMessage] = useState('');
   const [isRefreshingRepositories, setIsRefreshingRepositories] = useState(false);
@@ -72,16 +71,10 @@ export function useNewProjectPage() {
     [repositoryOptions]
   );
 
-  const selectedRepositoryOption = useMemo(
-    () => findRepositoryOptionById(selectedRepositoryId),
-    [findRepositoryOptionById, selectedRepositoryId]
-  );
-
   const handleSelectRepository = useCallback(
     (repositoryId: string) => {
       const selectedOption = repositoryOptions.find((option) => option.value === repositoryId) ?? null;
 
-      setSelectedRepositoryId(repositoryId);
       setSelectedRepositoryOwner(selectedOption?.repository.owner.login ?? '');
       setSelectedRepositoryName(selectedOption?.repository.name ?? '');
       setBranchSearch(selectedOption?.repository.defaultBranch ?? '');
@@ -134,19 +127,10 @@ export function useNewProjectPage() {
 
   const submit = useCallback(
     async (values: CreateProjectFormValues) => {
-      if (!selectedRepositoryOption) {
-        throw new Error('Selected repository is missing');
-      }
 
-      const { repository } = selectedRepositoryOption;
 
       await createProject({
         githubRepoId: values.githubRepoId,
-        repoFullName: repository.fullName,
-        repoOwner: repository.owner.login,
-        repoName: repository.name,
-        repoUrl: repository.url,
-        githubDefaultBranch: repository.defaultBranch,
         name: values.name,
         deployBranch: values.deployBranch,
         rootDirectory: values.rootDirectory,
@@ -159,7 +143,7 @@ export function useNewProjectPage() {
 
       router.replace('/projects');
     },
-    [createProject, router, selectedRepositoryOption]
+    [createProject, router]
   );
 
   return {
