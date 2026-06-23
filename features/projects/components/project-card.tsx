@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui';
+import { Link } from '@i18n/navigation';
 import { cn } from '@lib/utils';
 import { getRelativeTime } from '@lib/utils/date';
 import { ExternalLink, GitBranch, Globe, Rocket, SquareTerminal } from 'lucide-react';
@@ -31,7 +32,7 @@ function getDeployBadgeClassName(status: DeployStatus) {
       return 'border-destructive/30 bg-destructive/15 text-destructive';
     case 'BUILDING':
       return 'border-info/30 bg-info/15 text-info';
-    case 'PENDING':
+    case 'DEPLOYING':
       return 'border-warning/30 bg-warning/15 text-warning';
     default:
       return 'border-border bg-muted text-muted-foreground';
@@ -89,7 +90,9 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
                       getWebhookBadgeClassName(project.isWebhookProvisioned)
                     )}
                   >
-                    {project.isWebhookProvisioned ? t(`webhook.connected`) : t('webhook.unconnected')}
+                    {project.isWebhookProvisioned
+                      ? t(`webhook.connected`)
+                      : t('webhook.unconnected')}
                   </Badge>
                 </div>
 
@@ -163,8 +166,8 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
         </div>
 
         <CardFooter className="flex flex-wrap gap-2 p-5 pt-0 lg:flex-col">
-          <Button variant="outline" className="flex-1 lg:w-full" disabled>
-            {t('actions.viewDetail')}
+          <Button variant="outline" className="flex-1 lg:w-full" asChild>
+            <Link href={'/projects/' + project.id}>{t('actions.viewDetail')}</Link>
           </Button>
           <Button color="primary" className="flex-1 lg:w-full" disabled>
             {t('actions.deployNow')}

@@ -56,16 +56,41 @@ export interface CreateProjectRequest {
 }
 
 // Dùng cho trang Project Detail (GET /projects/:id) — chi tiết 1 project
+export type ProjectRunnerType = 'LOCAL' | 'SSH';
+export type ProjectStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+
+// Response from GET /projects/:id.
 export interface ProjectDetail {
     id: string;
+    ownerId: string;
     name: string;
+    slug: string;
     repoFullName: string;
-    branch: string;
+    repoOwner: string;
+    repoName: string;
+    repoUrl: string;
+    githubRepoId: string | null;
+    githubDefaultBranch: string;
+    deployBranch: string;
+    rootDirectory: string;
     dockerfilePath: string;
+    buildContext: string;
+    runnerType: ProjectRunnerType;
+    localRepoPath: string | null;
+    sshHost: string | null;
+    sshPort: number | null;
+    sshUser: string | null;
+    sshKeyEncrypted: string | null;
+    containerPort: number;
+    hostPort: number | null;
+    containerName: string | null;
+    imageName: string | null;
+    autoDeploy: boolean;
+    webhookId: string | null;
+    webhookSecretEncrypted: string | null;
+    status: ProjectStatus;
     createdAt: string;
-    latestDeploy: LatestDeploy | null;
-    // Detail page cần thêm field mà list view không cần load để đỡ nặng:
-    webhookId: number;
+    updatedAt: string;
 }
 
 // Dùng cho trang Deployment History (GET /projects/:id/deploys)
