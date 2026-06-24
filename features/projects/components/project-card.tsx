@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@components/ui';
-import { Link } from '@i18n/navigation';
+import { Link, useRouter } from '@i18n/navigation';
 import { cn } from '@lib/utils';
 import { getRelativeTime } from '@lib/utils/date';
 import { ExternalLink, GitBranch, Globe, Rocket, SquareTerminal } from 'lucide-react';
@@ -54,14 +54,17 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
   const locale = useLocale();
   const latestDeploy = project.latestDeploy;
   const relativeTime = latestDeploy ? getRelativeTime(latestDeploy.createdAt, locale) : null;
-
+  const router = useRouter();
   const layoutClassName =
     viewMode === 'list'
       ? 'flex h-full flex-col lg:flex-row lg:items-start lg:justify-between'
       : 'flex h-full flex-col';
 
   return (
-    <Card className="border-border/60 bg-card/95 h-full rounded-2xl shadow-sm backdrop-blur-sm">
+    <Card
+      className="border-border/60 bg-card/95 h-full rounded-2xl shadow-sm backdrop-blur-sm hover:cursor-pointer hover:shadow-lg"
+      onClick={() => router.push(`/projects/${project.id}`)}
+    >
       <div className={layoutClassName}>
         <div className="flex-1">
           <CardHeader className="space-y-4 p-5">
