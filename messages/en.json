@@ -101,6 +101,31 @@
         "helper": "Connect GitHub from your account settings to continue.",
         "connect": "Connect"
       },
+      "githubConnectStatus": {
+        "dismiss": "Dismiss GitHub connection status",
+        "connected": {
+          "title": "GitHub connected successfully",
+          "description": "Your GitHub account is now connected. You can continue linking repositories and creating projects."
+        },
+        "cancelled": {
+          "title": "GitHub connection was cancelled",
+          "description": "No changes were made to your GitHub connection. You can try again whenever you are ready."
+        },
+        "error": {
+          "title": "GitHub connection failed",
+          "description": "We could not complete the GitHub connection. Please try again or check the integration settings.",
+          "reasons": {
+            "access_denied": "You denied GitHub access, so the connection was not completed.",
+            "invalid_state": "The GitHub authorization request is no longer valid. Please try connecting again.",
+            "user_not_found": "We could not find your account in the system. Please sign in again and retry.",
+            "already_connected": "Your account is already connected to GitHub.",
+            "account_in_use": "This GitHub account is already linked to another user.",
+            "authorization_expired": "The GitHub authorization code expired before it could be completed. Please try again.",
+            "oauth_configuration_error": "The GitHub integration is currently misconfigured. Please check the integration settings.",
+            "connection_failed": "We could not complete the GitHub connection. Please try again in a moment."
+          }
+        }
+      },
       "summary": {
         "totalProjects": "{count} projects in this view"
       },
@@ -138,9 +163,141 @@
         "webhook": "webhook"
       },
       "webhook": {
-        "CONNECTED": "Connected",
-        "MISSING": "Missing",
-        "ERROR": "Error"
+        "connected": "connected webhook",
+        "unconnected": "unconnect webhook"
+      }
+    },
+    "projectDetail": {
+      "back": "Back to projects",
+      "description": "See where this project deploys from, what the latest deployment looks like, and where deployment observability will appear next.",
+      "actions": {
+        "openRepository": "Open repository"
+      },
+      "states": {
+        "errorTitle": "Could not load this project",
+        "errorDescription": "Something went wrong while loading the project detail page.",
+        "retry": "Try again"
+      },
+      "status": {
+        "QUEUED": "Queued",
+        "PULLING": "Pulling source",
+        "BUILDING": "Building",
+        "DEPLOYING": "Deploying",
+        "SUCCESS": "Live",
+        "FAILED": "Failed",
+        "CANCELED": "Canceled"
+      },
+      "trigger": {
+        "manual": "Manual",
+        "webhook": "Webhook"
+      },
+      "projectStatus": {
+        "ACTIVE": "Active",
+        "PAUSED": "Paused",
+        "ARCHIVED": "Archived"
+      },
+      "runnerType": {
+        "LOCAL": "Local runner",
+        "SSH": "SSH runner"
+      },
+      "deploymentStatus": {
+        "eyebrow": "Current deployment",
+        "title": "Deployment status",
+        "description": "A focused summary of the most recent deploy so users can immediately understand what is running now.",
+        "emptyTitle": "No deployments have run yet",
+        "emptyDescription": "This project is connected and ready, but deployment execution has not been wired into this phase yet.",
+        "primaryAction": "Deploy now",
+        "secondaryAction": "Open deployment run",
+        "metrics": {
+          "commit": "Commit",
+          "started": "Started",
+          "finished": "Finished"
+        },
+        "progressLabel": "Latest deployment progress",
+        "inProgress": "Still running",
+        "noCommitMessage": "No commit message was captured for this deployment.",
+        "cards": {
+          "commit": {
+            "title": "Commit summary"
+          },
+          "started": {
+            "title": "Started at"
+          },
+          "action": {
+            "title": "Run completion",
+            "pending": "Finish time will appear here once the deploy completes."
+          }
+        }
+      },
+      "overview": {
+        "eyebrow": "Project overview",
+        "title": "Where this project deploys from",
+        "description": "Key source, build, and runtime settings so a user can quickly understand what repository, branch, and runner are attached to this project.",
+        "unset": "Not configured yet",
+        "autoDeployEnabled": "Enabled",
+        "autoDeployDisabled": "Disabled",
+        "fields": {
+          "repository": "Repository",
+          "deployBranch": "Deploy branch",
+          "rootDirectory": "Root directory",
+          "buildContext": "Build context",
+          "dockerfile": "Dockerfile path",
+          "imageName": "Image name",
+          "autoDeploy": "Auto deploy",
+          "createdAt": "Created at",
+          "updatedAt": "Last updated"
+        },
+        "runtime": {
+          "title": "Runtime target",
+          "description": "Container and host wiring that the platform will use when deployment execution is turned on.",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "containerName": "Container name"
+        }
+      },
+      "webhook": {
+        "eyebrow": "Webhook info",
+        "title": "Repository webhook",
+        "connected": "Connected",
+        "notConnected": "Not connected",
+        "summaryTitle": "Provisioning state",
+        "summaryConnected": "This project already has a webhook identifier, so repository events can be mapped to it.",
+        "summaryPending": "Webhook provisioning has not completed yet, so repository events are not connected to deployments.",
+        "fields": {
+          "webhookId": "Webhook ID",
+          "secret": "Webhook secret"
+        },
+        "notAvailable": "Not available yet",
+        "secretStored": "Encrypted secret is stored",
+        "secretMissing": "Secret is not available yet",
+        "nextStepTitle": "Next step",
+        "nextStepConnected": "When deployment execution is added, this card can expand with delivery health and recent webhook activity.",
+        "nextStepPending": "Once the backend finishes provisioning a webhook, the ID and delivery health can live here.",
+        "notAvailableShort": "Pending"
+      },
+      "future": {
+        "shared": {
+          "previewTitle": "Layout reserved",
+          "previewDescription": "This section is already placed in the page flow so future deployment features can plug in without reshaping the whole screen.",
+          "placeholderTitle": "Phase note",
+          "placeholderDescription": "Content intentionally stays lightweight for now because this phase focuses on project detail structure."
+        },
+        "history": {
+          "eyebrow": "Deployment history",
+          "title": "Deployment history",
+          "description": "A dedicated area for chronological deploy runs, release outcomes, and future filtering controls.",
+          "helperTitle": "History timeline will land here",
+          "helperDescription": "We are reserving a stable block for deployment cards, pagination, and commit-level history once the deployment phase starts.",
+          "action": "View full history"
+        },
+        "logs": {
+          "eyebrow": "Realtime logs",
+          "title": "Realtime logs",
+          "description": "A future log surface for streaming build and runtime output without crowding the first release of this page.",
+          "helperTitle": "Log stream container is ready",
+          "helperDescription": "This layout is intentionally sized for a terminal-like stream, filters, and tail controls in the next phase.",
+          "action": "Open live logs"
+        }
       }
     },
     "logs": {
@@ -150,6 +307,122 @@
     "dashboard": {
       "title": "Dashboard",
       "description": "View a high-level overview of platform health, usage, and recent activity."
+    },
+    "newProject": {
+      "back": "Back to projects",
+      "title": "Create project",
+      "description": "Link a GitHub repository, choose the deploy branch, and configure the build/runtime settings for your next deployment.",
+      "formAriaLabel": "Create project form",
+      "card": {
+        "title": "Project setup",
+        "description": "Start with the repository, then review the build and runtime settings before creating the project."
+      },
+      "sections": {
+        "repository": {
+          "title": "Repository",
+          "description": "Pick the repository that will back this project and confirm the project identity."
+        },
+        "build": {
+          "title": "Build configuration",
+          "description": "Optional paths let you adapt this project to monorepos or custom Docker layouts."
+        },
+        "runtime": {
+          "title": "Runtime",
+          "description": "Set the ports and deployment behavior that should be used when the container runs."
+        }
+      },
+      "repositories": {
+        "errorTitle": "Could not load GitHub repositories",
+        "retry": "Try again",
+        "empty": "No repositories are available yet. Connect GitHub or create a repository first.",
+        "emptySearch": "No repositories match the current keyword.",
+        "private": "Private",
+        "public": "Public",
+        "refresh": "Refresh repositories"
+      },
+      "fields": {
+        "githubRepoId": {
+          "label": "GitHub repository",
+          "description": "Search by owner, repo name, or default branch.",
+          "placeholder": "Search repositories..."
+        },
+        "name": {
+          "label": "Project name",
+          "description": "This name is shown in your project list and deployment views.",
+          "placeholder": "my-next-app"
+        },
+        "deployBranch": {
+          "label": "Deploy branch",
+          "description": "Choose one of the available branches from the selected repository.",
+          "placeholder": "Select branch..."
+        },
+        "rootDirectory": {
+          "label": "Root directory",
+          "description": "Optional. Useful when the app lives in a subfolder of a monorepo.",
+          "placeholder": "apps/web"
+        },
+        "dockerfilePath": {
+          "label": "Dockerfile path",
+          "description": "Optional. Override the default Dockerfile location.",
+          "placeholder": "Dockerfile"
+        },
+        "buildContext": {
+          "label": "Build context",
+          "description": "Optional. Choose a custom build context if Docker should build from another path.",
+          "placeholder": "."
+        },
+        "containerPort": {
+          "label": "Container port",
+          "description": "Optional. Leave empty to let the backend use its default port.",
+          "placeholder": "3000"
+        },
+        "hostPort": {
+          "label": "Host port",
+          "description": "Optional. Leave empty to let the platform assign or persist no host port.",
+          "placeholder": "8080"
+        },
+        "autoDeploy": {
+          "label": "Enable auto deploy",
+          "description": "Automatically trigger deployments when new commits land on the selected branch."
+        }
+      },
+      "actions": {
+        "cancel": "Back to projects",
+        "submit": "Create project",
+        "submitting": "Creating project..."
+      },
+      "validation": {
+        "githubRepoIdRequired": "Please select a GitHub repository.",
+        "nameRequired": "Project name is required.",
+        "deployBranchRequired": "Deploy branch is required."
+      },
+      "branches": {
+        "empty": "No branches are available for this repository.",
+        "selectRepositoryFirst": "Select a repository to load branches first.",
+        "refresh": "Refresh branches"
+      }
     }
+  },
+  "errors": {
+    "BAD_REQUEST": "The request is invalid.",
+    "UNAUTHORIZED": "You need to sign in to continue.",
+    "FORBIDDEN": "You do not have permission to perform this action.",
+    "NOT_FOUND": "The requested resource could not be found.",
+    "CONFLICT": "This data conflicts with an existing record.",
+    "VALIDATION_ERROR": "Submitted data is invalid. Please review and try again.",
+    "TOO_MANY_REQUESTS": "Too many requests. Please try again later.",
+    "INTERNAL_ERROR": "Something went wrong on the server. Please try again later.",
+    "DATABASE_ERROR": "A database error occurred. Please try again later.",
+    "EMAIL_ALREADY_EXISTS": "This email is already registered.",
+    "INVALID_CREDENTIALS": "Email or password is incorrect.",
+    "REFRESH_TOKEN_MISSING": "Your session is missing refresh credentials. Please sign in again.",
+    "INVALID_REFRESH_TOKEN": "Your session is invalid. Please sign in again.",
+    "REFRESH_TOKEN_REVOKED": "Your session has been revoked. Please sign in again.",
+    "TOKEN_REVOKED": "Your access has been revoked. Please sign in again.",
+    "INVALID_REQUEST_ORIGIN": "This request origin is not allowed.",
+    "INSUFFICIENT_ROLE": "Your account does not have the required permissions.",
+    "USER_NOT_FOUND": "User not found.",
+    "NOT_CONNECTED_GITHUB_YET": "You are not connect Github yet",
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!"
   }
 }

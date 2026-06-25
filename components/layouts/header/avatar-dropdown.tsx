@@ -25,7 +25,7 @@ export default function AvatarDropdown({ onLogout }: AvatarDropdownProps) {
   const router = useRouter();
   const { data: me } = useGetMe();
 
-  const displayName = me?.full_name;
+  const displayName = me?.name;
   const avatarAlt = displayName || t('user');
 
   const handleLogout = () => {
@@ -41,7 +41,7 @@ export default function AvatarDropdown({ onLogout }: AvatarDropdownProps) {
       <DropdownMenuTrigger asChild>
         <button className="cursor-pointer outline-none">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={me?.avt_url ?? undefined} alt={avatarAlt} />
+            <AvatarImage src={me?.avatarUrl ?? undefined} alt={avatarAlt} />
             <AvatarFallback className="bg-muted text-muted-foreground">
               {(displayName && getChangeNameAvatar(displayName)) || 'U'}
             </AvatarFallback>
@@ -51,7 +51,7 @@ export default function AvatarDropdown({ onLogout }: AvatarDropdownProps) {
       <DropdownMenuContent align="end" className="min-w-[250px]">
         <div className="flex items-center gap-2 px-2 py-1.5">
           <Avatar className="h-16 w-16">
-            <AvatarImage src={me?.avt_url ?? undefined} alt={avatarAlt} />
+            <AvatarImage src={me?.avatarUrl ?? undefined} alt={avatarAlt} />
             <AvatarFallback className="bg-muted text-muted-foreground">
               {(displayName && getChangeNameAvatar(displayName)) || 'U'}
             </AvatarFallback>

@@ -1,10 +1,8 @@
 /**
- * Minimal refresh helper for the starter skeleton.
- * Returns the refreshed access token when the backend supports `/auth/refresh`.
+ * Refresh auth cookies via `/auth/refresh`.
+ * The backend is responsible for rotating tokens and setting cookies.
  */
 export const refreshTokenService = async () => {
   const apiClient = (await import('./api-client')).default;
-  const response = await apiClient.get('/auth/refresh');
-
-  return response.data.data.accessToken as string;
+  await apiClient.post('/auth/refresh');
 };

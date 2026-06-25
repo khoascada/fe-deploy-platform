@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+﻿import type { Meta, StoryObj } from '@storybook/react';
 import { NextIntlClientProvider } from 'next-intl';
 import enMessages from '@/messages/en.json';
 import { ProjectsPageView } from './projects-page-view';
@@ -13,9 +13,13 @@ const meta: Meta<typeof ProjectsPageView> = {
     currentPage: 1,
     errorMessage: null,
     githubConnected: true,
+    githubConnectReason: null,
+    githubConnectStatus: null,
     hasSearchQuery: false,
     isError: false,
     isLoading: false,
+    onConnectGithub: () => {},
+    onDismissGithubConnectStatus: () => {},
     onPageChange: () => {},
     onRetry: () => {},
     onSearchChange: () => {},
@@ -67,5 +71,29 @@ export const GithubDisconnected: Story = {
   args: {
     canCreateProject: false,
     githubConnected: false,
+  },
+};
+
+export const GithubConnectSuccess: Story = {
+  args: {
+    githubConnectStatus: 'connected',
+  },
+};
+
+export const GithubConnectAccessDenied: Story = {
+  args: {
+    canCreateProject: false,
+    githubConnected: false,
+    githubConnectReason: 'access_denied',
+    githubConnectStatus: 'error',
+  },
+};
+
+export const GithubConnectError: Story = {
+  args: {
+    canCreateProject: false,
+    githubConnected: false,
+    githubConnectReason: 'connection_failed',
+    githubConnectStatus: 'error',
   },
 };

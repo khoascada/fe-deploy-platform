@@ -101,6 +101,31 @@
         "helper": "Hãy vào phần cài đặt tài khoản để kết nối GitHub rồi quay lại.",
         "connect": "Kết nối"
       },
+      "githubConnectStatus": {
+        "dismiss": "Đóng thông báo trạng thái kết nối GitHub",
+        "connected": {
+          "title": "Kết nối GitHub thành công",
+          "description": "Tài khoản GitHub của bạn đã được kết nối. Bây giờ bạn có thể liên kết repository và tạo project mới."
+        },
+        "cancelled": {
+          "title": "Bạn đã hủy kết nối GitHub",
+          "description": "Không có thay đổi nào được áp dụng cho kết nối GitHub. Bạn có thể thử lại bất cứ lúc nào."
+        },
+        "error": {
+          "title": "Kết nối GitHub thất bại",
+          "description": "Hệ thống chưa thể hoàn tất việc kết nối GitHub. Hãy thử lại hoặc kiểm tra cấu hình tích hợp.",
+          "reasons": {
+            "access_denied": "Bạn đã từ chối quyền truy cập GitHub nên kết nối chưa được hoàn tất.",
+            "invalid_state": "Yêu cầu xác thực GitHub không còn hợp lệ. Hãy thử kết nối lại.",
+            "user_not_found": "Không tìm thấy tài khoản của bạn trong hệ thống. Vui lòng đăng nhập lại rồi thử tiếp.",
+            "already_connected": "Tài khoản của bạn đã được kết nối với GitHub rồi.",
+            "account_in_use": "Tài khoản GitHub này đang được liên kết với một người dùng khác.",
+            "authorization_expired": "Mã xác thực GitHub đã hết hạn trước khi hoàn tất. Hãy thử lại.",
+            "oauth_configuration_error": "Cấu hình tích hợp GitHub hiện chưa chính xác. Hãy kiểm tra lại phần cấu hình.",
+            "connection_failed": "Chưa thể hoàn tất kết nối GitHub lúc này. Hãy thử lại sau ít phút."
+          }
+        }
+      },
       "summary": {
         "totalProjects": "{count} dự án trong trang hiện tại"
       },
@@ -112,6 +137,7 @@
         "notAvailable": "Chưa có",
         "notDeployed": "Chưa có lần deploy nào"
       },
+
       "actions": {
         "viewDetail": "Xem chi tiết",
         "deployNow": "Deploy ngay",
@@ -124,7 +150,7 @@
         "emptyTitle": "Chưa có dự án nào",
         "emptyDescription": "Dự án sẽ xuất hiện ở đây sau khi bạn kết nối repository đầu tiên.",
         "noResultsTitle": "Không tìm thấy dự án phù hợp",
-        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa bộ tìm kiếm hiện tại."
+        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa từ khóa tìm kiếm hiện tại."
       },
       "status": {
         "PENDING": "Đang chờ",
@@ -138,9 +164,141 @@
         "webhook": "webhook"
       },
       "webhook": {
-        "CONNECTED": "Đã kết nối",
-        "MISSING": "Chưa cấu hình",
-        "ERROR": "Lỗi"
+        "connected": "Đã kết nối webhook",
+        "unconnected": "Chưa kết nối webhook"
+      }
+    },
+    "projectDetail": {
+      "back": "Quay lại dự án",
+      "description": "Xem dự án này đang deploy từ đâu, trạng thái deploy gần nhất ra sao, và vị trí các phần observability sẽ xuất hiện ở phase sau.",
+      "actions": {
+        "openRepository": "Mở repository"
+      },
+      "states": {
+        "errorTitle": "Không thể tải chi tiết dự án",
+        "errorDescription": "Đã có lỗi xảy ra khi tải trang chi tiết dự án.",
+        "retry": "Thử lại"
+      },
+      "status": {
+        "QUEUED": "Đang xếp hàng",
+        "PULLING": "Đang kéo source",
+        "BUILDING": "Đang build",
+        "DEPLOYING": "Đang deploy",
+        "SUCCESS": "Đang hoạt động",
+        "FAILED": "Thất bại",
+        "CANCELED": "Đã hủy"
+      },
+      "trigger": {
+        "manual": "Thủ công",
+        "webhook": "Webhook"
+      },
+      "projectStatus": {
+        "ACTIVE": "Hoạt động",
+        "PAUSED": "Tạm dừng",
+        "ARCHIVED": "Lưu trữ"
+      },
+      "runnerType": {
+        "LOCAL": "Local runner",
+        "SSH": "SSH runner"
+      },
+      "deploymentStatus": {
+        "eyebrow": "Deploy hiện tại",
+        "title": "Trạng thái deployment",
+        "description": "Tóm tắt gọn lần deploy gần nhất để người dùng hiểu ngay bản chạy hiện tại đang ở trạng thái nào.",
+        "emptyTitle": "Chưa có lần deploy nào",
+        "emptyDescription": "Project đã sẵn sàng về mặt kết nối, nhưng luồng chạy deployment sẽ được nối ở phase tiếp theo.",
+        "primaryAction": "Deploy ngay",
+        "secondaryAction": "Mở deployment run",
+        "metrics": {
+          "commit": "Commit",
+          "started": "Bắt đầu",
+          "finished": "Hoàn tất"
+        },
+        "progressLabel": "Tiến độ deploy gần nhất",
+        "inProgress": "Đang chạy",
+        "noCommitMessage": "Chưa có commit message cho lần deploy này.",
+        "cards": {
+          "commit": {
+            "title": "Tóm tắt commit"
+          },
+          "started": {
+            "title": "Thời điểm bắt đầu"
+          },
+          "action": {
+            "title": "Trạng thái hoàn tất",
+            "pending": "Thời điểm hoàn tất sẽ hiển thị tại đây khi deployment kết thúc."
+          }
+        }
+      },
+      "overview": {
+        "eyebrow": "Project overview",
+        "title": "Project này đang deploy từ đâu",
+        "description": "Tập hợp các cấu hình source, build, và runtime quan trọng để người dùng nhìn nhanh là hiểu repository, branch, và runner đang gắn với project.",
+        "unset": "Chưa cấu hình",
+        "autoDeployEnabled": "Đã bật",
+        "autoDeployDisabled": "Đang tắt",
+        "fields": {
+          "repository": "Repository",
+          "deployBranch": "Nhánh deploy",
+          "rootDirectory": "Thư mục gốc",
+          "buildContext": "Build context",
+          "dockerfile": "Đường dẫn Dockerfile",
+          "imageName": "Image name",
+          "autoDeploy": "Auto deploy",
+          "createdAt": "Thời điểm tạo",
+          "updatedAt": "Cập nhật lần cuối"
+        },
+        "runtime": {
+          "title": "Runtime target",
+          "description": "Thông tin nối container và host mà platform sẽ dùng khi phase deployment execution được bật lên.",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "containerName": "Container name"
+        }
+      },
+      "webhook": {
+        "eyebrow": "Webhook info",
+        "title": "Webhook của repository",
+        "connected": "Đã kết nối",
+        "notConnected": "Chưa kết nối",
+        "summaryTitle": "Trạng thái provisioning",
+        "summaryConnected": "Project này đã có webhook ID nên repository event có thể map vào project.",
+        "summaryPending": "Webhook vẫn chưa được provision xong nên repository event chưa thể nối vào deployment.",
+        "fields": {
+          "webhookId": "Webhook ID",
+          "secret": "Webhook secret"
+        },
+        "notAvailable": "Chưa có dữ liệu",
+        "secretStored": "Đã lưu secret dạng mã hóa",
+        "secretMissing": "Chưa có secret",
+        "nextStepTitle": "Bước tiếp theo",
+        "nextStepConnected": "Khi phase deployment hoàn thiện, card này có thể mở rộng để hiển thị health và hoạt động webhook gần đây.",
+        "nextStepPending": "Sau khi backend provision xong webhook, khu vực này có thể hiển thị ID và sức khỏe nhận event.",
+        "notAvailableShort": "Đang chờ"
+      },
+      "future": {
+        "shared": {
+          "previewTitle": "Đã chừa sẵn layout",
+          "previewDescription": "Section này đã được đặt đúng flow để các tính năng deployment sau này có thể cắm vào mà không cần đập lại toàn bộ page.",
+          "placeholderTitle": "Ghi chú phase",
+          "placeholderDescription": "Nội dung hiện giữ ở mức nhẹ vì phase này tập trung vào khung trang chi tiết dự án."
+        },
+        "history": {
+          "eyebrow": "Deployment history",
+          "title": "Lịch sử deployment",
+          "description": "Khu vực riêng cho timeline deploy, kết quả release, và các bộ lọc sẽ bổ sung ở phase tiếp theo.",
+          "helperTitle": "Timeline deploy sẽ nằm ở đây",
+          "helperDescription": "Mình chừa sẵn một block ổn định cho thẻ deployment, phân trang, và lịch sử theo commit khi bước sang phase deployment.",
+          "action": "Xem toàn bộ lịch sử"
+        },
+        "logs": {
+          "eyebrow": "Realtime logs",
+          "title": "Realtime logs",
+          "description": "Bề mặt log trong tương lai cho build và runtime output mà không làm page đầu tiên bị quá nặng.",
+          "helperTitle": "Khung log stream đã sẵn sàng",
+          "helperDescription": "Layout này được chừa kích thước phù hợp cho terminal stream, filter, và tail controls ở phase kế tiếp.",
+          "action": "Mở live logs"
+        }
       }
     },
     "logs": {
@@ -150,6 +308,122 @@
     "dashboard": {
       "title": "Bảng điều khiển",
       "description": "Xem nhanh tình trạng nền tảng, mức sử dụng, và hoạt động gần đây."
+    },
+    "newProject": {
+      "back": "Quay lại danh sách dự án",
+      "title": "Tạo project",
+      "description": "Liên kết repository GitHub, chọn nhánh deploy, và cấu hình build/runtime cho lần deploy tiếp theo của bạn.",
+      "formAriaLabel": "Biểu mẫu tạo project",
+      "card": {
+        "title": "Thiết lập project",
+        "description": "Bắt đầu từ repository, sau đó kiểm tra cấu hình build và runtime trước khi tạo project."
+      },
+      "sections": {
+        "repository": {
+          "title": "Repository",
+          "description": "Chọn repository sẽ dùng cho project này và xác nhận thông tin nhận diện của project."
+        },
+        "build": {
+          "title": "Cấu hình build",
+          "description": "Các đường dẫn tùy chọn giúp bạn hỗ trợ monorepo hoặc bố cục Docker tùy chỉnh."
+        },
+        "runtime": {
+          "title": "Runtime",
+          "description": "Thiết lập port và hành vi deploy sẽ được dùng khi container chạy."
+        }
+      },
+      "repositories": {
+        "errorTitle": "Không thể tải danh sách repository GitHub",
+        "retry": "Thử lại",
+        "empty": "Chưa có repository nào. Hãy kết nối GitHub hoặc tạo repository trước.",
+        "emptySearch": "Không có repository nào khớp với từ khóa hiện tại.",
+        "private": "Riêng tư",
+        "public": "Công khai",
+        "refresh": "Làm mới danh sách repository"
+      },
+      "fields": {
+        "githubRepoId": {
+          "label": "Repository GitHub",
+          "description": "Tìm theo owner, tên repo, hoặc nhánh mặc định.",
+          "placeholder": "Tìm repository..."
+        },
+        "name": {
+          "label": "Tên project",
+          "description": "Tên này sẽ hiển thị trong danh sách project và màn hình deploy.",
+          "placeholder": "my-next-app"
+        },
+        "deployBranch": {
+          "label": "Nhánh deploy",
+          "description": "Chọn một branch khả dụng từ repository đã chọn.",
+          "placeholder": "Chọn branch..."
+        },
+        "rootDirectory": {
+          "label": "Thư mục gốc",
+          "description": "Tùy chọn. Hữu ích khi app nằm trong một thư mục con của monorepo.",
+          "placeholder": "apps/web"
+        },
+        "dockerfilePath": {
+          "label": "Đường dẫn Dockerfile",
+          "description": "Tùy chọn. Ghi đè vị trí Dockerfile mặc định.",
+          "placeholder": "Dockerfile"
+        },
+        "buildContext": {
+          "label": "Build context",
+          "description": "Tùy chọn. Chọn context build riêng nếu Docker cần build từ đường dẫn khác.",
+          "placeholder": "."
+        },
+        "containerPort": {
+          "label": "Container port",
+          "description": "Tùy chọn. Để trống để backend dùng port mặc định của nó.",
+          "placeholder": "3000"
+        },
+        "hostPort": {
+          "label": "Host port",
+          "description": "Tùy chọn. Để trống nếu platform tự gán hoặc không lưu host port.",
+          "placeholder": "8080"
+        },
+        "autoDeploy": {
+          "label": "Bật auto deploy",
+          "description": "Tự động trigger deploy khi có commit mới trên nhánh đã chọn."
+        }
+      },
+      "actions": {
+        "cancel": "Quay lại danh sách dự án",
+        "submit": "Tạo project",
+        "submitting": "Đang tạo project..."
+      },
+      "validation": {
+        "githubRepoIdRequired": "Vui lòng chọn một GitHub repository.",
+        "nameRequired": "Tên project là bắt buộc.",
+        "deployBranchRequired": "Nhánh deploy là bắt buộc."
+      },
+      "branches": {
+        "empty": "Không có branch nào khả dụng cho repository này.",
+        "selectRepositoryFirst": "Hãy chọn repository trước để tải danh sách branch.",
+        "refresh": "Làm mới danh sách branch"
+      }
     }
+  },
+  "errors": {
+    "BAD_REQUEST": "Yêu cầu không hợp lệ.",
+    "UNAUTHORIZED": "Bạn cần đăng nhập để tiếp tục.",
+    "FORBIDDEN": "Bạn không có quyền thực hiện hành động này.",
+    "NOT_FOUND": "Không tìm thấy tài nguyên được yêu cầu.",
+    "CONFLICT": "Dữ liệu đang bị trùng hoặc xung đột với bản ghi đã tồn tại.",
+    "VALIDATION_ERROR": "Dữ liệu gửi lên không hợp lệ. Vui lòng kiểm tra và thử lại.",
+    "TOO_MANY_REQUESTS": "Bạn thao tác quá nhanh. Vui lòng thử lại sau.",
+    "INTERNAL_ERROR": "Hệ thống đang gặp sự cố. Vui lòng thử lại sau.",
+    "DATABASE_ERROR": "Đã xảy ra lỗi dữ liệu. Vui lòng thử lại sau.",
+    "EMAIL_ALREADY_EXISTS": "Email này đã được đăng ký.",
+    "INVALID_CREDENTIALS": "Email hoặc mật khẩu không đúng.",
+    "REFRESH_TOKEN_MISSING": "Phiên đăng nhập thiếu thông tin làm mới. Vui lòng đăng nhập lại.",
+    "INVALID_REFRESH_TOKEN": "Phiên đăng nhập không hợp lệ. Vui lòng đăng nhập lại.",
+    "REFRESH_TOKEN_REVOKED": "Phiên đăng nhập đã bị thu hồi. Vui lòng đăng nhập lại.",
+    "TOKEN_REVOKED": "Quyền truy cập đã bị thu hồi. Vui lòng đăng nhập lại.",
+    "INVALID_REQUEST_ORIGIN": "Nguồn gửi request không được phép.",
+    "INSUFFICIENT_ROLE": "Tài khoản của bạn không đủ quyền để thực hiện hành động này.",
+    "USER_NOT_FOUND": "Không tìm thấy người dùng.",
+    "NOT_CONNECTED_GITHUB_YET": "Bạn chưa connect với Github",
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!"
   }
 }

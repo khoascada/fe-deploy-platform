@@ -1,6 +1,6 @@
 'use client';
-import type { LoginCredentials } from '@/types';
 import { useUIStore } from '@/features/ui';
+import type { LoginCredentials } from '@/types';
 import { useRouter } from '@i18n/navigation';
 import { useAppMutation } from '@lib/hooks/use-react-query';
 import { authApi } from '@services/auth.service';
@@ -27,18 +27,16 @@ export function useLogin() {
 
       setCredentials({ user });
 
-      setTheme(user?.setting?.theme || 'dark');
-      setNextTheme(user?.setting?.theme || 'dark');
+      setTheme(user.theme === 'LIGHT' ? 'light' : 'dark');
+      setNextTheme(user.theme);
 
-      const userLanguage = user?.setting?.language || 'VN';
-      const targetLocale = userLanguage === 'EN' ? 'en' : 'vi';
+      const targetLocale = user.language === 'EN' ? 'en' : 'vi';
 
       document.cookie = `NEXT_LOCALE=${targetLocale}; path=/; max-age=31536000`;
 
-      // remove cho chắc xD
       localStorage.removeItem('recent-views-storage');
 
-      const targetPath = redirectUrl || '/home';
+      const targetPath = redirectUrl || '/projects';
       router.replace(targetPath, { locale: targetLocale });
     } catch (error) {
       console.error(error);

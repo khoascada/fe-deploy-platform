@@ -1,5 +1,3 @@
-import { ErrorCode } from '@lib/constants/error-code';
-
 // Common API response wrapper
 export interface ApiResponse<T = unknown> {
   data: T;
@@ -29,9 +27,14 @@ export interface PaginatedResponse<T> {
 
 // Common error response
 export interface ApiError {
-  message: string;
-  statusCode: number;
-  errCode?: ErrorCode | null;
+  success: boolean;
+  error: {
+    code: string;
+    message: string;
+    statusCode: number;
+    details?: unknown;
+  };
+  statusCode?: number;
 }
 
 // Loading state

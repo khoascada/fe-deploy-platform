@@ -6,39 +6,18 @@ import AppHeader from '@components/layouts/header/header';
 import { SidebarContent } from '@components/layouts/sidebar-content';
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@components/ui';
 import { useIsMobile } from '@lib/hooks/use-media-query';
-import { useSseConnection } from '@lib/sse';
 import { useTranslations } from 'next-intl';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const t = useTranslations('navigation');
   const drawerOpen = useMobileDrawerStore((state) => state.drawerOpen);
   const setDrawerOpen = useMobileDrawerStore((state) => state.setDrawerOpen);
-  const [mounted, setMounted] = useState(false);
   const isMobile = useIsMobile();
-  const { resolvedTheme } = useTheme();
   // đặt noti-obser và invi-obser, sse ở đây vì nó chỉ obser khi user đăng nhập.
-  useSseConnection();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && resolvedTheme === 'dark';
+  // useSseConnection();
 
   return (
-    <div className="relative flex h-[100dvh] flex-col bg-white dark:bg-black">
-      <div
-        className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle at center, oklch(0.7789 0.1103 224.47 / 59.14%) 0%, transparent 80%)',
-          opacity: isDark ? 0.15 : 0.3,
-          mixBlendMode: isDark ? 'screen' : 'multiply',
-        }}
-      />
-
+    <div className="relative flex min-h-[100dvh] flex-col bg-background text-foreground">
       <ErrorBoundary variant="header">
         <AppHeader drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} showSidebarToggle />
       </ErrorBoundary>
@@ -48,7 +27,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
             <SheetContent
               side="left"
-              className="w-[220px] bg-white p-0 dark:bg-black"
+              className="w-[220px] border-r border-border bg-card p-0 shadow-none"
               showCloseButton={false}
             >
               <SheetTitle className="sr-only">{t('menuTitle')}</SheetTitle>
@@ -62,7 +41,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </Sheet>
         ) : (
           <ErrorBoundary variant="sidebar">
-            <div className="flex w-[220px] flex-col overflow-y-auto border-r border-gray-200 dark:border-white/[0.08]">
+            <div className="flex w-[220px] flex-col overflow-y-auto border-r border-border bg-card">
               <SidebarContent />
             </div>
           </ErrorBoundary>
@@ -70,7 +49,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         <div className="flex flex-1 flex-col overflow-y-auto">
           <ErrorBoundary variant="page">
-            <main className="w-full flex-1 px-8 py-4 md:px-12">{children}</main>
+            <main className="w-full flex-1 px-6 py-4 md:px-10">{children}</main>
           </ErrorBoundary>
         </div>
       </div>

@@ -51,5 +51,3 @@ jobs:
           NODE_ENV: production
           BACKEND_URL: http://localhost:3000
           NEXT_PUBLIC_API_URL: /api/v1
-          NEXT_PUBLIC_SOCKET_URL: http://localhost:3000
-          NEXT_PUBLIC_SSE_URL: http://localhost:3000

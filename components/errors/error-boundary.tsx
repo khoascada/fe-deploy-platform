@@ -68,8 +68,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
     if (variant === 'header') {
       return (
-        <div className="sticky top-0 z-50 flex h-[64px] items-center justify-center gap-4 border-b border-gray-200 bg-white/80 p-4 backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
-          <span className="text-sm text-gray-700 dark:text-gray-300">{msg.title}</span>
+        <div className="bg-background/80 border-border sticky top-0 z-50 flex h-[64px] items-center justify-center gap-4 border-b p-4 backdrop-blur-xl">
+          <span className="text-sm text-muted-foreground">{msg.title}</span>
           <Button onClick={this.handleReset} variant="default" size="sm">
             <RotateCcw size={14} />
             <span>{msg.tryAgain}</span>
@@ -80,8 +80,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
     if (variant === 'sidebar') {
       return (
-        <div className="flex w-[220px] flex-col items-center justify-center gap-2 overflow-y-auto border-r border-gray-200 dark:border-white/[0.08]">
-          <span className="text-sm text-gray-700 dark:text-gray-300">{msg.title}</span>
+        <div className="border-border flex w-[220px] flex-col items-center justify-center gap-2 overflow-y-auto border-r bg-card">
+          <span className="text-sm text-muted-foreground">{msg.title}</span>
           <Button onClick={this.handleReset} variant="default" size="sm">
             <RotateCcw size={14} />
             <span className="ml-1">{msg.tryAgain}</span>
@@ -93,9 +93,9 @@ export class ErrorBoundary extends Component<Props, State> {
     return (
       <div className="flex min-h-[400px] w-full items-center justify-center p-4">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="rounded-full bg-red-100 p-4 dark:bg-red-900/30">
+          <div className="rounded-full bg-destructive/10 p-4">
             <svg
-              className="h-12 w-12 text-red-600 dark:text-red-400"
+              className="h-12 w-12 text-destructive"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -110,16 +110,16 @@ export class ErrorBoundary extends Component<Props, State> {
           </div>
 
           <div>
-            <h1 className="mb-2 text-2xl font-bold text-gray-900 dark:text-gray-100">
+            <h1 className="mb-2 text-2xl font-bold text-foreground">
               {msg.title}
             </h1>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{msg.description}</p>
+            <p className="text-sm text-muted-foreground">{msg.description}</p>
             {process.env.NODE_ENV === 'development' && error && (
-              <details className="mt-4 max-w-md rounded bg-gray-100 p-3 text-left text-xs dark:bg-gray-800">
-                <summary className="cursor-pointer font-semibold text-gray-700 dark:text-gray-300">
+              <details className="bg-muted mt-4 max-w-md rounded p-3 text-left text-xs">
+                <summary className="cursor-pointer font-semibold text-foreground">
                   Chi tiết lỗi (Dev only)
                 </summary>
-                <pre className="mt-2 overflow-auto text-red-600 dark:text-red-400">
+                <pre className="mt-2 overflow-auto text-destructive">
                   {error.message}
                   {'\n\n'}
                   {error.stack}

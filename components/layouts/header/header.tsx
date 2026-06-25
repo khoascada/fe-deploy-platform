@@ -4,13 +4,12 @@ import { useIsAuthenticated, useLogout } from '@/features/auth';
 import AvatarDropdown from '@components/layouts/header/avatar-dropdown';
 import LanguageSwitcher from '@components/shared/language-select';
 import ThemeToggle from '@components/shared/theme-toggle';
-import { Button } from '@components/ui';
-import { Link, useRouter } from '@i18n/navigation';
+import { Button, Skeleton } from '@components/ui';
+import { Link } from '@i18n/navigation';
+import { useInitAuth } from '@lib/hooks/use-init-auth';
 import { PanelLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface AppHeaderProps {
   drawerOpen: boolean;
@@ -19,51 +18,30 @@ interface AppHeaderProps {
   showSidebarToggle?: boolean;
 }
 
+function HeaderAuthSkeleton() {
+  return (
+    <div className="flex items-center gap-2">
+      <Skeleton className="h-9 w-20 rounded-md" />
+      <Skeleton className="h-9 w-16 rounded-md" />
+    </div>
+  );
+}
+
 export default function AppHeader({
   drawerOpen,
   setDrawerOpen,
-  showLanguageAndThemeSwitcher,
   showSidebarToggle,
 }: AppHeaderProps) {
-  const router = useRouter();
-  const params = useSearchParams();
-  const typesOfSeach = params.get('types') || 'dataset';
   const t = useTranslations('header');
   const { logout } = useLogout();
   const isAuthenticated = useIsAuthenticated();
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (mobileSearchOpen) {
-      mobileSearchInputRef.current?.focus();
-    }
-  }, [mobileSearchOpen]);
-
-  const handleSearch = useCallback(() => {
-    const trimmedQuery = searchQuery.trim();
-    if (trimmedQuery) {
-      router.replace(`/search?q=${encodeURIComponent(trimmedQuery)}&types=${typesOfSeach}&page=1`);
-      setMobileSearchOpen(false);
-    }
-  }, [searchQuery, router, typesOfSeach]);
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        handleSearch();
-      }
-    },
-    [handleSearch]
-  );
+  const { isLoading: isAuthPending } = useInitAuth(true);
 
   return (
-    <header className="bg-background/30 border-card-border sticky top-0 z-50 flex flex-col border-b px-8 backdrop-blur">
+    <header className="bg-background/80 border-border sticky top-0 z-50 flex flex-col border-b px-6 backdrop-blur-xl md:px-8">
       <div className="flex h-[64px] w-full items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <Link href="/" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <Link href="/" className="text-lg font-semibold text-foreground">
             <Image
               src="/bee.svg"
               alt={t('logoAlt')}
@@ -81,7 +59,7 @@ export default function AppHeader({
               className="md:hidden"
               aria-label={t('toggleMenu')}
             >
-              <PanelLeft className="text-gray-700 dark:text-gray-300" />
+              <PanelLeft className="text-foreground" />
             </Button>
           )}
         </div>
@@ -90,7 +68,9 @@ export default function AppHeader({
           <LanguageSwitcher />
           <ThemeToggle />
 
-          {isAuthenticated ? (
+          {isAuthPending ? (
+            <HeaderAuthSkeleton />
+          ) : isAuthenticated ? (
             <div className="flex items-center gap-2">
               <AvatarDropdown onLogout={logout} />
             </div>

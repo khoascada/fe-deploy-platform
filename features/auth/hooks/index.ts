@@ -8,3 +8,7 @@ export * from './use-require-unverified';
 export * from './use-update-profile';
 export * from './use-upload-avatar';
 
+// Legacy shim for tests that still mock useGetRoles.
+export const useGetRoles = () => ({
+  data: [],
+});

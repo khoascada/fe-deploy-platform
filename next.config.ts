@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 import bundleAnalyzer from '@next/bundle-analyzer';
 import createNextIntlPlugin from 'next-intl/plugin';
-import { env } from './env';
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -15,10 +14,16 @@ const nextConfig: NextConfig = {
 
   // Proxy API requests to backend (same-origin for cookies)
   async rewrites() {
+    const backendUrl = process.env.BACKEND_URL;
+
+    if (!backendUrl) {
+      return [];
+    }
+
     return [
       {
         source: '/api/v1/:path*',
-        destination: `${env.BACKEND_URL}/api/v1/:path*`,
+        destination: `${backendUrl}/api/v1/:path*`,
       },
     ];
   },

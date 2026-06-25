@@ -1,13 +1,29 @@
-'use client';
+﻿'use client';
 
+import { env } from '@/env';
 import { useGetMe } from '@/features/auth/hooks';
 import { useGetProject } from '@/features/projects/hooks/actions';
 import type { ProjectsViewMode } from '@/features/projects/types';
 import { usePathname, useRouter } from '@i18n/navigation';
+import { getApiErrorMessage } from '@lib/utils/error';
 import { useSearchParams } from 'next/navigation';
 import { useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react';
 
 const DEFAULT_LIMIT = 6;
+const GITHUB_CONNECT_STATUS = ['connected', 'error'] as const;
+const GITHUB_CONNECT_REASONS = [
+  'access_denied',
+  'invalid_state',
+  'user_not_found',
+  'already_connected',
+  'account_in_use',
+  'authorization_expired',
+  'oauth_configuration_error',
+  'connection_failed',
+] as const;
+
+type GithubConnectStatus = (typeof GITHUB_CONNECT_STATUS)[number];
+type GithubConnectReason = (typeof GITHUB_CONNECT_REASONS)[number];
 
 function toPositiveInteger(value: string | null, fallback: number) {
   if (!value) return fallback;
@@ -26,6 +42,18 @@ export function useProjectsPage() {
   const currentPage = toPositiveInteger(searchParams.get('page'), 1);
   const currentSearch = searchParams.get('q') ?? '';
   const currentView = searchParams.get('view') === 'list' ? 'list' : 'grid';
+  const githubConnectStatusParam = searchParams.get('connectGithub');
+  const githubConnectReasonParam = searchParams.get('reason');
+  const githubConnectStatus = GITHUB_CONNECT_STATUS.includes(
+    githubConnectStatusParam as GithubConnectStatus
+  )
+    ? (githubConnectStatusParam as GithubConnectStatus)
+    : null;
+  const githubConnectReason = GITHUB_CONNECT_REASONS.includes(
+    githubConnectReasonParam as GithubConnectReason
+  )
+    ? (githubConnectReasonParam as GithubConnectReason)
+    : null;
 
   const [searchQuery, setSearchQuery] = useState(currentSearch);
   const [viewMode, setViewMode] = useState<ProjectsViewMode>(currentView);
@@ -50,24 +78,24 @@ export function useProjectsPage() {
     search: '',
   });
   const { data: me } = useGetMe();
-  const githubConnected = me?.github_connected !== false;
+  const githubConnected = me?.githubConnection.isConnected !== false;
 
   const deferredSearch = useDeferredValue(searchQuery.trim().toLowerCase());
 
   const filteredProjects = useMemo(() => {
-    const projects = listProjects?.projects ?? [];
+    const projects = listProjects?.items ?? [];
 
     if (!deferredSearch) {
       return projects;
     }
 
     return projects.filter((project) => {
-      return [project.name, project.repoFullName, project.appUrl ?? '']
+      return [project.name, project.repoFullName, project.repoUrl ?? '']
         .join(' ')
         .toLowerCase()
         .includes(deferredSearch);
     });
-  }, [deferredSearch, listProjects?.projects]);
+  }, [deferredSearch, listProjects?.items]);
 
   const updateParams = (updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -101,22 +129,39 @@ export function useProjectsPage() {
     updateParams({ view: nextViewMode === 'grid' ? null : nextViewMode });
   };
 
+  const handleConnectGithub = () => {
+    window.location.assign(`${env.NEXT_PUBLIC_API_URL}/github/oauth/login`);
+  };
+
+  const handleCreateNew = () => {
+    router.push('/new');
+  };
+
+  const handleDismissGithubConnectStatus = () => {
+    updateParams({ connectGithub: null, reason: null });
+  };
+
   return {
     canCreateProject: githubConnected,
     currentPage,
-    errorMessage: error?.message,
+    errorMessage: getApiErrorMessage(error),
     filteredProjects,
     githubConnected,
+    githubConnectReason,
+    githubConnectStatus,
     hasSearchQuery: deferredSearch.length > 0,
     isError,
     isLoading,
+    onConnectGithub: handleConnectGithub,
+    onCreateNew: handleCreateNew,
+    onDismissGithubConnectStatus: handleDismissGithubConnectStatus,
     onPageChange: handlePageChange,
     onRetry: () => void refetch(),
     onSearchChange: handleSearchChange,
     onViewModeChange: handleViewModeChange,
     searchQuery,
-    totalPages: listProjects?.totalPage ?? 0,
-    totalProjects: listProjects?.total ?? 0,
+    totalPages: listProjects?.meta.totalPage ?? 0,
+    totalProjects: listProjects?.meta.total ?? 0,
     viewMode,
   };
 }

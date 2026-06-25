@@ -18,9 +18,8 @@
 }
 
 @theme {
-  --font-family-sans: var(--font-family-apple);
-  --font-family-geist-sans: var(--font-geist-sans);
-  --font-family-geist-mono: var(--font-geist-mono);
+  --font-family-sans: var(--font-geist-sans);
+  --font-family-mono: var(--font-geist-mono);
 
   --animate-flame-flicker: flame-flicker 1.2s ease-in-out infinite;
 
@@ -42,6 +41,7 @@ body {
   margin: 0;
   padding: 0;
   scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
 }
 
 @layer base {
@@ -67,7 +67,7 @@ body {
 }
 
 body {
-  font-family: var(--font-apple), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -101,7 +101,7 @@ h6 {
 
 code,
 pre {
-  font-family: var(--font-family-geist-mono), monospace;
+  font-family: var(--font-geist-mono), monospace;
 }
 
 input.input-autofill:-webkit-autofill,
