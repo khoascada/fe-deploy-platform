@@ -1,5 +1,4 @@
 ﻿export * from './hooks';
-export * from './mock-projects';
 export * from './types';
 export { NewProjectPageClient } from './components/new-project-page-client';
 export { ProjectCard } from './components/project-card';
