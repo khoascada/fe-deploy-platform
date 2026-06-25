@@ -5,110 +5,62 @@ on:
     branches:
       - main
 
-env:
-  # Tên image chung để tái sử dụng trong các step build và deploy
-  IMAGE_NAME: fe-deploy-platform
+concurrency:
+  group: frontend-production
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      # Workflow chỉ cần quyền đọc source code để build image
       contents: read
 
     steps:
-      # Lấy source code của commit trong pull request để làm build context
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # Tạo sẵn tên repository image và tag theo commit SHA
-      # để các step sau dùng lại, không phải viết lặp
-      - name: Set image tags
-        id: image
+      - name: Deploy frontend on VPS
         run: |
-          # Tạo tên đầy đủ của Docker image
-          # Ví dụ: username/fe-deploy-platform
-          echo "repository=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}" >> "$GITHUB_OUTPUT"
-
-          # Lấy commit SHA hiện tại để làm tag riêng cho image
-          # Tag này giúp trace version và rollback dễ hơn
-          echo "sha_tag=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
-
-      # Bật Docker Buildx để build image theo cơ chế mới của Docker
-      # Buildx hỗ trợ cache và nhiều tính năng build tốt hơn
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # Đăng nhập Docker Hub trên GitHub Actions runner để push image
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # Build image frontend từ Dockerfile rồi push lên Docker Hub
-      # Push 2 tag:
-      # - latest: dùng cho deploy mặc định
-      # - SHA: dùng để trace version hoặc rollback nếu cần
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          # Build image từ thư mục gốc của repository frontend
-          context: .
-
-          # Push image lên Docker Hub sau khi build xong
-          push: true
-
-          # Gắn 2 tag cho cùng một image
-          tags: |
-            ${{ steps.image.outputs.repository }}:latest
-            ${{ steps.image.outputs.repository }}:${{ steps.image.outputs.sha_tag }}
-
-          # Truyền biến vào quá trình build frontend
-          # Lưu ý: build-args không nên chứa secret nhạy cảm
-          build-args: |
-            BACKEND_URL=${{ vars.BACKEND_URL || 'http://localhost:3000' }}
-            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL || '/api/v1' }}
-            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'http://localhost:5000' }}
-
-      # SSH vào VPS để kéo image mới và restart frontend
-      - name: SSH deploy frontend
-        run: |
-          # Tạo thư mục SSH trên GitHub Actions runner nếu chưa có
+          # Chuẩn bị SSH key để GitHub Actions có thể SSH vào VPS
           mkdir -p ~/.ssh
-
-          # Ghi private key từ GitHub Secrets ra file id_ed25519
-          # Key này dùng để SSH từ GitHub Actions vào VPS
           echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-
-          # Chỉ cho owner đọc/ghi private key
-          # SSH sẽ từ chối dùng key nếu permission quá mở
           chmod 600 ~/.ssh/id_ed25519
-
-          # Thêm fingerprint của VPS vào known_hosts
-          # Mục đích là tránh prompt xác nhận khi SSH lần đầu
           ssh-keyscan -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts
 
-          # SSH vào VPS và chạy các lệnh deploy frontend
-          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << EOF
-            # Dừng script ngay nếu có bất kỳ lệnh nào bị lỗi
-            set -e
+          # SSH vào VPS và truyền commit SHA hiện tại sang VPS
+          ssh -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" "DEPLOY_SHA='${{ github.sha }}' bash -s" <<'EOF'
+          set -euo pipefail
 
-            # Di chuyển tới thư mục infra trên VPS
-            # Thư mục này chứa file docker-compose.yml production
-            cd /opt/mini-deploy/mini-deploy-infra
+          # Thư mục gốc chứa các repo trên VPS
+          APP_ROOT=/opt/mini-deploy
+          LOCK_FILE=/tmp/mini-deploy-cd.lock
 
-            # Đăng nhập Docker Hub trên VPS để pull được private image frontend
-            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          # Sync repo về đúng commit vừa trigger workflow
+          sync_sha() {
+            repo_dir="$1"
+            sha="$2"
+            git -C "$APP_ROOT/$repo_dir" fetch --prune origin
+            git -C "$APP_ROOT/$repo_dir" checkout --force "$sha"
+          }
 
-            # Kéo image mới nhất cho service frontend theo cấu hình trong docker-compose.yml
-            docker compose pull frontend
+          # Sync repo về branch mới nhất từ origin
+          sync_branch() {
+            repo_dir="$1"
+            branch="$2"
+            git -C "$APP_ROOT/$repo_dir" fetch --prune origin
+            git -C "$APP_ROOT/$repo_dir" checkout --force -B "$branch" "origin/$branch"
+          }
 
-            # Start lại frontend bằng image mới
-            # --no-build: không build trên VPS, chỉ dùng image đã pull từ Docker Hub
-            docker compose up -d --no-build frontend
+          (
+            # Khóa deploy để tránh 2 tiến trình deploy đụng nhau trên VPS
+            flock -w 600 9
 
-            # In trạng thái các container để kiểm tra nhanh sau khi deploy
+            # Cập nhật source frontend và infra
+            sync_sha fe-deploy-platform "$DEPLOY_SHA"
+            sync_branch mini-deploy-infra main
+
+            # Build lại image và restart container frontend
+            cd "$APP_ROOT/mini-deploy-infra"
+            docker compose build frontend
+            docker compose up -d --no-deps frontend
             docker compose ps
+          ) 9>"$LOCK_FILE"
           EOF
