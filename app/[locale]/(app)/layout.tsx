@@ -1,5 +1,5 @@
 'use client';
-
+export const dynamic = 'force-dynamic';
 import { useMobileDrawerStore } from '@/features/app-shell';
 import { ErrorBoundaryWithTranslation as ErrorBoundary } from '@components/errors';
 import AppHeader from '@components/layouts/header/header';
@@ -12,12 +12,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const t = useTranslations('navigation');
   const drawerOpen = useMobileDrawerStore((state) => state.drawerOpen);
   const setDrawerOpen = useMobileDrawerStore((state) => state.setDrawerOpen);
+
   const isMobile = useIsMobile();
   // đặt noti-obser và invi-obser, sse ở đây vì nó chỉ obser khi user đăng nhập.
   // useSseConnection();
 
   return (
-    <div className="relative flex min-h-[100dvh] flex-col bg-background text-foreground">
+    <div className="bg-background text-foreground relative flex min-h-[100dvh] flex-col">
       <ErrorBoundary variant="header">
         <AppHeader drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} showSidebarToggle />
       </ErrorBoundary>
@@ -27,7 +28,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
             <SheetContent
               side="left"
-              className="w-[220px] border-r border-border bg-card p-0 shadow-none"
+              className="border-border bg-card w-[220px] border-r p-0 shadow-none"
               showCloseButton={false}
             >
               <SheetTitle className="sr-only">{t('menuTitle')}</SheetTitle>
@@ -41,7 +42,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </Sheet>
         ) : (
           <ErrorBoundary variant="sidebar">
-            <div className="flex w-[220px] flex-col overflow-y-auto border-r border-border bg-card">
+            <div className="border-border bg-card flex w-[220px] flex-col overflow-y-auto border-r">
               <SidebarContent />
             </div>
           </ErrorBoundary>

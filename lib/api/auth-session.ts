@@ -1,15 +1,14 @@
-import axios from 'axios';
-import { env } from '@/env';
-import { devError } from '@lib/utils/logger';
+import { useAuthStore } from '@/features/auth';
+import { queryClient } from '@lib/query/query-client';
 
 export const logoutInvalid = async () => {
-  try {
-    await axios.post(`${env.NEXT_PUBLIC_API_URL}/auth/logout`, {}, { withCredentials: true });
-  } catch (error) {
-    devError('Logout invalid error:', error);
-  } finally {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/';
-    }
+  if (typeof window === 'undefined') {
+    return;
   }
+
+  localStorage.removeItem('auth');
+  localStorage.removeItem('recent-views-storage');
+  useAuthStore.getState().logout();
+  queryClient.clear();
+  window.location.href = '/login?session_expired=true';
 };

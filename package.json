@@ -6,7 +6,7 @@
     "prepare": "husky",
     "commit": "cz",
     "dev": "next dev -p 2805",
-    "build": "next build --webpack",
+    "build": "next build",
     "build:analyze": "cross-env ANALYZE=true next build --webpack",
     "build:analyze-turbo": "next experimental-analyze",
     "start": "next start -p 5000",

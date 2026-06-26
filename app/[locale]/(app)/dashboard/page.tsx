@@ -1,7 +1,9 @@
-import { getTranslations } from 'next-intl/server';
+'use client';
 
-export default async function DashboardPage() {
-  const t = await getTranslations('pages.dashboard');
+import { useTranslations } from 'next-intl';
+
+export default function DashboardPage() {
+  const t = useTranslations('pages.dashboard');
 
   return (
     <section className="space-y-3">
