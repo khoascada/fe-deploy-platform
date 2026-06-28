@@ -34,7 +34,6 @@ COPY types ./types
 COPY env.ts ./env.ts
 COPY eslint.config.mjs ./eslint.config.mjs
 COPY global.d.ts ./global.d.ts
-COPY next-env.d.ts ./next-env.d.ts
 COPY next.config.ts ./next.config.ts
 COPY postcss.config.mjs ./postcss.config.mjs
 COPY proxy.ts ./proxy.ts
