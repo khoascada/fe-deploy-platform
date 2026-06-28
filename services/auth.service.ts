@@ -16,7 +16,6 @@ import type { ApiResponse } from '@lib/types/base';
 export const authApi = {
     login: async (credentials: LoginCredentials) => {
         const response = await apiClient.post<ApiResponse<AuthResponse>>('/auth/login', credentials);
-        console.log("🚀 ~ response:", response.data.data.user)
         const data = validateResponse(AuthResponseSchema, response.data.data);
         return { ...response.data, data };
     },

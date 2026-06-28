@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import * as React from 'react';
 import Image from 'next/image';
@@ -47,7 +47,7 @@ const COUNTRIES: Country[] = [
 ];
 
 export interface PhoneInputProps
-  extends Omit<React.ComponentProps<'input'>, 'value' | 'onChange' | 'type'> {
+  extends Omit<React.ComponentProps<typeof Input>, 'value' | 'onChange' | 'type'> {
   value?: string;
   onChange?: (value: string, countryCode: string, fullNumber: string) => void;
   defaultCountry?: string;
@@ -67,7 +67,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
       selectClassName,
       placeholder = 'Enter phone number',
       disabled,
-      size, // Destructure size here to exclude it from ...props
+      size,
       ...props
     },
     ref
@@ -77,10 +77,10 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 
     const selectedCountryData = COUNTRIES.find((c) => c.code === selectedCountry) || COUNTRIES[0];
 
-    // Sync với value prop nếu là controlled component
+    // Sync vá»›i value prop náº¿u lÃ  controlled component
     React.useEffect(() => {
       if (value) {
-        // Nếu value có chứa country code, tách ra
+        // Náº¿u value cÃ³ chá»©a country code, tÃ¡ch ra
         const countryMatch = COUNTRIES.find((c) => value.startsWith(c.dialCode));
         if (countryMatch) {
           setSelectedCountry(countryMatch.code);
@@ -103,7 +103,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
     };
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newPhoneNumber = e.target.value.replace(/\D/g, ''); // Chỉ cho phép số
+      const newPhoneNumber = e.target.value.replace(/\D/g, ''); // Chá»‰ cho phÃ©p sá»‘
       setPhoneNumber(newPhoneNumber);
       const country = COUNTRIES.find((c) => c.code === selectedCountry);
       if (country && onChange) {
@@ -153,6 +153,7 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
           placeholder={placeholder}
           className={cn('flex-1', inputClassName)}
           disabled={disabled}
+          size={size}
           {...props}
         />
       </div>
@@ -163,3 +164,4 @@ const PhoneInput = React.forwardRef<HTMLInputElement, PhoneInputProps>(
 PhoneInput.displayName = 'PhoneInput';
 
 export { PhoneInput, COUNTRIES };
+

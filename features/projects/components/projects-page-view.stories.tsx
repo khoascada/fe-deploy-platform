@@ -97,3 +97,4 @@ export const GithubConnectError: Story = {
     githubConnectStatus: 'error',
   },
 };
+

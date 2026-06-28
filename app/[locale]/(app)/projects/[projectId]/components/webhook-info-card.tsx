@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import type { ProjectDetail } from '@/types/project';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui';
 import { useTranslations } from 'next-intl';
-import { Cable, CheckCircle2, LockKeyhole, ShieldCheck, Webhook } from 'lucide-react';
+import { Cable, CheckCircle2, ShieldCheck, Webhook } from 'lucide-react';
 import { getWebhookTone, StatusBadge } from './project-detail-utils';
 
 interface WebhookInfoCardProps {
@@ -72,3 +72,4 @@ export function WebhookInfoCard({ project }: WebhookInfoCardProps) {
     </Card>
   );
 }
+

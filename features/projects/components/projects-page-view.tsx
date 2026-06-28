@@ -83,7 +83,6 @@ function ProjectsSkeleton({ viewMode }: { viewMode: ProjectsViewMode }) {
 export function ProjectsPageView({
   canCreateProject,
   currentPage,
-  errorMessage,
   githubConnected,
   githubConnectReason,
   githubConnectStatus,
@@ -280,3 +279,5 @@ export function ProjectsPageView({
     </section>
   );
 }
+
+

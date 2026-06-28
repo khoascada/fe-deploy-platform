@@ -1,4 +1,4 @@
-import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
+﻿import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
 import { refreshTokenService } from '@lib/api/auth-refresh';
 import { devLog } from '@lib/utils';
 
@@ -15,7 +15,7 @@ export const createSseConnection = (options: SseOptions) => {
   const { onMessage, onEvent, onError, onOpen, onClose, headers: customHeaders } = options;
   const ctrl = new AbortController();
 
-  // ---- Đường dẫn tương đối để Next.js Rewrites xử lý ----
+  // ---- ÄÆ°á»ng dáº«n tÆ°Æ¡ng Ä‘á»‘i Ä‘á»ƒ Next.js Rewrites xá»­ lÃ½ ----
   const fullUrl = '/api/v1/sse/event';
 
   const connect = async () => {
@@ -33,7 +33,7 @@ export const createSseConnection = (options: SseOptions) => {
           Accept: EventStreamContentType,
           ...customHeaders,
         },
-        credentials: 'include', // Gửi kèm cookies để xác thực
+        credentials: 'include', // Gá»­i kÃ¨m cookies Ä‘á»ƒ xÃ¡c thá»±c
         signal: ctrl.signal,
         openWhenHidden: true,
 
@@ -55,12 +55,12 @@ export const createSseConnection = (options: SseOptions) => {
               throw new Error('401_UNAUTHORIZED');
             } catch (err) {
               devLog('[SSE] Refresh token failed. Closing connection.');
-              throw err; // Ngừng retry nếu refresh fail
+              throw err; // Ngá»«ng retry náº¿u refresh fail
             }
           }
 
           if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-            // Lỗi client-side khác -> ngừng retry
+            // Lá»—i client-side khÃ¡c -> ngá»«ng retry
             throw new Error(`Fatal error: ${response.status}`);
           }
         },
@@ -78,7 +78,7 @@ export const createSseConnection = (options: SseOptions) => {
             } else {
               onMessage?.(data);
             }
-          } catch (e) {
+          } catch {
             if (msg.event && onEvent) {
               onEvent(msg.event, msg.data);
             } else {
@@ -98,12 +98,12 @@ export const createSseConnection = (options: SseOptions) => {
             err
           );
           if (err instanceof Error && err.message === '401_UNAUTHORIZED') {
-            // Đây là lỗi chúng ta chủ động ném để retry sau khi refresh token
-            // Trả về mặc định để cho phép retry
+            // ÄÃ¢y lÃ  lá»—i chÃºng ta chá»§ Ä‘á»™ng nÃ©m Ä‘á»ƒ retry sau khi refresh token
+            // Tráº£ vá» máº·c Ä‘á»‹nh Ä‘á»ƒ cho phÃ©p retry
             return;
           }
           onError?.(err);
-          // throw error để trigger retry logic của fetch-event-source (mặc định exponential backoff)
+          // throw error Ä‘á»ƒ trigger retry logic cá»§a fetch-event-source (máº·c Ä‘á»‹nh exponential backoff)
           throw err;
         },
       });
@@ -125,3 +125,4 @@ export const createSseConnection = (options: SseOptions) => {
     },
   };
 };
+
