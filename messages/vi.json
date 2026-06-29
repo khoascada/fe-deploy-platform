@@ -174,6 +174,15 @@
       "actions": {
         "openRepository": "Mở repository"
       },
+      "toast": {
+        "deployQueued": "Đã đưa deployment vào hàng chờ."
+      },
+      "confirm": {
+        "deployTitle": "Deploy {projectName}?",
+        "deployDescription": "Deploy branch {branch} ngay bây giờ?",
+        "confirmAction": "Deploy ngay",
+        "cancelAction": "Hủy"
+      },
       "states": {
         "errorTitle": "Không thể tải chi tiết dự án",
         "errorDescription": "Đã có lỗi xảy ra khi tải trang chi tiết dự án.",
@@ -189,6 +198,8 @@
         "CANCELED": "Đã hủy"
       },
       "trigger": {
+        "MANUAL": "Thủ công",
+        "GITHUB_PUSH": "Webhook",
         "manual": "Thủ công",
         "webhook": "Webhook"
       },
@@ -424,6 +435,13 @@
     "INSUFFICIENT_ROLE": "Tài khoản của bạn không đủ quyền để thực hiện hành động này.",
     "USER_NOT_FOUND": "Không tìm thấy người dùng.",
     "NOT_CONNECTED_GITHUB_YET": "Bạn chưa connect với Github",
-    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!"
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!",
+    "NOT_ACCESS_TO_PROJECT": "Bạn không có quyền truy cập dự án này.",
+    "PROJECT_NOT_FOUND": "Không tìm thấy dự án.",
+    "PROJECT_NOT_DEPLOYABLE": "Dự án này chưa thể deploy với cấu hình hiện tại.",
+    "PROJECT_NOT_ACTIVE": "Chỉ dự án đang hoạt động mới có thể deploy.",
+    "PROJECT_RUNNER_NOT_SUPPORTED": "Trình chạy deployment của dự án này chưa được hỗ trợ.",
+    "PROJECT_DEPLOY_CONFIG_MISSING": "Dự án đang thiếu cấu hình bắt buộc để deploy.",
+    "ACTIVE_DEPLOYMENT_EXISTS": "Dự án này đang có một deployment được thực thi."
   }
 }

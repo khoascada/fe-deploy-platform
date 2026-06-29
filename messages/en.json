@@ -173,6 +173,15 @@
       "actions": {
         "openRepository": "Open repository"
       },
+      "toast": {
+        "deployQueued": "Deployment queued successfully."
+      },
+      "confirm": {
+        "deployTitle": "Deploy {projectName}?",
+        "deployDescription": "Deploy branch {branch} now?",
+        "confirmAction": "Deploy now",
+        "cancelAction": "Cancel"
+      },
       "states": {
         "errorTitle": "Could not load this project",
         "errorDescription": "Something went wrong while loading the project detail page.",
@@ -188,6 +197,8 @@
         "CANCELED": "Canceled"
       },
       "trigger": {
+        "MANUAL": "Manual",
+        "GITHUB_PUSH": "Webhook",
         "manual": "Manual",
         "webhook": "Webhook"
       },
@@ -423,6 +434,13 @@
     "INSUFFICIENT_ROLE": "Your account does not have the required permissions.",
     "USER_NOT_FOUND": "User not found.",
     "NOT_CONNECTED_GITHUB_YET": "You are not connect Github yet",
-    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!"
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!",
+    "NOT_ACCESS_TO_PROJECT": "You do not have permission to access this project.",
+    "PROJECT_NOT_FOUND": "Project not found.",
+    "PROJECT_NOT_DEPLOYABLE": "This project cannot be deployed with its current configuration.",
+    "PROJECT_NOT_ACTIVE": "Only active projects can be deployed.",
+    "PROJECT_RUNNER_NOT_SUPPORTED": "This project's deployment runner is not supported yet.",
+    "PROJECT_DEPLOY_CONFIG_MISSING": "This project is missing required deployment configuration.",
+    "ACTIVE_DEPLOYMENT_EXISTS": "A deployment is already in progress for this project."
   }
 }

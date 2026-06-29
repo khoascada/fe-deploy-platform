@@ -6,6 +6,7 @@ import {
   useGetGithubRepos,
 } from '@/features/projects/hooks/actions';
 import type { CreateProjectFormValues } from '@/features/projects/validations';
+import { useTranslateError } from '@/lib/hooks';
 import { useRouter } from '@i18n/navigation';
 import { getApiErrorMessage } from '@lib/utils/error';
 import { githubApi } from '@services/github.service';
@@ -15,6 +16,7 @@ import { useCallback, useMemo, useState } from 'react';
 export function useNewProjectPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { getErrorMessage } = useTranslateError()
   const [repositorySearch, setRepositorySearch] = useState('');
   const [branchSearch, setBranchSearch] = useState('');
   const [selectedRepositoryOwner, setSelectedRepositoryOwner] = useState('');
@@ -38,6 +40,7 @@ export function useNewProjectPage() {
     isLoading: isBranchesLoading,
   } = useGetGithubBranches(selectedRepositoryOwner, selectedRepositoryName);
   const { createProject, error: submitError, isPending: isSubmitting } = useCreateProject();
+
 
 
   const filteredRepositoryOptions = useMemo(() => {
@@ -149,7 +152,7 @@ export function useNewProjectPage() {
   return {
     branchSearch,
     branchesErrorMessage:
-      refreshBranchesErrorMessage || (branchesError ? getApiErrorMessage(branchesError) : ''),
+      refreshBranchesErrorMessage || (branchesError ? getErrorMessage(branchesError) : ''),
     filteredBranchOptions,
     filteredRepositoryOptions,
     findRepositoryOptionById,
@@ -169,8 +172,8 @@ export function useNewProjectPage() {
     onSubmit: submit,
     repositoriesErrorMessage:
       refreshRepositoriesErrorMessage ||
-      (repositoriesError ? getApiErrorMessage(repositoriesError) : ''),
+      (repositoriesError ? getErrorMessage(repositoriesError) : ''),
     repositorySearch,
-    submitErrorMessage: submitError ? getApiErrorMessage(submitError) : '',
+    submitErrorMessage: submitError ? getErrorMessage(submitError) : '',
   };
 }

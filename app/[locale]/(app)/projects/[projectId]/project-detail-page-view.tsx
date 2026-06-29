@@ -2,7 +2,9 @@
 
 import type { ProjectDetail } from '@/types/project';
 import { Button, Card, CardContent } from '@components/ui';
+import NotFoundPage from '@components/status-page/not-found';
 import { Link } from '@i18n/navigation';
+import type { ApiError } from '@lib/types/base';
 import { ArrowLeft, ExternalLink, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { DeploymentStatusCard } from './components/deployment-status-card';
@@ -10,30 +12,36 @@ import { FutureSectionCard } from './components/future-section-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
 import { ProjectOverviewCard } from './components/project-overview-card';
 import { WebhookInfoCard } from './components/webhook-info-card';
-import { ApiError } from '@lib/types/base';
-import NotFoundPage from '@components/status-page/not-found';
 
 interface ProjectDetailPageViewProps {
-  error: ApiError | null
+  deployErrorMessage: string;
+  error: ApiError | null;
   errorMessage?: string;
+  isDeployDisabled: boolean;
+  isDeploying: boolean;
   isError: boolean;
   isLoading: boolean;
+  onDeployNow: () => void;
   onRetry: () => void;
   project?: ProjectDetail;
 }
 
 export function ProjectDetailPageView({
+  deployErrorMessage,
   error,
   errorMessage,
+  isDeployDisabled,
+  isDeploying,
   isError,
   isLoading,
+  onDeployNow,
   onRetry,
   project,
 }: ProjectDetailPageViewProps) {
   const t = useTranslations('pages.projectDetail');
 
-  if(error?.statusCode === 404 || error?.error.statusCode === 404) {
-    return <NotFoundPage />
+  if (error?.statusCode === 404 || error?.error.statusCode === 404) {
+    return <NotFoundPage />;
   }
 
   if (isLoading) {
@@ -49,14 +57,14 @@ export function ProjectDetailPageView({
             {t('back')}
           </Link>
         </Button>
-        <Card className="border-destructive/25 bg-destructive/5 overflow-hidden rounded-2xl shadow-sm">
+        <Card className="overflow-hidden rounded-2xl border-destructive/25 bg-destructive/5 shadow-sm">
           <CardContent className="flex min-h-72 flex-col items-center justify-center gap-5 p-8 text-center">
-            <div className="bg-destructive/10 text-destructive flex size-12 items-center justify-center rounded-full">
+            <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
               <RefreshCw className="size-5" />
             </div>
             <div className="max-w-md space-y-2">
               <h1 className="text-xl font-semibold tracking-tight">{t('states.errorTitle')}</h1>
-              <p className="text-muted-foreground text-sm leading-6">
+              <p className="text-sm leading-6 text-muted-foreground">
                 {errorMessage || t('states.errorDescription')}
               </p>
             </div>
@@ -78,7 +86,7 @@ export function ProjectDetailPageView({
             </Link>
           </Button>
           <div className="space-y-1.5">
-            <p className="text-muted-foreground font-mono text-xs tracking-wider uppercase">
+            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {project.repoFullName}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{project.name}</h1>
@@ -93,7 +101,13 @@ export function ProjectDetailPageView({
       </header>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.7fr)_minmax(280px,0.7fr)]">
-        <DeploymentStatusCard project={project} />
+        <DeploymentStatusCard
+          deployErrorMessage={deployErrorMessage}
+          isDeployDisabled={isDeployDisabled}
+          isDeploying={isDeploying}
+          onDeployNow={onDeployNow}
+          project={project}
+        />
         <WebhookInfoCard project={project} />
       </div>
 

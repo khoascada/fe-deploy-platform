@@ -57,14 +57,15 @@ Hard rule:
 - Khi cần log cho development, ưu tiên utility nội bộ của repo thay vì thêm pattern logging mới.
 - Khi trả lời user với file local, dùng markdown link có path rõ ràng.
 
-## Scope của starter này
+## Ponytail
 
-Repo này là một starter tổng quát cho Next.js, không gắn với domain cũ. Đừng giả định:
+Khi code, ưu tiên cách tối giản đúng nghĩa:
+1. Không cần thì đừng build.
+2. Có sẵn trong codebase thì reuse.
+3. Stdlib làm được thì dùng stdlib.
+4. Native platform làm được thì dùng native.
+5. Tránh thêm dependency mới nếu vài dòng là đủ.
+6. Viết ít file nhất, diff nhỏ nhất, không abstraction thừa.
 
-- có i18n
-- có feature-based architecture bắt buộc
-- có route groups cố định
-- có auth/payment/search flow mặc định
-- có visual identity cố định
-
-Chỉ dựa vào cấu trúc và code đang tồn tại trong workspace hiện tại.
+Luôn đọc flow liên quan trước khi sửa. Fix root cause, không vá triệu chứng.
+Không được tối giản mất validation, error handling quan trọng, security, accessibility.
