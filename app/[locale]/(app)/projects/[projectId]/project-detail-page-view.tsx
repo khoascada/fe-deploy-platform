@@ -11,6 +11,7 @@ import { DeploymentStatusCard } from './components/deployment-status-card';
 import { FutureSectionCard } from './components/future-section-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
 import { ProjectOverviewCard } from './components/project-overview-card';
+import { RealtimeLogsCard } from './components/realtime-logs-card';
 import { WebhookInfoCard } from './components/webhook-info-card';
 
 interface ProjectDetailPageViewProps {
@@ -114,8 +115,8 @@ export function ProjectDetailPageView({
       <ProjectOverviewCard project={project} />
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <FutureSectionCard kind="history" />
-        <FutureSectionCard kind="logs" />
+        <FutureSectionCard />
+        <RealtimeLogsCard />
       </div>
     </section>
   );

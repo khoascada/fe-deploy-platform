@@ -304,10 +304,34 @@
         "logs": {
           "eyebrow": "Realtime logs",
           "title": "Realtime logs",
-          "description": "A future log surface for streaming build and runtime output without crowding the first release of this page.",
+          "description": "A terminal-like stream for deployment events, platform messages, and command output that will later plug into SSE without reshaping this page.",
           "helperTitle": "Log stream container is ready",
           "helperDescription": "This layout is intentionally sized for a terminal-like stream, filters, and tail controls in the next phase.",
-          "action": "Open live logs"
+          "action": "Open live logs",
+          "summary": {
+            "totalLines": "Total lines",
+            "latestLevel": "Latest level",
+            "latestEvent": "Latest event",
+            "sources": "Sources",
+            "emptyValue": "Waiting"
+          },
+          "listTitle": "Stream preview",
+          "listHint": "SYSTEM logs come from the platform itself, while STDOUT and STDERR reflect command output.",
+          "listAriaLabel": "Realtime deployment log stream preview",
+          "emptyTitle": "Waiting for deployment output",
+          "emptyDescription": "Platform events, command output, and health updates will appear here once a deployment starts emitting log lines.",
+          "footnote": "This UI is mock-backed for now, but it already follows the shape and reading order of the future SSE stream.",
+          "levels": {
+            "DEBUG": "Debug",
+            "INFO": "Info",
+            "WARN": "Warn",
+            "ERROR": "Error"
+          },
+          "streams": {
+            "SYSTEM": "System",
+            "STDOUT": "Stdout",
+            "STDERR": "Stderr"
+          }
         }
       }
     },
@@ -441,6 +465,10 @@
     "PROJECT_NOT_ACTIVE": "Only active projects can be deployed.",
     "PROJECT_RUNNER_NOT_SUPPORTED": "This project's deployment runner is not supported yet.",
     "PROJECT_DEPLOY_CONFIG_MISSING": "This project is missing required deployment configuration.",
-    "ACTIVE_DEPLOYMENT_EXISTS": "A deployment is already in progress for this project."
+    "ACTIVE_DEPLOYMENT_EXISTS": "A deployment is already in progress for this project.",
+    "HOST_PORT_ALREADY_EXISTS": "Host port is already in use. Please use a different port!",
+    "GITHUB_REPO_ALREADY_EXISTS": "This GitHub repo has already been created!",
+    "PROJECT_SLUG_ALREADY_EXISTS": "Slug already exists!",
+    "CONTAINER_NAME_ALREADY_EXISTS": "Container name already exists!"
   }
 }
