@@ -337,7 +337,60 @@
     },
     "logs": {
       "title": "Nhật ký",
-      "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng."
+      "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng.",
+      "retry": "Thử lại",
+      "notSelected": "Chưa chọn",
+      "selectionSummaryTitle": "Lựa chọn hiện tại",
+      "selectionSummaryDescription": "Trên màn hình nhỏ, dùng các selector bên trên để chuyển nhanh giữa project và deployment run.",
+      "projects": {
+        "title": "Projects",
+        "description": "Chọn một project trước, rồi xem các deployment run gần đây của project đó.",
+        "searchPlaceholder": "Tìm project...",
+        "mobileLabel": "Chọn project",
+        "mobilePlaceholder": "Chọn một project",
+        "errorTitle": "Không thể tải danh sách project",
+        "errorDescription": "Đã có lỗi xảy ra khi tải cột project.",
+        "emptyTitle": "Chưa có project nào",
+        "emptyDescription": "Project sẽ xuất hiện ở đây sau khi bạn kết nối repository đầu tiên.",
+        "noResultsTitle": "Không tìm thấy project phù hợp",
+        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa từ khóa tìm kiếm hiện tại.",
+        "latestDeploy": "Deploy gần nhất {time}",
+        "noDeployYet": "Chưa có deployment nào"
+      },
+      "deployments": {
+        "title": "Deployments",
+        "description": "Các run gần đây của project đang chọn, sắp xếp từ mới nhất đến cũ hơn.",
+        "mobileLabel": "Chọn deployment",
+        "mobilePlaceholder": "Chọn một deployment",
+        "errorTitle": "Không thể tải lịch sử deployment",
+        "errorDescription": "Chưa thể tải lịch sử deployment cho project này.",
+        "emptyTitle": "Project này chưa có deployment",
+        "emptyDescription": "Hãy trigger deployment trước, rồi lịch sử run sẽ xuất hiện ở đây.",
+        "noCommitMessage": "Chưa có commit message cho run này."
+      },
+      "terminal": {
+        "eyebrow": "Terminal",
+        "title": "Luồng log deployment",
+        "titleWithProject": "Luồng log của {projectName}",
+        "description": "Chọn project và deployment run để xem output theo kiểu terminal.",
+        "meta": "Branch {branch} · trạng thái {status}",
+        "logAriaLabel": "Vùng terminal hiển thị log deployment",
+        "jumpToLatest": "Nhảy xuống cuối",
+        "connection": {
+          "live": "Đang tail realtime",
+          "snapshot": "Ảnh chụp tĩnh"
+        },
+        "states": {
+          "errorTitle": "Không thể tải logs",
+          "errorDescription": "Chưa thể tải output terminal của deployment này.",
+          "noProjectTitle": "Hãy chọn một project",
+          "noProjectDescription": "Khi đã chọn project, các deployment run gần đây sẽ xuất hiện cạnh terminal.",
+          "noDeploymentTitle": "Hãy chọn một deployment run",
+          "noDeploymentDescription": "Chọn một deployment run để xem output log của nó.",
+          "emptyTitle": "Đang chờ output từ deployment",
+          "emptyDescription": "Deployment này chưa phát ra dòng log nào."
+        }
+      }
     },
     "dashboard": {
       "title": "Bảng điều khiển",

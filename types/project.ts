@@ -96,11 +96,16 @@ export interface ProjectDetail {
 // Dùng cho trang Deployment History (GET /projects/:id/deploys)
 export interface DeployListItem {
     id: string;
+    projectId: string;
+    deploymentNumber: number;
     status: DeployStatus;
-    commitSha: string;
-    commitMsg: string | null;
+    trigger: 'MANUAL' | 'GITHUB_PUSH';
+    branch: string;
+    commitSha: string | null;
+    commitMessage: string | null;
+    queuedAt: string;
     createdAt: string;
     finishedAt: string | null;
-    containerId: string | null;
-    port: number | null;
+    containerId?: string | null;
+    port?: number | null;
 }

@@ -1,6 +1,7 @@
 import type { DeployListItem, DeployStatus, LatestDeploy } from './project';
 
 export type { DeployListItem, DeployStatus, LatestDeploy };
+export type DeploymentsResponse = DeployListItem[];
 
 export interface CreateDeploymentResponse {
   id: string;

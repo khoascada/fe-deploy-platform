@@ -336,7 +336,60 @@
     },
     "logs": {
       "title": "Logs",
-      "description": "Inspect build output, runtime logs, and operational events across your platform."
+      "description": "Inspect build output, runtime logs, and operational events across your platform.",
+      "retry": "Try again",
+      "notSelected": "Not selected yet",
+      "selectionSummaryTitle": "Current selection",
+      "selectionSummaryDescription": "Use the selectors above to jump between projects and deployment runs on smaller screens.",
+      "projects": {
+        "title": "Projects",
+        "description": "Pick a project first, then inspect its recent deployment runs.",
+        "searchPlaceholder": "Search projects...",
+        "mobileLabel": "Select project",
+        "mobilePlaceholder": "Choose a project",
+        "errorTitle": "Could not load projects",
+        "errorDescription": "Something went wrong while loading the project rail.",
+        "emptyTitle": "No projects yet",
+        "emptyDescription": "Projects will appear here after your first repository is connected.",
+        "noResultsTitle": "No matching projects",
+        "noResultsDescription": "Try another keyword or clear the current search.",
+        "latestDeploy": "Latest deploy {time}",
+        "noDeployYet": "No deployments yet"
+      },
+      "deployments": {
+        "title": "Deployments",
+        "description": "Recent runs for the selected project, sorted from newest to oldest.",
+        "mobileLabel": "Select deployment",
+        "mobilePlaceholder": "Choose a deployment",
+        "errorTitle": "Could not load deployments",
+        "errorDescription": "We could not load deployment history for this project.",
+        "emptyTitle": "No deployments for this project",
+        "emptyDescription": "Trigger a deployment first, then its run history will appear here.",
+        "noCommitMessage": "No commit message captured for this run."
+      },
+      "terminal": {
+        "eyebrow": "Terminal",
+        "title": "Deployment log stream",
+        "titleWithProject": "{projectName} log stream",
+        "description": "Choose a project and deployment run to inspect the terminal output.",
+        "meta": "Branch {branch} · status {status}",
+        "logAriaLabel": "Deployment logs terminal output",
+        "jumpToLatest": "Jump to latest",
+        "connection": {
+          "live": "Live tailing",
+          "snapshot": "Snapshot"
+        },
+        "states": {
+          "errorTitle": "Could not load logs",
+          "errorDescription": "We could not load the terminal output for this deployment.",
+          "noProjectTitle": "Pick a project to start",
+          "noProjectDescription": "Once a project is selected, its recent deployment runs will appear beside the terminal.",
+          "noDeploymentTitle": "Pick a deployment run",
+          "noDeploymentDescription": "Select one deployment run to inspect its log output.",
+          "emptyTitle": "Waiting for deployment output",
+          "emptyDescription": "This deployment has not emitted any log lines yet."
+        }
+      }
     },
     "dashboard": {
       "title": "Dashboard",
