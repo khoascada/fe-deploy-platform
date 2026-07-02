@@ -116,7 +116,11 @@ export function ProjectDetailPageView({
 
       <div className="grid gap-5 lg:grid-cols-2">
         <FutureSectionCard />
-        <RealtimeLogsCard />
+        <RealtimeLogsCard
+          deploymentId={project.latestDeploy?.id}
+          deploymentStatus={project.latestDeploy?.status}
+          projectId={project.id}
+        />
       </div>
     </section>
   );

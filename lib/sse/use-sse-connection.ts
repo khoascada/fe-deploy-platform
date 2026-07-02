@@ -11,6 +11,7 @@ export const useSseConnection = () => {
     devLog('[useSseConnection] Mở kết nối SSE trung tâm...');
 
     const { disconnect } = createSseConnection({
+      url: '/api/v1/sse/event',
       onEvent: (eventName, data) => {
         devLog(`[useSseConnection] Nhận event: ${eventName}`, data);
         sseEventBus.emit(eventName, data);

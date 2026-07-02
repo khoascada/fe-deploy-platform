@@ -1,0 +1,6 @@
+﻿*** Begin Patch
+*** Update File: types/log.ts
+@@
+-export type LogStream = 'SYSTEM' | 'STDOUT' | 'STDERR'
++export type LogStream = 'SYSTEM' | 'STDOUT' | 'STDERR';
+*** End Patch

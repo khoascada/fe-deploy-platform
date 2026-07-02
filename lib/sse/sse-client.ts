@@ -1,8 +1,9 @@
-﻿import { fetchEventSource, EventStreamContentType } from '@microsoft/fetch-event-source';
-import { refreshTokenService } from '@lib/api/auth-refresh';
+﻿import { refreshTokenService } from '@lib/api/auth-refresh';
 import { devLog } from '@lib/utils';
+import { EventStreamContentType, fetchEventSource } from '@microsoft/fetch-event-source';
 
 export interface SseOptions {
+  url: string;
   onMessage?: (data: unknown) => void;
   onEvent?: (event: string, data: unknown) => void;
   onError?: (error: unknown) => void;
@@ -12,11 +13,10 @@ export interface SseOptions {
 }
 
 export const createSseConnection = (options: SseOptions) => {
-  const { onMessage, onEvent, onError, onOpen, onClose, headers: customHeaders } = options;
+  const { url, onMessage, onEvent, onError, onOpen, onClose, headers: customHeaders } = options;
   const ctrl = new AbortController();
 
   // ---- ÄÆ°á»ng dáº«n tÆ°Æ¡ng Ä‘á»‘i Ä‘á»ƒ Next.js Rewrites xá»­ lÃ½ ----
-  const fullUrl = '/api/v1/sse/event';
 
   const connect = async () => {
     let connectedAt: Date | null = null;
@@ -27,13 +27,13 @@ export const createSseConnection = (options: SseOptions) => {
         : '(never fully connected)';
 
     try {
-      await fetchEventSource(fullUrl, {
+      await fetchEventSource(url, {
         method: 'GET',
         headers: {
           Accept: EventStreamContentType,
           ...customHeaders,
         },
-        credentials: 'include', // Gá»­i kÃ¨m cookies Ä‘á»ƒ xÃ¡c thá»±c
+        credentials: 'include', // cookie
         signal: ctrl.signal,
         openWhenHidden: true,
 
@@ -109,7 +109,7 @@ export const createSseConnection = (options: SseOptions) => {
       });
     } catch (err) {
       if (ctrl.signal.aborted) {
-        devLog(`[SSE] Connection aborted for ${fullUrl}`);
+        devLog(`[SSE] Connection aborted for ${url}`);
         return;
       }
       devLog(`[SSE] Fatal connection drop at ${new Date().toISOString()} ${elapsedSince()}:`, err);
@@ -125,4 +125,3 @@ export const createSseConnection = (options: SseOptions) => {
     },
   };
 };
-

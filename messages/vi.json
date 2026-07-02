@@ -310,18 +310,17 @@
           "helperDescription": "Layout này được chừa kích thước phù hợp cho terminal stream, filter, và tail controls ở phase kế tiếp.",
           "action": "Mở live logs",
           "summary": {
-            "totalLines": "Tổng số dòng",
-            "latestLevel": "Mức độ mới nhất",
-            "latestEvent": "Sự kiện gần nhất",
-            "sources": "Nguồn log",
+            "totalLines": "Total lines",
+            "latestLevel": "Latest level",
+            "latestEvent": "Latest event",
+            "sources": "Sources",
             "emptyValue": "Đang chờ"
           },
-          "listTitle": "Xem trước stream",
+          "listTitle": "Stream preview",
           "listHint": "SYSTEM là log do platform tự ghi, còn STDOUT và STDERR phản ánh output từ command.",
           "listAriaLabel": "Vùng xem trước luồng log deployment theo thời gian thực",
           "emptyTitle": "Đang chờ output từ deployment",
           "emptyDescription": "Các sự kiện từ platform, output của command, và cập nhật health check sẽ xuất hiện tại đây khi deployment bắt đầu phát log.",
-          "footnote": "UI này hiện vẫn dùng dữ liệu mock, nhưng đã bám đúng shape và thứ tự đọc của luồng SSE trong phase sau.",
           "levels": {
             "DEBUG": "Debug",
             "INFO": "Info",

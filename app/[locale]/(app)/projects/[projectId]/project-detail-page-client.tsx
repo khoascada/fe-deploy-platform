@@ -1,7 +1,7 @@
 'use client';
 
 import { ProjectDetailPageView } from './project-detail-page-view';
-import { useDetailPageAction } from './use-detail-page-action';
+import { useDetailPageAction } from './hooks/use-detail-page-action';
 
 interface ProjectDetailPageClientProps {
   projectId: string;

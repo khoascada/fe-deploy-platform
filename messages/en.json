@@ -320,7 +320,6 @@
           "listAriaLabel": "Realtime deployment log stream preview",
           "emptyTitle": "Waiting for deployment output",
           "emptyDescription": "Platform events, command output, and health updates will appear here once a deployment starts emitting log lines.",
-          "footnote": "This UI is mock-backed for now, but it already follows the shape and reading order of the future SSE stream.",
           "levels": {
             "DEBUG": "Debug",
             "INFO": "Info",
