@@ -118,7 +118,11 @@ apiClient.interceptors.response.use(
       const errorMessage = apiError.error.message;
 
       // Handle 401 Unauthorized - Token refresh
-      if (errorStatusCode === 401 && errorCode !== ERROR_CODES.INVALID_CREDENTIALS && !originalRequest._retry) {
+      if (
+        errorStatusCode === 401 &&
+        errorCode !== ERROR_CODES.INVALID_CREDENTIALS &&
+        !originalRequest._retry
+      ) {
         // Check if this is a refresh request (avoid infinite loop)
         if (originalRequest.url?.includes('/auth/refresh')) {
           if (typeof window !== 'undefined') {

@@ -2,11 +2,9 @@
 
 :root {
   --font-geist-sans:
-    'Geist', 'Segoe UI', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui,
-    sans-serif;
+    'Geist', 'Segoe UI', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-geist-mono:
-    'Geist Mono', 'SFMono-Regular', 'SF Mono', Consolas, 'Liberation Mono', Menlo,
-    monospace;
+    'Geist Mono', 'SFMono-Regular', 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
 }
 
 @theme {

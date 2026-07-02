@@ -26,7 +26,8 @@ const defaultLogs: DeploymentLogItem[] = [
     createdAt: '2026-07-01T12:00:04.000Z',
     deploymentId: 'dep_123',
     level: 'WARN',
-    message: 'npm warn deprecated inflight@1.0.6: This module is not supported and may leak memory.',
+    message:
+      'npm warn deprecated inflight@1.0.6: This module is not supported and may leak memory.',
     projectId: 'proj_123',
     seq: 35,
     stream: 'STDERR',
@@ -85,7 +86,7 @@ const meta: Meta<typeof RealtimeLogsCard> = {
   decorators: [
     (Story) => (
       <NextIntlClientProvider locale="en" messages={enMessages}>
-        <div className="min-h-screen bg-background p-6 md:p-10">
+        <div className="bg-background min-h-screen p-6 md:p-10">
           <div className="mx-auto max-w-4xl">
             <Story />
           </div>

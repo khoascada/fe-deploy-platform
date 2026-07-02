@@ -26,7 +26,6 @@ export function WebhookInfoCard({ project }: WebhookInfoCardProps) {
               {isProvisioned ? t('webhook.connected') : t('webhook.notConnected')}
             </StatusBadge>
           </div>
-         
         </div>
       </CardHeader>
 
@@ -51,13 +50,19 @@ export function WebhookInfoCard({ project }: WebhookInfoCardProps) {
               <Cable className="size-4" />
               {t('webhook.fields.webhookId')}
             </div>
-            <p className="mt-2 break-all text-sm font-medium">{project.webhookId || t('webhook.notAvailable')}</p>
+            <p className="mt-2 text-sm font-medium break-all">
+              {project.webhookId || t('webhook.notAvailable')}
+            </p>
           </div>
 
           <div className="rounded-2xl border border-dashed p-4">
             <div className="flex items-start gap-3">
               <div className="bg-success/10 text-success flex size-10 items-center justify-center rounded-xl">
-                {isProvisioned ? <CheckCircle2 className="size-4" /> : <ShieldCheck className="size-4" />}
+                {isProvisioned ? (
+                  <CheckCircle2 className="size-4" />
+                ) : (
+                  <ShieldCheck className="size-4" />
+                )}
               </div>
               <div className="space-y-1">
                 <p className="text-sm font-medium">{t('webhook.nextStepTitle')}</p>
@@ -72,4 +77,3 @@ export function WebhookInfoCard({ project }: WebhookInfoCardProps) {
     </Card>
   );
 }
-

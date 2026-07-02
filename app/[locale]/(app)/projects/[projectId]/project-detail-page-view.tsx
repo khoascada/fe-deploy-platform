@@ -58,14 +58,14 @@ export function ProjectDetailPageView({
             {t('back')}
           </Link>
         </Button>
-        <Card className="overflow-hidden rounded-2xl border-destructive/25 bg-destructive/5 shadow-sm">
+        <Card className="border-destructive/25 bg-destructive/5 overflow-hidden rounded-2xl shadow-sm">
           <CardContent className="flex min-h-72 flex-col items-center justify-center gap-5 p-8 text-center">
-            <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
+            <div className="bg-destructive/10 text-destructive flex size-12 items-center justify-center rounded-full">
               <RefreshCw className="size-5" />
             </div>
             <div className="max-w-md space-y-2">
               <h1 className="text-xl font-semibold tracking-tight">{t('states.errorTitle')}</h1>
-              <p className="text-sm leading-6 text-muted-foreground">
+              <p className="text-muted-foreground text-sm leading-6">
                 {errorMessage || t('states.errorDescription')}
               </p>
             </div>
@@ -78,7 +78,7 @@ export function ProjectDetailPageView({
 
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 pb-8">
-      <header className="flex flex-col gap-5 border-b border-border/70 pb-6 sm:flex-row sm:items-end sm:justify-between">
+      <header className="border-border/70 flex flex-col gap-5 border-b pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div className="space-y-4">
           <Button variant="ghost" asChild className="-ml-3">
             <Link href="/projects">
@@ -87,7 +87,7 @@ export function ProjectDetailPageView({
             </Link>
           </Button>
           <div className="space-y-1.5">
-            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            <p className="text-muted-foreground font-mono text-xs tracking-wider uppercase">
               {project.repoFullName}
             </p>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{project.name}</h1>

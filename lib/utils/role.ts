@@ -15,7 +15,10 @@ export function hasRole(userRoles: string | undefined, roleName: string): boolea
     const roles = JSON.parse(userRoles) as unknown;
     return (
       Array.isArray(roles) &&
-      roles.some((role) => typeof role === 'object' && role !== null && (role as RolePayload).role_name === roleName)
+      roles.some(
+        (role) =>
+          typeof role === 'object' && role !== null && (role as RolePayload).role_name === roleName
+      )
     );
   } catch {
     return false;

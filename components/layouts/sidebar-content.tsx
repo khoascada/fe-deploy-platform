@@ -25,7 +25,7 @@ export const SidebarContent = () => {
 
   const menuSectionsForUser: MenuSection[] = [
     {
-      title: null ,
+      title: null,
       items: [
         {
           label: t('menu.projects'),
@@ -48,7 +48,7 @@ export const SidebarContent = () => {
 
   const menuSectionsForAdmin: MenuSection[] = [
     {
-      title: t('sections.workspace') ,
+      title: t('sections.workspace'),
       items: [
         {
           label: t('menu.projects'),
@@ -69,7 +69,7 @@ export const SidebarContent = () => {
     },
   ];
 
-  const menuSections = isAdmin ? menuSectionsForAdmin :   menuSectionsForUser;
+  const menuSections = isAdmin ? menuSectionsForAdmin : menuSectionsForUser;
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -111,7 +111,9 @@ export const SidebarContent = () => {
                     </div>
                     <span
                       className={`text-sm ${
-                        active ? 'text-sidebar-primary-foreground font-semibold' : 'text-text-secondary font-medium'
+                        active
+                          ? 'text-sidebar-primary-foreground font-semibold'
+                          : 'text-text-secondary font-medium'
                       }`}
                     >
                       {item.label}

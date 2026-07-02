@@ -21,15 +21,15 @@ export function FutureSectionCard() {
   const Icon = config.icon;
 
   return (
-    <Card className="rounded-3xl border-border/70">
-      <CardHeader className="border-b border-border/60 pb-5">
+    <Card className="border-border/70 rounded-3xl">
+      <CardHeader className="border-border/60 border-b pb-5">
         <div className="space-y-2">
-          <div className="flex items-center gap-2 text-xs font-medium tracking-[0.24em] text-muted-foreground uppercase">
+          <div className="text-muted-foreground flex items-center gap-2 text-xs font-medium tracking-[0.24em] uppercase">
             <Icon className="size-4" />
             {config.eyebrow}
           </div>
           <CardTitle className="text-xl">{config.title}</CardTitle>
-          <p className="text-sm leading-6 text-muted-foreground">{config.description}</p>
+          <p className="text-muted-foreground text-sm leading-6">{config.description}</p>
         </div>
       </CardHeader>
 
@@ -37,17 +37,23 @@ export function FutureSectionCard() {
         <EmptyMetric title={config.helperTitle} description={config.helperDescription} />
 
         <div className="grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl bg-muted/50 p-4">
-            <div className="flex items-center gap-2 text-xs uppercase text-muted-foreground">
+          <div className="bg-muted/50 rounded-2xl p-4">
+            <div className="text-muted-foreground flex items-center gap-2 text-xs uppercase">
               <ScrollText className="size-4" />
               {t('future.shared.previewTitle')}
             </div>
-            <p className="mt-2 text-sm font-medium leading-6">{t('future.shared.previewDescription')}</p>
+            <p className="mt-2 text-sm leading-6 font-medium">
+              {t('future.shared.previewDescription')}
+            </p>
           </div>
 
-          <div className="rounded-2xl bg-muted/50 p-4">
-            <div className="text-xs uppercase text-muted-foreground">{t('future.shared.placeholderTitle')}</div>
-            <p className="mt-2 text-sm font-medium leading-6">{t('future.shared.placeholderDescription')}</p>
+          <div className="bg-muted/50 rounded-2xl p-4">
+            <div className="text-muted-foreground text-xs uppercase">
+              {t('future.shared.placeholderTitle')}
+            </div>
+            <p className="mt-2 text-sm leading-6 font-medium">
+              {t('future.shared.placeholderDescription')}
+            </p>
           </div>
         </div>
 

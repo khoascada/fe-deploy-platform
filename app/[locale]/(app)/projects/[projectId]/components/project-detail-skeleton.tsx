@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 export function ProjectDetailSkeleton() {
   return (
     <section className="mx-auto w-full max-w-7xl space-y-6 pb-8">
-      <div className="space-y-5 border-b border-border/70 pb-6">
+      <div className="border-border/70 space-y-5 border-b pb-6">
         <Button variant="ghost" className="-ml-3 w-fit" disabled>
           <ArrowLeft className="size-4" />
           <span>Loading</span>

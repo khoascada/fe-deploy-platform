@@ -1,4 +1,10 @@
-import type { DeployStatus, LatestDeploy, ProjectDetail, ProjectRunnerType, ProjectStatus } from '@/types/project';
+import type {
+  DeployStatus,
+  LatestDeploy,
+  ProjectDetail,
+  ProjectRunnerType,
+  ProjectStatus,
+} from '@/types/project';
 import { Badge } from '@components/ui';
 import { cn } from '@lib/utils';
 import { formatDate, getRelativeTime } from '@lib/utils/date';
@@ -115,20 +121,18 @@ export function StatusBadge({
   return (
     <Badge
       variant="outline"
-      className={cn('rounded-full px-3 py-1 text-[11px] font-semibold uppercase', toneClassName(tone), className)}
+      className={cn(
+        'rounded-full px-3 py-1 text-[11px] font-semibold uppercase',
+        toneClassName(tone),
+        className
+      )}
     >
       {children}
     </Badge>
   );
 }
 
-export function EmptyMetric({
-  description,
-  title,
-}: {
-  description: string;
-  title: string;
-}) {
+export function EmptyMetric({ description, title }: { description: string; title: string }) {
   return (
     <div className="border-border/60 bg-background/70 flex min-h-32 flex-col justify-center rounded-2xl border border-dashed p-5">
       <div className="flex items-start gap-3">
