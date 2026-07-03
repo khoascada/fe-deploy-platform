@@ -1,27 +1,20 @@
-'use client';
+﻿'use client';
 
 import type { LogItem as DeploymentLogItem, LogStream } from '@/types/log';
-import type { DeployStatus } from '@/types/project';
 import { useGetDeploymentLogs } from '@features/logs/hooks/use-get-deployment-logs';
 import { useTranslateError } from '@lib/hooks';
 
 interface UseRealtimeLogsCardOptions {
   deploymentId?: string | null;
-  deploymentStatus?: DeployStatus | null;
   logs?: DeploymentLogItem[];
   projectId?: string;
 }
 
-export function useRealtimeLogsCard({
-  deploymentId,
-  deploymentStatus,
-  projectId,
-}: UseRealtimeLogsCardOptions) {
+export function useRealtimeLogsCard({ deploymentId, projectId }: UseRealtimeLogsCardOptions) {
   const { getErrorMessage } = useTranslateError();
   const { data, error, isError, isLoading } = useGetDeploymentLogs(
     {
       deploymentId: deploymentId ?? '',
-      deploymentStatus,
       projectId: projectId ?? '',
     },
     {

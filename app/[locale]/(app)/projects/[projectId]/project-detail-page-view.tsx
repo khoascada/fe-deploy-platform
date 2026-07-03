@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { ProjectDetail } from '@/types/project';
 import { Button, Card, CardContent } from '@components/ui';
@@ -117,6 +117,7 @@ export function ProjectDetailPageView({
       <div className="grid gap-5 lg:grid-cols-2">
         <FutureSectionCard />
         <RealtimeLogsCard
+          key={project.latestDeploy?.id ?? 'no-deployment'}
           deploymentId={project.latestDeploy?.id}
           deploymentStatus={project.latestDeploy?.status}
           projectId={project.id}

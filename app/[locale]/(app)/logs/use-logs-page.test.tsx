@@ -1,5 +1,7 @@
-import type { DeployListItem, ProjectListItem } from '@/types/project';
+﻿import type { DeployListItem, ProjectListItem } from '@/types/project';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useLogsPage } from './use-logs-page';
 
@@ -130,6 +132,7 @@ vi.mock('@/features/projects/hooks', () => ({
 }));
 
 vi.mock('@/features/deployments', () => ({
+  useDeploymentStream: vi.fn(),
   useGetProjectDeployments: vi.fn((projectId: string) => ({
     data: mockDeploymentsByProject[projectId] ?? [],
     isError: false,
@@ -140,6 +143,7 @@ vi.mock('@/features/deployments', () => ({
 }));
 
 vi.mock('@/features/logs', () => ({
+  useDeploymentLogCreatedHandler: vi.fn(() => vi.fn()),
   useGetDeploymentLogs: vi.fn(({ deploymentId }: { deploymentId: string }) => ({
     data: deploymentId ? [] : [],
     isError: false,
@@ -147,6 +151,12 @@ vi.mock('@/features/logs', () => ({
     error: null,
   })),
 }));
+
+function createWrapper(queryClient: QueryClient) {
+  return function Wrapper({ children }: { children: ReactNode }) {
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  };
+}
 
 describe('useLogsPage', () => {
   beforeEach(() => {
@@ -157,7 +167,10 @@ describe('useLogsPage', () => {
   });
 
   it('selects the latest available project and its newest deployment when the URL is empty', async () => {
-    const { result } = renderHook(() => useLogsPage());
+    const queryClient = new QueryClient();
+    const { result } = renderHook(() => useLogsPage(), {
+      wrapper: createWrapper(queryClient),
+    });
 
     await waitFor(() => {
       expect(result.current.selectedProject?.id).toBe('project-2');
@@ -172,7 +185,10 @@ describe('useLogsPage', () => {
     mockSearchParams.set('projectId', 'project-2');
     mockSearchParams.set('deploymentId', 'deployment-b2');
 
-    const { result } = renderHook(() => useLogsPage());
+    const queryClient = new QueryClient();
+    const { result } = renderHook(() => useLogsPage(), {
+      wrapper: createWrapper(queryClient),
+    });
 
     await waitFor(() => {
       expect(result.current.selectedDeployment?.id).toBe('deployment-b2');

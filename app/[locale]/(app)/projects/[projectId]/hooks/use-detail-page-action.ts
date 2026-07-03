@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useCreateDeployment } from '@/features/deployments/hooks/use-create-deployment';
 import { useGetProjectDetail } from '@/features/projects/hooks';
@@ -6,6 +6,7 @@ import type { ProjectDetail } from '@/types/project';
 import { useConfirm, useTranslateError } from '@lib/hooks';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
+import { useProjectDeploymentRealtime } from './use-project-deployment-realtime';
 
 interface UseDetailPageActionOptions {
   projectId: string;
@@ -29,6 +30,8 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
     isPending: isDeploying,
     reset: resetCreateDeployment,
   } = useCreateDeployment(projectId);
+
+  useProjectDeploymentRealtime({ project: data });
 
   const handleDeployNow = async () => {
     if (!data || isDeploying) {

@@ -305,7 +305,6 @@
         "logs": {
           "eyebrow": "Realtime logs",
           "title": "Realtime logs",
-          "description": "Bề mặt log kiểu terminal cho sự kiện deployment, log hệ thống của platform, và output từ command; sau này có thể cắm SSE vào mà không cần đổi lại layout trang.",
           "helperTitle": "Khung log stream đã sẵn sàng",
           "helperDescription": "Layout này được chừa kích thước phù hợp cho terminal stream, filter, và tail controls ở phase kế tiếp.",
           "action": "Mở live logs",

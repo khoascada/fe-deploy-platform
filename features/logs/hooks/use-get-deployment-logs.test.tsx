@@ -1,20 +1,11 @@
-import type { LogItem, LogsResponse } from '@/types/log';
-import type { SseOptions } from '@lib/sse';
+﻿import type { LogItem, LogsResponse } from '@/types/log';
 import { logApi } from '@services/log.service';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { deploymentLogsQueryKey } from '../utils/deployment-logs-query';
 import { useGetDeploymentLogs } from './use-get-deployment-logs';
-
-let connectionOptions: SseOptions | undefined;
-
-vi.mock('@lib/sse', () => ({
-  createSseConnection: vi.fn((options: SseOptions) => {
-    connectionOptions = options;
-    return { disconnect: vi.fn() };
-  }),
-}));
 
 vi.mock('@services/log.service', () => ({
   logApi: {
@@ -46,11 +37,10 @@ function createWrapper(queryClient: QueryClient) {
 
 describe('useGetDeploymentLogs', () => {
   beforeEach(() => {
-    connectionOptions = undefined;
     vi.mocked(logApi.getLogsByDeploymentId).mockReset();
   });
 
-  it('merges stream events received before the HTTP snapshot resolves', async () => {
+  it('merges cached streamed logs that arrive before the HTTP snapshot resolves', async () => {
     let resolveSnapshot: (logs: LogsResponse) => void = () => undefined;
     const snapshotPromise = new Promise<LogsResponse>((resolve) => {
       resolveSnapshot = resolve;
@@ -64,22 +54,18 @@ describe('useGetDeploymentLogs', () => {
         },
       },
     });
+    const queryKey = deploymentLogsQueryKey(PROJECT_ID, DEPLOYMENT_ID);
     const { result } = renderHook(
       () =>
         useGetDeploymentLogs({
           deploymentId: DEPLOYMENT_ID,
-          deploymentStatus: 'BUILDING',
           projectId: PROJECT_ID,
         }),
       { wrapper: createWrapper(queryClient) }
     );
 
     act(() => {
-      const { id: _id, ...streamLog } = createLog('stream-log', 2);
-      connectionOptions?.onEvent?.('deployment-log.created', {
-        ...streamLog,
-        type: 'deployment-log.created',
-      });
+      queryClient.setQueryData<LogsResponse>(queryKey, [createLog('stream-log', 2)]);
     });
 
     await act(async () => {
@@ -88,9 +74,6 @@ describe('useGetDeploymentLogs', () => {
     });
 
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
-    expect(result.current.data).toEqual([
-      createLog('snapshot-log', 1),
-      { ...createLog('stream-log', 2), id: `${DEPLOYMENT_ID}:2` },
-    ]);
+    expect(result.current.data).toEqual([createLog('snapshot-log', 1), createLog('stream-log', 2)]);
   });
 });

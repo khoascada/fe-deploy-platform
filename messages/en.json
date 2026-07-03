@@ -304,7 +304,6 @@
         "logs": {
           "eyebrow": "Realtime logs",
           "title": "Realtime logs",
-          "description": "A terminal-like stream for deployment events, platform messages, and command output that will later plug into SSE without reshaping this page.",
           "helperTitle": "Log stream container is ready",
           "helperDescription": "This layout is intentionally sized for a terminal-like stream, filters, and tail controls in the next phase.",
           "action": "Open live logs",

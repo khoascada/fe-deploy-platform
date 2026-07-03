@@ -1,15 +1,29 @@
 'use client';
 
-import { useGetProjectDeployments } from '@/features/deployments';
-import { useGetDeploymentLogs } from '@/features/logs';
+import {
+  useDeploymentStream,
+  useGetProjectDeployments,
+  type DeploymentStatusChangedEvent,
+} from '@/features/deployments';
+import { useDeploymentLogCreatedHandler, useGetDeploymentLogs } from '@/features/logs';
 import { useGetProject } from '@/features/projects/hooks';
+import type { DeploymentsResponse } from '@/types/deployment';
 import type { DeployListItem, ProjectListItem } from '@/types/project';
 import { usePathname, useRouter } from '@i18n/navigation';
 import { useTranslateError } from '@lib/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react';
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition
+} from 'react';
 
 const PROJECTS_LIMIT = 50;
+const DEPLOYMENTS_LIMIT = 20;
 
 function getPreferredProject(projects: ProjectListItem[]) {
   return (
@@ -29,6 +43,7 @@ export function useLogsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { getErrorMessage } = useTranslateError();
+  const queryClient = useQueryClient();
   const [, startTransition] = useTransition();
 
   const initialSearch = searchParams.get('q') ?? '';
@@ -71,7 +86,7 @@ export function useLogsPage() {
     return getPreferredProject(filteredProjects);
   }, [currentProjectId, filteredProjects]);
 
-  const deploymentsQuery = useGetProjectDeployments(selectedProject?.id ?? '', 20, {
+  const deploymentsQuery = useGetProjectDeployments(selectedProject?.id ?? '', DEPLOYMENTS_LIMIT, {
     enabled: Boolean(selectedProject?.id),
     retry: false,
   });
@@ -88,7 +103,6 @@ export function useLogsPage() {
   const logsQuery = useGetDeploymentLogs(
     {
       deploymentId: selectedDeployment?.id ?? '',
-      deploymentStatus: selectedDeployment?.status ?? null,
       projectId: selectedProject?.id ?? '',
     },
     {
@@ -96,6 +110,42 @@ export function useLogsPage() {
       retry: false,
     }
   );
+
+  const handleLogCreated = useDeploymentLogCreatedHandler({
+    deploymentId: selectedDeployment?.id ?? '',
+    projectId: selectedProject?.id ?? '',
+  });
+
+  const handleStatusChanged = useCallback((event: DeploymentStatusChangedEvent) => {
+    const projectId = selectedProject?.id;
+
+    if (!projectId) {
+      return;
+    }
+
+    queryClient.setQueryData<DeploymentsResponse>(
+      ['projects', projectId, 'deployments', DEPLOYMENTS_LIMIT],
+      (currentDeployments) =>
+        currentDeployments?.map((deployment) =>
+          deployment.id === event.deploymentId
+            ? {
+              ...deployment,
+              finishedAt: event.finishedAt ?? deployment.finishedAt,
+              status: event.status,
+            }
+            : deployment
+        ) ?? currentDeployments
+    );
+  }, [queryClient, selectedProject?.id]);
+
+  useDeploymentStream({
+    deploymentId: selectedDeployment?.id ?? '',
+    deploymentStatus: selectedDeployment?.status ?? null,
+    enabled: Boolean(selectedProject?.id && selectedDeployment?.id),
+    onLogCreated: handleLogCreated,
+    onStatusChanged: handleStatusChanged,
+    projectId: selectedProject?.id ?? '',
+  });
 
   const updateParams = useCallback((updates: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
