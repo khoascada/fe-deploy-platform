@@ -286,6 +286,97 @@
         "nextStepPending": "Once the backend finishes provisioning a webhook, the ID and delivery health can live here.",
         "notAvailableShort": "Pending"
       },
+      "envVars": {
+        "eyebrow": "Environment variables",
+        "title": "Environment variables",
+        "description": "Store secrets and config per project for runtime, build time, or both.",
+        "maskedValue": "Secret stored securely",
+        "actions": {
+          "add": "Add variable",
+          "retry": "Try again",
+          "edit": "Edit",
+          "delete": "Delete",
+          "enable": "Enable",
+          "disable": "Disable",
+          "toggle": "Toggle {key}"
+        },
+        "states": {
+          "errorTitle": "Could not load environment variables",
+          "errorDescription": "Something went wrong while loading the environment variable list.",
+          "emptyTitle": "No environment variables yet",
+          "emptyDescription": "Add runtime or build variables here so this project is ready for the next deployment phase."
+        },
+        "status": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        },
+        "scope": {
+          "runtime": "Runtime",
+          "build": "Build",
+          "both": "Runtime + Build"
+        },
+        "row": {
+          "updatedAt": "Updated {date}"
+        },
+        "dialog": {
+          "createTitle": "Add environment variable",
+          "createDescription": "Create one variable at a time and choose whether it should be available during build, runtime, or both.",
+          "editTitle": "Edit environment variable",
+          "editDescription": "Update the key, scope, enabled state, or replace the stored secret value.",
+          "fields": {
+            "key": {
+              "label": "Variable key",
+              "description": "Use a shell-safe key such as DATABASE_URL or NEXT_PUBLIC_API_URL.",
+              "placeholder": "DATABASE_URL"
+            },
+            "value": {
+              "label": "Secret value",
+              "description": "The value is encrypted before it is stored.",
+              "editDescription": "Leave this blank to keep the current secret. Enter a new value to replace it.",
+              "placeholder": "Enter the secret value",
+              "editPlaceholder": "Leave blank to keep the current secret"
+            },
+            "scope": {
+              "label": "Where should this variable be available?",
+              "description": "Choose at least one phase.",
+              "runtime": "Runtime",
+              "runtimeDescription": "Write it into the runtime .env file when deployments run.",
+              "build": "Build",
+              "buildDescription": "Pass it into docker build as a build-time variable."
+            },
+            "enabled": {
+              "label": "Enabled",
+              "description": "Disabled variables stay stored but will be skipped in later deployment phases."
+            }
+          },
+          "actions": {
+            "cancel": "Cancel",
+            "create": "Create variable",
+            "creating": "Creating variable...",
+            "save": "Save changes",
+            "saving": "Saving changes..."
+          }
+        },
+        "confirm": {
+          "deleteTitle": "Delete {key}?",
+          "deleteDescription": "This variable will be removed from the project configuration.",
+          "deleteAction": "Delete variable",
+          "cancelAction": "Cancel"
+        },
+        "toast": {
+          "created": "Environment variable created.",
+          "updated": "Environment variable updated.",
+          "deleted": "Deleted {key}.",
+          "enabled": "Enabled {key}.",
+          "disabled": "Disabled {key}."
+        },
+        "validation": {
+          "keyRequired": "Variable key is required.",
+          "keyInvalid": "Use only letters, numbers, and underscores, and start with a letter or underscore.",
+          "valueRequired": "Secret value is required.",
+          "scopeRequired": "Select at least one availability option."
+        }
+      },
       "future": {
         "shared": {
           "previewTitle": "Layout reserved",
@@ -371,7 +462,7 @@
         "title": "Deployment log stream",
         "titleWithProject": "{projectName} log stream",
         "description": "Choose a project and deployment run to inspect the terminal output.",
-        "meta": "Branch {branch} · status {status}",
+        "meta": "Branch {branch} Ãƒâ€šÃ‚Â· status {status}",
         "logAriaLabel": "Deployment logs terminal output",
         "jumpToLatest": "Jump to latest",
         "connection": {
@@ -520,6 +611,7 @@
     "HOST_PORT_ALREADY_EXISTS": "Host port is already in use. Please use a different port!",
     "GITHUB_REPO_ALREADY_EXISTS": "This GitHub repo has already been created!",
     "PROJECT_SLUG_ALREADY_EXISTS": "Slug already exists!",
-    "CONTAINER_NAME_ALREADY_EXISTS": "Container name already exists!"
+    "CONTAINER_NAME_ALREADY_EXISTS": "Container name already exists!",
+    "ENV_VAR_KEY_ALREADY_EXISTS": "This environment variable key already exists in the project."
   }
 }

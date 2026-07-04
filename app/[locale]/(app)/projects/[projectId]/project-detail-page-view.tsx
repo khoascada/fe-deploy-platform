@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import type { ProjectDetail } from '@/types/project';
 import { Button, Card, CardContent } from '@components/ui';
@@ -8,7 +8,7 @@ import type { ApiError } from '@lib/types/base';
 import { ArrowLeft, ExternalLink, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { DeploymentStatusCard } from './components/deployment-status-card';
-import { FutureSectionCard } from './components/future-section-card';
+import { EnvironmentVariablesCard } from './components/environment-variables-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
 import { ProjectOverviewCard } from './components/project-overview-card';
 import { RealtimeLogsCard } from './components/realtime-logs-card';
@@ -115,7 +115,7 @@ export function ProjectDetailPageView({
       <ProjectOverviewCard project={project} />
 
       <div className="grid gap-5 lg:grid-cols-2">
-        <FutureSectionCard />
+        <EnvironmentVariablesCard projectId={project.id} />
         <RealtimeLogsCard
           key={project.latestDeploy?.id ?? 'no-deployment'}
           deploymentId={project.latestDeploy?.id}

@@ -287,6 +287,97 @@
         "nextStepPending": "Sau khi backend provision xong webhook, khu vực này có thể hiển thị ID và sức khỏe nhận event.",
         "notAvailableShort": "Đang chờ"
       },
+      "envVars": {
+        "eyebrow": "Biến môi trường",
+        "title": "Biến môi trường",
+        "description": "Lưu secret và config theo từng project cho runtime, build time, hoặc cả hai.",
+        "maskedValue": "Secret đang được lưu an toàn",
+        "actions": {
+          "add": "Thêm biến mới",
+          "retry": "Thử lại",
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa",
+          "enable": "Bật",
+          "disable": "Tắt",
+          "toggle": "Chuyển trạng thái {key}"
+        },
+        "states": {
+          "errorTitle": "Không thể tải danh sách biến môi trường",
+          "errorDescription": "Đã có lỗi xảy ra khi tải danh sách biến môi trường của project.",
+          "emptyTitle": "Chưa có biến môi trường nào",
+          "emptyDescription": "Thêm biến cho runtime hoặc build tại đây để project sẵn sàng cho phase deploy tiếp theo."
+        },
+        "status": {
+          "enabled": "Đang bật",
+          "disabled": "Đang tắt"
+        },
+        "scope": {
+          "runtime": "Runtime",
+          "build": "Build",
+          "both": "Runtime + Build"
+        },
+        "row": {
+          "updatedAt": "Cập nhật {date}"
+        },
+        "dialog": {
+          "createTitle": "Thêm biến môi trường",
+          "createDescription": "Tạo từng biến một và chọn xem biến đó dùng cho build, runtime, hay cả hai.",
+          "editTitle": "Chỉnh sửa biến môi trường",
+          "editDescription": "Cập nhật key, scope, trạng thái bật tắt, hoặc thay secret đang được lưu.",
+          "fields": {
+            "key": {
+              "label": "Tên biến",
+              "description": "Dùng key an toàn cho shell như DATABASE_URL hoặc NEXT_PUBLIC_API_URL.",
+              "placeholder": "DATABASE_URL"
+            },
+            "value": {
+              "label": "Giá trị secret",
+              "description": "Giá trị sẽ được mã hóa trước khi lưu.",
+              "editDescription": "Để trống để giữ nguyên secret hiện tại. Nhập giá trị mới để thay thế.",
+              "placeholder": "Nhập giá trị secret",
+              "editPlaceholder": "Để trống để giữ secret hiện tại"
+            },
+            "scope": {
+              "label": "Biến này sẽ khả dụng ở đâu?",
+              "description": "Chọn ít nhất một phase.",
+              "runtime": "Runtime",
+              "runtimeDescription": "Sẽ được ghi vào file .env runtime khi deployment chạy.",
+              "build": "Build",
+              "buildDescription": "Sẽ được truyền vào docker build như biến ở thời điểm build."
+            },
+            "enabled": {
+              "label": "Đang bật",
+              "description": "Biến bị tắt vẫn được lưu nhưng sẽ bị bỏ qua ở các phase deploy sau này."
+            }
+          },
+          "actions": {
+            "cancel": "Hủy",
+            "create": "Tạo biến",
+            "creating": "Đang tạo biến...",
+            "save": "Lưu thay đổi",
+            "saving": "Đang lưu thay đổi..."
+          }
+        },
+        "confirm": {
+          "deleteTitle": "Xóa {key}?",
+          "deleteDescription": "Biến này sẽ bị gỡ khỏi cấu hình của project.",
+          "deleteAction": "Xóa biến",
+          "cancelAction": "Hủy"
+        },
+        "toast": {
+          "created": "Đã tạo biến môi trường.",
+          "updated": "Đã cập nhật biến môi trường.",
+          "deleted": "Đã xóa {key}.",
+          "enabled": "Đã bật {key}.",
+          "disabled": "Đã tắt {key}."
+        },
+        "validation": {
+          "keyRequired": "Tên biến là bắt buộc.",
+          "keyInvalid": "Chỉ dùng chữ cái, số, dấu gạch dưới và phải bắt đầu bằng chữ cái hoặc dấu gạch dưới.",
+          "valueRequired": "Giá trị secret là bắt buộc.",
+          "scopeRequired": "Hãy chọn ít nhất một nơi sử dụng biến này."
+        }
+      },
       "future": {
         "shared": {
           "previewTitle": "Đã chừa sẵn layout",
