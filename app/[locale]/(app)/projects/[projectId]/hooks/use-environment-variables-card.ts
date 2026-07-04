@@ -5,7 +5,7 @@ import {
   useDeleteEnvVar,
   useGetProjectEnvVars,
   useUpdateEnvVar,
-} from '@/features/env-vars/hooks';
+} from '@/features/env-vars';
 import type { EnvVar } from '@/types/env-var';
 import { useConfirm, useTranslateError } from '@lib/hooks';
 import type { ApiError } from '@lib/types/base';

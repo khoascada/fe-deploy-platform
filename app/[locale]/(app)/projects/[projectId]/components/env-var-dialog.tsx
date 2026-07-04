@@ -6,7 +6,7 @@ import {
   createEnvVarFormSchema,
   getEnvVarFormDefaults,
   type EnvVarFormInput,
-} from '@/features/env-vars/validations/env-var-form.schema';
+} from '@/features/env-vars';
 import type { CreateEnvVarRequest, EnvVar, UpdateEnvVarRequest } from '@/types/env-var';
 import {
   Button,
