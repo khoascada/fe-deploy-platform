@@ -23,7 +23,7 @@ export function useGetGithubBranches(
   options?: GetGithubBranchesOptions
 ) {
   return useAppQuery({
-    queryKey: ['github', 'repos', owner, repo, 'branches'],
+    queryKey: ['github-repos-branches', owner, repo],
     queryFn: () => githubApi.getListBranches(owner, repo),
     enabled: Boolean(owner && repo),
     select: (response) =>

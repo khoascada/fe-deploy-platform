@@ -13,6 +13,7 @@ export default defineConfig({
       'features/projects/validations/create-project.schema.test.ts',
       'features/projects/hooks/actions/use-get-github-repos.test.tsx',
       'features/projects/components/new-project-page-view.test.tsx',
+      'features/projects/hooks/use-project-deployment-stream.test.tsx',
     ],
   },
   resolve: {

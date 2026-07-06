@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { ProjectDetailPageView } from './project-detail-page-view';
 import { useDetailPageAction } from './hooks/use-detail-page-action';
@@ -12,13 +12,16 @@ export function ProjectDetailPageClient({ projectId }: ProjectDetailPageClientPr
 
   return (
     <ProjectDetailPageView
+      deleteErrorMessage={detailPageAction.deleteErrorMessage}
       deployErrorMessage={detailPageAction.deployErrorMessage}
       error={detailPageAction.error}
       errorMessage={detailPageAction.errorMessage}
+      isDeleting={detailPageAction.isDeleting}
       isDeployDisabled={detailPageAction.isDeployDisabled}
       isDeploying={detailPageAction.isDeploying}
       isError={detailPageAction.isError}
       isLoading={detailPageAction.isLoading}
+      onDeleteProject={detailPageAction.onDeleteProject}
       onDeployNow={detailPageAction.onDeployNow}
       onRetry={detailPageAction.onRetry}
       project={detailPageAction.project}

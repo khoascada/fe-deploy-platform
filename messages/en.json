@@ -174,13 +174,17 @@
         "openRepository": "Open repository"
       },
       "toast": {
-        "deployQueued": "Deployment queued successfully."
+        "deployQueued": "Deployment queued successfully.",
+        "projectDeleted": "Deleted {projectName}."
       },
       "confirm": {
         "deployTitle": "Deploy {projectName}?",
         "deployDescription": "Deploy branch {branch} now?",
         "confirmAction": "Deploy now",
-        "cancelAction": "Cancel"
+        "cancelAction": "Cancel",
+        "deleteProjectTitle": "Delete {projectName}?",
+        "deleteProjectDescription": "This action permanently removes the project and its related configuration.",
+        "deleteProjectAction": "Delete project"
       },
       "states": {
         "errorTitle": "Could not load this project",
@@ -422,6 +426,14 @@
             "STDERR": "Stderr"
           }
         }
+      },
+      "deleteProject": {
+        "eyebrow": "Danger zone",
+        "title": "Delete project",
+        "warningTitle": "{projectName} will be permanently removed.",
+        "description": "This action removes the project and its related configuration from the workspace. You cannot undo it.",
+        "action": "Delete project",
+        "deletingAction": "Deleting project..."
       }
     },
     "logs": {

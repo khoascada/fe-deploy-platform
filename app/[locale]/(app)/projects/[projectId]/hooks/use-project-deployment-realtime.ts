@@ -1,6 +1,13 @@
 'use client';
 
-import { useDeploymentStream, type DeploymentStatusChangedEvent } from '@/features/deployments';
+import {
+  useDeploymentStream,
+  type DeploymentStatusChangedEvent,
+} from '@/features/deployments';
+import {
+  useProjectDeploymentStream,
+  type DeploymentCreatedEvent,
+} from '@/features/projects';
 import { useDeploymentLogCreatedHandler } from '@/features/logs';
 import type { ProjectDetail } from '@/types/project';
 import { useQueryClient } from '@tanstack/react-query';
@@ -15,6 +22,27 @@ export function useProjectDeploymentRealtime({ project }: UseProjectDeploymentRe
   const projectId = project?.id ?? '';
   const deploymentId = project?.latestDeploy?.id ?? '';
   const deploymentStatus = project?.latestDeploy?.status ?? null;
+
+  const handleDeploymentCreated = useCallback(
+    (event: DeploymentCreatedEvent) => {
+      const current = queryClient.getQueryData<ProjectDetail>([
+        'projects',
+        'detail',
+        projectId,
+      ]);
+      if (current?.latestDeploy?.id === event.deploymentId) return;
+      void queryClient.invalidateQueries({
+        queryKey: ['projects', 'detail', projectId],
+      });
+    },
+    [projectId, queryClient],
+  );
+
+  useProjectDeploymentStream({
+    projectId,
+    enabled: Boolean(projectId),
+    onDeploymentCreated: handleDeploymentCreated,
+  });
   
   // merge log vào list log
   const handleLogCreated = useDeploymentLogCreatedHandler({

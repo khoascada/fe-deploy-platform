@@ -1,12 +1,13 @@
-'use client';
+﻿'use client';
 
 import type { ProjectDetail } from '@/types/project';
-import { Button, Card, CardContent } from '@components/ui';
 import NotFoundPage from '@components/status-page/not-found';
+import { Button, Card, CardContent } from '@components/ui';
 import { Link } from '@i18n/navigation';
 import type { ApiError } from '@lib/types/base';
 import { ArrowLeft, ExternalLink, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { DeleteProjectCard } from './components/delete-project-card';
 import { DeploymentStatusCard } from './components/deployment-status-card';
 import { EnvironmentVariablesCard } from './components/environment-variables-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
@@ -15,26 +16,32 @@ import { RealtimeLogsCard } from './components/realtime-logs-card';
 import { WebhookInfoCard } from './components/webhook-info-card';
 
 interface ProjectDetailPageViewProps {
+  deleteErrorMessage: string;
   deployErrorMessage: string;
   error: ApiError | null;
   errorMessage?: string;
+  isDeleting: boolean;
   isDeployDisabled: boolean;
   isDeploying: boolean;
   isError: boolean;
   isLoading: boolean;
+  onDeleteProject: () => void;
   onDeployNow: () => void;
   onRetry: () => void;
   project?: ProjectDetail;
 }
 
 export function ProjectDetailPageView({
+  deleteErrorMessage,
   deployErrorMessage,
   error,
   errorMessage,
+  isDeleting,
   isDeployDisabled,
   isDeploying,
   isError,
   isLoading,
+  onDeleteProject,
   onDeployNow,
   onRetry,
   project,
@@ -123,6 +130,13 @@ export function ProjectDetailPageView({
           projectId={project.id}
         />
       </div>
+
+      <DeleteProjectCard
+        deleteErrorMessage={deleteErrorMessage}
+        isDeleting={isDeleting}
+        onDeleteProject={onDeleteProject}
+        projectName={project.name}
+      />
     </section>
   );
 }

@@ -137,7 +137,6 @@
         "notAvailable": "Chưa có",
         "notDeployed": "Chưa có lần deploy nào"
       },
-
       "actions": {
         "viewDetail": "Xem chi tiết",
         "deployNow": "Deploy ngay",
@@ -175,13 +174,17 @@
         "openRepository": "Mở repository"
       },
       "toast": {
-        "deployQueued": "Đã đưa deployment vào hàng chờ."
+        "deployQueued": "Đã đưa deployment vào hàng chờ.",
+        "projectDeleted": "?? x?a {projectName}."
       },
       "confirm": {
         "deployTitle": "Deploy {projectName}?",
         "deployDescription": "Deploy branch {branch} ngay bây giờ?",
         "confirmAction": "Deploy ngay",
-        "cancelAction": "Hủy"
+        "cancelAction": "Hủy",
+        "deleteProjectTitle": "Xóa {projectName}?",
+        "deleteProjectDescription": "Hành động này sẽ xóa vĩnh viễn project và các cấu hình liên quan.",
+        "deleteProjectAction": "Xóa project"
       },
       "states": {
         "errorTitle": "Không thể tải chi tiết dự án",
@@ -423,6 +426,14 @@
             "STDERR": "Stderr"
           }
         }
+      },
+      "deleteProject": {
+        "eyebrow": "Vùng nguy hiểm",
+        "title": "Xóa project",
+        "warningTitle": "{projectName} sẽ bị xóa vĩnh viễn.",
+        "description": "Hành động này sẽ xóa project và các cấu hình liên quan khỏi workspace. Bạn sẽ không thể hoàn tác.",
+        "action": "Xóa project",
+        "deletingAction": "Đang xóa project..."
       }
     },
     "logs": {

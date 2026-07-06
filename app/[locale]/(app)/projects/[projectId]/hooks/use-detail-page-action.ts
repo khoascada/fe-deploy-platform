@@ -1,9 +1,11 @@
 ﻿'use client';
 
 import { useCreateDeployment } from '@/features/deployments/hooks/use-create-deployment';
-import { useGetProjectDetail } from '@/features/projects/hooks';
+import { useDeleteProject, useGetProjectDetail } from '@/features/projects/hooks';
 import type { ProjectDetail } from '@/types/project';
+import { useRouter } from '@i18n/navigation';
 import { useConfirm, useTranslateError } from '@lib/hooks';
+import type { ApiError } from '@lib/types/base';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { useProjectDeploymentRealtime } from './use-project-deployment-realtime';
@@ -20,6 +22,7 @@ const ACTIVE_DEPLOYMENT_STATUSES: Array<NonNullable<ProjectDetail['latestDeploy'
 ];
 
 export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
+  const router = useRouter();
   const t = useTranslations('pages.projectDetail');
   const { data, error, isError, isLoading, refetch } = useGetProjectDetail(projectId);
   const confirm = useConfirm();
@@ -30,6 +33,12 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
     isPending: isDeploying,
     reset: resetCreateDeployment,
   } = useCreateDeployment(projectId);
+  const {
+    deleteProject,
+    error: deleteError,
+    isPending: isDeleting,
+    reset: resetDeleteProject,
+  } = useDeleteProject();
 
   useProjectDeploymentRealtime({ project: data });
 
@@ -59,18 +68,50 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
     }
   };
 
+  const handleDeleteProject = async () => {
+    if (!data || isDeleting) {
+      return;
+    }
+
+    resetDeleteProject();
+
+    const isConfirmed = await confirm({
+      title: t('confirm.deleteProjectTitle', { projectName: data.name }),
+      description: t('confirm.deleteProjectDescription'),
+      confirmText: t('confirm.deleteProjectAction'),
+      cancelText: t('confirm.cancelAction'),
+      destructive: true,
+    });
+
+    if (!isConfirmed) {
+      return;
+    }
+
+    try {
+      await deleteProject(data.id);
+      toast.success(t('toast.projectDeleted', { projectName: data.name }));
+      router.push('/projects');
+    } catch (mutationError) {
+      toast.error(getErrorMessage(mutationError as ApiError));
+    }
+  };
+
   const isDeployDisabled =
     isDeploying ||
     (data?.latestDeploy ? ACTIVE_DEPLOYMENT_STATUSES.includes(data.latestDeploy.status) : false);
 
   return {
+    deleteErrorMessage: deleteError ? getErrorMessage(deleteError) : '',
     deployErrorMessage: deploymentError ? getErrorMessage(deploymentError) : '',
     error,
     errorMessage: getErrorMessage(error),
+    isDeleteDisabled: isDeleting,
+    isDeleting,
     isDeployDisabled,
     isDeploying,
     isError,
     isLoading,
+    onDeleteProject: () => void handleDeleteProject(),
     onDeployNow: () => void handleDeployNow(),
     onRetry: () => void refetch(),
     project: data,

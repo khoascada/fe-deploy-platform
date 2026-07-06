@@ -19,7 +19,7 @@ type GetGithubReposOptions = Omit<
 
 export function useGetGithubRepos(options?: GetGithubReposOptions) {
   return useAppQuery({
-    queryKey: ['github', 'repos'],
+    queryKey: ['github-repos'],
     queryFn: () => githubApi.getListRepos(),
     select: (response) =>
       response.items.map((repository) => ({

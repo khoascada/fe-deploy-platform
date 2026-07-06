@@ -7,7 +7,7 @@ import { envVarApi } from '@services/env-var.service';
 import type { UseQueryOptions } from '@tanstack/react-query';
 
 export const projectEnvVarsQueryKey = (projectId: string) =>
-  ['projects', 'detail', projectId, 'env-vars'] as const;
+  ['projects-env-vars', projectId] as const;
 
 type GetProjectEnvVarsOptions = Omit<
   UseQueryOptions<EnvVar[], ApiError, EnvVar[], ReturnType<typeof projectEnvVarsQueryKey>>,

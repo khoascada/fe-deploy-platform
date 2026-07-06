@@ -133,7 +133,6 @@ export function useDeploymentStream({
         }
 
         if (eventName === 'deployment-status.changed') {
-          console.log('eventttt', data)
           if (
             !isDeploymentStatusChangedEvent(data) ||
             data.projectId !== projectId ||
@@ -148,5 +147,5 @@ export function useDeploymentStream({
     });
 
     return disconnect;
-  }, [deploymentId, handleLogCreated, handleStatusChanged, projectId, shouldSubscribe]);
+  }, [deploymentId, projectId, shouldSubscribe]);
 }

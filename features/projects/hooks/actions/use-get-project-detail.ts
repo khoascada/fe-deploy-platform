@@ -13,7 +13,7 @@ type GetProjectDetailOptions = Omit<
 
 export function useGetProjectDetail(projectId: string, options?: GetProjectDetailOptions) {
   return useAppQuery({
-    queryKey: ['projects', 'detail', projectId],
+    queryKey: ['projects-detail', projectId],
     queryFn: () => projectApi.getProject(projectId),
     enabled: projectId.length > 0,
     ...options,
