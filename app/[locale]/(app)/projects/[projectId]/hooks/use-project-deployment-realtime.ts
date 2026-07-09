@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  useDeploymentStream,
-  type DeploymentStatusChangedEvent,
-} from '@/features/deployments';
-import {
-  useProjectDeploymentStream,
-  type DeploymentCreatedEvent,
-} from '@/features/projects';
+import { useDeploymentStream, type DeploymentStatusChangedEvent } from '@/features/deployments';
 import { useDeploymentLogCreatedHandler } from '@/features/logs';
+import { useProjectDeploymentStream, type DeploymentCreatedEvent } from '@/features/projects';
 import type { ProjectDetail } from '@/types/project';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
@@ -25,17 +19,13 @@ export function useProjectDeploymentRealtime({ project }: UseProjectDeploymentRe
 
   const handleDeploymentCreated = useCallback(
     (event: DeploymentCreatedEvent) => {
-      const current = queryClient.getQueryData<ProjectDetail>([
-        'projects',
-        'detail',
-        projectId,
-      ]);
+      const current = queryClient.getQueryData<ProjectDetail>(['projects-detail', projectId]);
       if (current?.latestDeploy?.id === event.deploymentId) return;
       void queryClient.invalidateQueries({
-        queryKey: ['projects', 'detail', projectId],
+        queryKey: ['projects-detail', projectId],
       });
     },
-    [projectId, queryClient],
+    [projectId, queryClient]
   );
 
   useProjectDeploymentStream({
@@ -43,7 +33,7 @@ export function useProjectDeploymentRealtime({ project }: UseProjectDeploymentRe
     enabled: Boolean(projectId),
     onDeploymentCreated: handleDeploymentCreated,
   });
-  
+
   // merge log vào list log
   const handleLogCreated = useDeploymentLogCreatedHandler({
     deploymentId,
@@ -51,22 +41,28 @@ export function useProjectDeploymentRealtime({ project }: UseProjectDeploymentRe
   });
 
   //  optimistic status in latestDeploy
-  const handleStatusChanged = useCallback((event: DeploymentStatusChangedEvent) => {
-    queryClient.setQueryData<ProjectDetail>(['projects', 'detail', projectId], (currentProject) => {
-      if (!currentProject?.latestDeploy || currentProject.latestDeploy.id !== event.deploymentId) {
-        return currentProject;
-      }
+  const handleStatusChanged = useCallback(
+    (event: DeploymentStatusChangedEvent) => {
+      queryClient.setQueryData<ProjectDetail>(['projects-detail', projectId], (currentProject) => {
+        if (
+          !currentProject?.latestDeploy ||
+          currentProject.latestDeploy.id !== event.deploymentId
+        ) {
+          return currentProject;
+        }
 
-      return {
-        ...currentProject,
-        latestDeploy: {
-          ...currentProject.latestDeploy,
-          finishedAt: event.finishedAt ?? currentProject.latestDeploy.finishedAt,
-          status: event.status,
-        },
-      };
-    });
-  }, [projectId, queryClient]);
+        return {
+          ...currentProject,
+          latestDeploy: {
+            ...currentProject.latestDeploy,
+            finishedAt: event.finishedAt ?? currentProject.latestDeploy.finishedAt,
+            status: event.status,
+          },
+        };
+      });
+    },
+    [projectId, queryClient]
+  );
 
   useDeploymentStream({
     deploymentId,

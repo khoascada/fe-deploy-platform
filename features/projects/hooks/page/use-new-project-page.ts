@@ -16,7 +16,7 @@ import { useCallback, useMemo, useState } from 'react';
 export function useNewProjectPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { getErrorMessage } = useTranslateError()
+  const { getErrorMessage } = useTranslateError();
   const [repositorySearch, setRepositorySearch] = useState('');
   const [branchSearch, setBranchSearch] = useState('');
   const [selectedRepositoryOwner, setSelectedRepositoryOwner] = useState('');
@@ -40,8 +40,6 @@ export function useNewProjectPage() {
     isLoading: isBranchesLoading,
   } = useGetGithubBranches(selectedRepositoryOwner, selectedRepositoryName);
   const { createProject, error: submitError, isPending: isSubmitting } = useCreateProject();
-
-
 
   const filteredRepositoryOptions = useMemo(() => {
     const query = repositorySearch.trim().toLowerCase();
@@ -76,7 +74,8 @@ export function useNewProjectPage() {
 
   const handleSelectRepository = useCallback(
     (repositoryId: string) => {
-      const selectedOption = repositoryOptions.find((option) => option.value === repositoryId) ?? null;
+      const selectedOption =
+        repositoryOptions.find((option) => option.value === repositoryId) ?? null;
 
       setSelectedRepositoryOwner(selectedOption?.repository.owner.login ?? '');
       setSelectedRepositoryName(selectedOption?.repository.name ?? '');
@@ -94,7 +93,7 @@ export function useNewProjectPage() {
 
     try {
       const repositories = await githubApi.getListRepos(true);
-      queryClient.setQueryData(['github', 'repos'], repositories);
+      queryClient.setQueryData(['github-repos'], repositories);
     } catch (error) {
       setRefreshRepositoriesErrorMessage(getApiErrorMessage(error as never));
     } finally {
@@ -118,7 +117,7 @@ export function useNewProjectPage() {
       );
 
       queryClient.setQueryData(
-        ['github', 'repos', selectedRepositoryOwner, selectedRepositoryName, 'branches'],
+        ['github-repos-branches', selectedRepositoryOwner, selectedRepositoryName],
         branches
       );
     } catch (error) {
@@ -130,8 +129,6 @@ export function useNewProjectPage() {
 
   const submit = useCallback(
     async (values: CreateProjectFormValues) => {
-
-
       await createProject({
         githubRepoId: values.githubRepoId,
         name: values.name,

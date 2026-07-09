@@ -13,14 +13,7 @@ import { usePathname, useRouter } from '@i18n/navigation';
 import { useTranslateError } from '@lib/hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import {
-  useCallback,
-  useDeferredValue,
-  useEffect,
-  useMemo,
-  useState,
-  useTransition
-} from 'react';
+import { useCallback, useDeferredValue, useEffect, useMemo, useState, useTransition } from 'react';
 
 const PROJECTS_LIMIT = 50;
 const DEPLOYMENTS_LIMIT = 20;
@@ -34,7 +27,9 @@ function getPreferredProject(projects: ProjectListItem[]) {
         const rightDate = right.latestDeploy ? new Date(right.latestDeploy.createdAt).getTime() : 0;
         return rightDate - leftDate;
       })
-      .at(0) ?? projects.at(0) ?? null
+      .at(0) ??
+    projects.at(0) ??
+    null
   );
 }
 
@@ -74,7 +69,10 @@ export function useLogsPage() {
     }
 
     return projects.filter((project) =>
-      [project.name, project.repoFullName, project.repoUrl ?? ''].join(' ').toLowerCase().includes(deferredSearch)
+      [project.name, project.repoFullName, project.repoUrl ?? '']
+        .join(' ')
+        .toLowerCase()
+        .includes(deferredSearch)
     );
   }, [deferredSearch, projectsQuery.data?.items]);
 
@@ -116,27 +114,30 @@ export function useLogsPage() {
     projectId: selectedProject?.id ?? '',
   });
 
-  const handleStatusChanged = useCallback((event: DeploymentStatusChangedEvent) => {
-    const projectId = selectedProject?.id;
+  const handleStatusChanged = useCallback(
+    (event: DeploymentStatusChangedEvent) => {
+      const projectId = selectedProject?.id;
 
-    if (!projectId) {
-      return;
-    }
+      if (!projectId) {
+        return;
+      }
 
-    queryClient.setQueryData<DeploymentsResponse>(
-      ['projects', projectId, 'deployments', DEPLOYMENTS_LIMIT],
-      (currentDeployments) =>
-        currentDeployments?.map((deployment) =>
-          deployment.id === event.deploymentId
-            ? {
-              ...deployment,
-              finishedAt: event.finishedAt ?? deployment.finishedAt,
-              status: event.status,
-            }
-            : deployment
-        ) ?? currentDeployments
-    );
-  }, [queryClient, selectedProject?.id]);
+      queryClient.setQueryData<DeploymentsResponse>(
+        ['project-deployments', projectId, DEPLOYMENTS_LIMIT],
+        (currentDeployments) =>
+          currentDeployments?.map((deployment) =>
+            deployment.id === event.deploymentId
+              ? {
+                  ...deployment,
+                  finishedAt: event.finishedAt ?? deployment.finishedAt,
+                  status: event.status,
+                }
+              : deployment
+          ) ?? currentDeployments
+      );
+    },
+    [queryClient, selectedProject?.id]
+  );
 
   useDeploymentStream({
     deploymentId: selectedDeployment?.id ?? '',
@@ -147,23 +148,26 @@ export function useLogsPage() {
     projectId: selectedProject?.id ?? '',
   });
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString());
 
-    Object.entries(updates).forEach(([key, value]) => {
-      if (!value) {
-        params.delete(key);
-      } else {
-        params.set(key, value);
-      }
-    });
+      Object.entries(updates).forEach(([key, value]) => {
+        if (!value) {
+          params.delete(key);
+        } else {
+          params.set(key, value);
+        }
+      });
 
-    const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+      const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
 
-    startTransition(() => {
-      router.replace(nextUrl);
-    });
-  }, [pathname, router, searchParams]);
+      startTransition(() => {
+        router.replace(nextUrl);
+      });
+    },
+    [pathname, router, searchParams]
+  );
 
   useEffect(() => {
     if (projectsQuery.isLoading) {
