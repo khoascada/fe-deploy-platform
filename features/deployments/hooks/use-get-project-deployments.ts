@@ -17,7 +17,7 @@ export function useGetProjectDeployments(
   options?: GetProjectDeploymentsOptions
 ) {
   return useAppQuery({
-    queryKey: ['projects', projectId, 'deployments', limit],
+    queryKey: ['project-deployments', projectId, limit],
     queryFn: () => deploymentApi.getDeployments(projectId, limit),
     enabled: projectId.length > 0,
     ...options,

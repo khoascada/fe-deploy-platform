@@ -25,7 +25,7 @@ function buildQueuedLatestDeploy(
 
 export function useCreateDeployment(projectId: string) {
   const queryClient = useQueryClient();
-  const queryKey = ['projects', 'detail', projectId] as const;
+  const queryKey = ['projects-detail', projectId] as const;
 
   const mutation = useAppMutation({
     mutationFn: () => deploymentApi.createDeployment(projectId),
