@@ -12,6 +12,7 @@ import { DeploymentStatusCard } from './components/deployment-status-card';
 import { EnvironmentVariablesCard } from './components/environment-variables-card';
 import { ProjectDetailSkeleton } from './components/project-detail-skeleton';
 import { ProjectOverviewCard } from './components/project-overview-card';
+import { ProjectSettingsCard } from './components/project-settings-card';
 import { RealtimeLogsCard } from './components/realtime-logs-card';
 import { WebhookInfoCard } from './components/webhook-info-card';
 
@@ -121,8 +122,10 @@ export function ProjectDetailPageView({
 
       <ProjectOverviewCard project={project} />
 
+      
+
       <div className="grid gap-5 lg:grid-cols-2">
-        <EnvironmentVariablesCard projectId={project.id} />
+        <EnvironmentVariablesCard project={project} isDeployDisabled={isDeployDisabled} />
         <RealtimeLogsCard
           key={project.latestDeploy?.id ?? 'no-deployment'}
           deploymentId={project.latestDeploy?.id}
@@ -130,6 +133,11 @@ export function ProjectDetailPageView({
           projectId={project.id}
         />
       </div>
+
+      <ProjectSettingsCard
+        isDeploymentActive={isDeployDisabled}
+        project={project}
+      />
 
       <DeleteProjectCard
         deleteErrorMessage={deleteErrorMessage}

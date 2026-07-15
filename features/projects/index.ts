@@ -1,5 +1,6 @@
 ﻿export * from './hooks';
 export * from './types';
+export * from './validations';
 export { NewProjectPageClient } from './components/new-project-page-client';
 export { ProjectCard } from './components/project-card';
 export { ProjectsPageClient } from './components/projects-page-client';

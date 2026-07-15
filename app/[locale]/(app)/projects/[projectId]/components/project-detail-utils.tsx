@@ -4,6 +4,7 @@ import type {
   ProjectDetail,
   ProjectRunnerType,
   ProjectStatus,
+  WebhookEventStatus,
 } from '@/types/project';
 import { Badge } from '@components/ui';
 import { cn } from '@lib/utils';
@@ -71,18 +72,35 @@ export function getWebhookTone(project: ProjectDetail): Tone {
   return project.autoDeploy ? 'warning' : 'muted';
 }
 
+export function getWebhookEventTone(status: WebhookEventStatus): Tone {
+  switch (status) {
+    case 'PROCESSED':
+      return 'success';
+    case 'FAILED':
+      return 'danger';
+    case 'PENDING':
+      return 'warning';
+    case 'RECEIVED':
+      return 'info';
+    case 'IGNORED':
+    case 'SUPERSEDED':
+    default:
+      return 'muted';
+  }
+}
+
 export function renderStatusIcon(status: DeployStatus, className?: string) {
   switch (status) {
     case 'SUCCESS':
-      return <CheckCircle2 className={className} />;
+      return <CheckCircle2 color="var(--success)" className={className} />;
     case 'FAILED':
     case 'CANCELED':
-      return <XCircle className={className} />;
+      return <XCircle color="var(--destructive)" className={className} />;
     case 'DEPLOYING':
-      return <Rocket className={className} />;
+      return <Rocket color="var(--info)" className={className} />;
     case 'BUILDING':
     case 'PULLING':
-      return <LoaderCircle className={className} />;
+      return <LoaderCircle color="var(--info)" className={className} />;
     case 'QUEUED':
     default:
       return <Clock3 className={className} />;

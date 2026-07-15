@@ -1,5 +1,6 @@
 'use client';
 
+import type { ProjectDetail } from '@/types';
 import type { EnvVar } from '@/types/env-var';
 import {
   Badge,
@@ -19,7 +20,8 @@ import { useEnvironmentVariablesCard } from '../hooks/use-environment-variables-
 import { EnvVarDialog } from './env-var-dialog';
 
 interface EnvironmentVariablesCardProps {
-  projectId: string;
+  project: ProjectDetail;
+  isDeployDisabled: boolean;
 }
 
 function ScopeBadge({ scope }: { scope: EnvVar['scope'] }) {
@@ -36,7 +38,11 @@ function ScopeBadge({ scope }: { scope: EnvVar['scope'] }) {
   );
 }
 
-export function EnvironmentVariablesCard({ projectId }: EnvironmentVariablesCardProps) {
+export function EnvironmentVariablesCard({
+  project,
+  isDeployDisabled,
+}: EnvironmentVariablesCardProps) {
+  const { id: projectId } = project;
   const t = useTranslations('pages.projectDetail.envVars');
   const locale = useLocale();
   const {
@@ -69,7 +75,11 @@ export function EnvironmentVariablesCard({ projectId }: EnvironmentVariablesCard
               <CardTitle className="text-xl uppercase">{t('eyebrow')}</CardTitle>
               <p className="text-muted-foreground text-sm leading-6">{t('description')}</p>
             </div>
-            <Button onClick={onOpenCreateDialog} className="w-full sm:w-auto">
+            <Button
+              onClick={onOpenCreateDialog}
+              className="w-full sm:w-auto"
+              disabled={isDeployDisabled}
+            >
               <Plus className="size-4" />
               {t('actions.add')}
             </Button>

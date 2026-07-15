@@ -58,6 +58,36 @@ export interface CreateProjectRequest {
 // Dùng cho trang Project Detail (GET /projects/:id) — chi tiết 1 project
 export type ProjectRunnerType = 'LOCAL' | 'SSH';
 export type ProjectStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+export type WebhookEventStatus =
+    | 'RECEIVED'
+    | 'PENDING'
+    | 'PROCESSED'
+    | 'IGNORED'
+    | 'FAILED'
+    | 'SUPERSEDED';
+
+export interface LatestWebhookEvent {
+    id: string;
+    eventName: string;
+    status: WebhookEventStatus;
+    statusReason: string | null;
+    isVerified: boolean;
+    receivedAt: string;
+    processedAt: string | null;
+    branch: string | null;
+    commitSha: string | null;
+    commitMessage: string | null;
+}
+
+export interface UpdateProjectRequest {
+    deployBranch?: string;
+    rootDirectory?: string;
+    dockerfilePath?: string;
+    buildContext?: string;
+    containerPort?: number;
+    hostPort?: number | null;
+    autoDeploy?: boolean;
+}
 
 // Response from GET /projects/:id.
 export interface ProjectDetail {
@@ -88,6 +118,7 @@ export interface ProjectDetail {
     autoDeploy: boolean;
     webhookId: string | null;
     latestDeploy: LatestDeploy | null;
+    latestWebhookEvent: LatestWebhookEvent | null;
     status: ProjectStatus;
     createdAt: string;
     updatedAt: string;

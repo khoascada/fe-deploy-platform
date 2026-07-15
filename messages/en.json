@@ -288,7 +288,21 @@
         "nextStepTitle": "Next step",
         "nextStepConnected": "When deployment execution is added, this card can expand with delivery health and recent webhook activity.",
         "nextStepPending": "Once the backend finishes provisioning a webhook, the ID and delivery health can live here.",
-        "notAvailableShort": "Pending"
+        "notAvailableShort": "Pending",
+        "latest": {
+          "title": "Latest event",
+          "notConnected": "Connect the repository webhook before delivery activity can appear here.",
+          "waitingFirstDelivery": "The webhook is connected and waiting for its first delivery.",
+          "received": "Received {time}"
+        },
+        "eventStatus": {
+          "RECEIVED": "Received",
+          "PENDING": "Waiting for current deployment",
+          "PROCESSED": "Deployment created",
+          "IGNORED": "Ignored",
+          "FAILED": "Processing failed",
+          "SUPERSEDED": "Replaced by a newer push"
+        }
       },
       "envVars": {
         "eyebrow": "Environment variables",
@@ -426,6 +440,20 @@
             "STDERR": "Stderr"
           }
         }
+      },
+      "settings": {
+        "title": "Project settings",
+        "description": "Configure the branch, build paths, runtime ports, and automatic deployments.",
+        "activeDeployment": "Settings are locked while a deployment is active. Try again after it finishes.",
+        "autoDeployDescription": "Automatically deploy new commits pushed to the selected branch.",
+        "fields": {
+          "deployBranch": "Deploy branch", "rootDirectory": "Root directory", "dockerfilePath": "Dockerfile path",
+          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Enable auto deploy"
+        },
+        "placeholders": { "deployBranch": "Select a branch" },
+        "actions": { "edit": "Edit", "cancel": "Cancel", "save": "Save changes", "saving": "Saving..." },
+        "validation": { "deployBranchRequired": "Deploy branch is required.", "invalidPort": "Enter a positive whole number." },
+        "toast": { "updated": "Project settings updated." }
       },
       "deleteProject": {
         "eyebrow": "Danger zone",

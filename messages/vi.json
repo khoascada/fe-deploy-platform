@@ -175,7 +175,7 @@
       },
       "toast": {
         "deployQueued": "Đã đưa deployment vào hàng chờ.",
-        "projectDeleted": "?? x?a {projectName}."
+        "projectDeleted": "Đã xóa {projectName}."
       },
       "confirm": {
         "deployTitle": "Deploy {projectName}?",
@@ -288,7 +288,21 @@
         "nextStepTitle": "Bước tiếp theo",
         "nextStepConnected": "Khi phase deployment hoàn thiện, card này có thể mở rộng để hiển thị health và hoạt động webhook gần đây.",
         "nextStepPending": "Sau khi backend provision xong webhook, khu vực này có thể hiển thị ID và sức khỏe nhận event.",
-        "notAvailableShort": "Đang chờ"
+        "notAvailableShort": "Đang chờ",
+        "latest": {
+          "title": "Event gần nhất",
+          "notConnected": "Hãy kết nối webhook của repository để theo dõi hoạt động delivery tại đây.",
+          "waitingFirstDelivery": "Webhook đã kết nối và đang chờ delivery đầu tiên.",
+          "received": "Đã nhận {time}"
+        },
+        "eventStatus": {
+          "RECEIVED": "Đã nhận",
+          "PENDING": "Đang chờ deployment hiện tại",
+          "PROCESSED": "Đã tạo deployment",
+          "IGNORED": "Đã bỏ qua",
+          "FAILED": "Xử lý thất bại",
+          "SUPERSEDED": "Đã được push mới thay thế"
+        }
       },
       "envVars": {
         "eyebrow": "Biến môi trường",
@@ -426,6 +440,20 @@
             "STDERR": "Stderr"
           }
         }
+      },
+      "settings": {
+        "title": "Cấu hình project",
+        "description": "Cấu hình nhánh deploy, đường dẫn build, port runtime và deploy tự động.",
+        "activeDeployment": "Cấu hình đang bị khóa khi deployment hoạt động. Hãy thử lại sau khi deployment kết thúc.",
+        "autoDeployDescription": "Tự động deploy commit mới được push lên nhánh đã chọn.",
+        "fields": {
+          "deployBranch": "Nhánh deploy", "rootDirectory": "Thư mục gốc", "dockerfilePath": "Đường dẫn Dockerfile",
+          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Bật auto deploy"
+        },
+        "placeholders": { "deployBranch": "Chọn một nhánh" },
+        "actions": { "edit": "Chỉnh sửa", "cancel": "Hủy", "save": "Lưu thay đổi", "saving": "Đang lưu..." },
+        "validation": { "deployBranchRequired": "Nhánh deploy là bắt buộc.", "invalidPort": "Hãy nhập số nguyên dương." },
+        "toast": { "updated": "Đã cập nhật cấu hình project." }
       },
       "deleteProject": {
         "eyebrow": "Vùng nguy hiểm",

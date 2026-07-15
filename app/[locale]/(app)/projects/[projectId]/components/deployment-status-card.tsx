@@ -4,7 +4,6 @@ import type { ProjectDetail } from '@/types/project';
 import { Button, Card, CardContent, CardHeader, CardTitle, Progress } from '@components/ui';
 import {
   AlertCircle,
-  ArrowUpRight,
   Clock3,
   GitCommitHorizontal,
   Loader2,
@@ -129,6 +128,7 @@ export function DeploymentStatusCard({
       </CardHeader>
 
       <CardContent className="space-y-6 p-6">
+        {/*  */}
         <div className="from-background to-muted/30 rounded-2xl border p-5">
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -190,6 +190,7 @@ export function DeploymentStatusCard({
           </div>
         </div>
 
+        {/* 3 box */}
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-2xl border p-4">
             <div className="text-muted-foreground flex items-center gap-2 text-xs uppercase">
@@ -232,10 +233,6 @@ export function DeploymentStatusCard({
           <Button disabled={isDeployDisabled} onClick={onDeployNow}>
             {isDeploying ? <Loader2 className="size-4 animate-spin" /> : null}
             {t('deploymentStatus.primaryAction')}
-          </Button>
-          <Button variant="outline" disabled>
-            {t('deploymentStatus.secondaryAction')}
-            <ArrowUpRight className="size-4" />
           </Button>
         </div>
       </CardContent>

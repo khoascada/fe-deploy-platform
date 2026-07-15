@@ -3,6 +3,7 @@
   ProjectDetail,
   ProjectListParams,
   ProjectListResponse,
+  UpdateProjectRequest,
 } from '@/types/project';
 import apiClient from '@lib/api/api-client';
 import type { ApiResponse } from '@lib/types/base';
@@ -27,6 +28,14 @@ export const projectApi = {
 
   async createProject(payload: CreateProjectRequest) {
     const response = await apiClient.post<ApiResponse<{ id: string }>>('/projects', payload);
+    return response.data.data;
+  },
+
+  async updateProject(projectId: string, payload: UpdateProjectRequest) {
+    const response = await apiClient.patch<ApiResponse<ProjectDetail>>(
+      `/projects/${projectId}`,
+      payload
+    );
     return response.data.data;
   },
 
