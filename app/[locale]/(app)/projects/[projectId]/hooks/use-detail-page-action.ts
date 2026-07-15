@@ -1,18 +1,24 @@
-﻿'use client';
+'use client';
 
-import { useCreateDeployment } from '@/features/deployments/hooks/use-create-deployment';
+import {
+  useCreateDeployment,
+  useGetProjectDeployments,
+} from '@/features/deployments';
 import { useDeleteProject, useGetProjectDetail } from '@/features/projects/hooks';
 import type { ProjectDetail } from '@/types/project';
 import { useRouter } from '@i18n/navigation';
 import { useConfirm, useTranslateError } from '@lib/hooks';
 import type { ApiError } from '@lib/types/base';
 import { useTranslations } from 'next-intl';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useProjectDeploymentRealtime } from './use-project-deployment-realtime';
 
 interface UseDetailPageActionOptions {
   projectId: string;
 }
+
+const PROJECT_DETAIL_DEPLOYMENTS_LIMIT = 20;
 
 const ACTIVE_DEPLOYMENT_STATUSES: Array<NonNullable<ProjectDetail['latestDeploy']>['status']> = [
   'QUEUED',
@@ -25,8 +31,13 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
   const router = useRouter();
   const t = useTranslations('pages.projectDetail');
   const { data, error, isError, isLoading, refetch } = useGetProjectDetail(projectId);
+  const deploymentsQuery = useGetProjectDeployments(projectId, PROJECT_DETAIL_DEPLOYMENTS_LIMIT, {
+    enabled: Boolean(projectId),
+    retry: false,
+  });
   const confirm = useConfirm();
   const { getErrorMessage } = useTranslateError();
+  const [selectedDeploymentId, setSelectedDeploymentId] = useState<string | null>(null);
   const {
     createDeployment,
     error: deploymentError,
@@ -41,6 +52,33 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
   } = useDeleteProject();
 
   useProjectDeploymentRealtime({ project: data });
+
+  const deployments = useMemo(() => deploymentsQuery.data ?? [], [deploymentsQuery.data]);
+  const preferredDeploymentId = deployments.at(0)?.id ?? data?.latestDeploy?.id ?? null;
+
+  useEffect(() => {
+    setSelectedDeploymentId((currentDeploymentId) => {
+      if (
+        currentDeploymentId &&
+        deployments.some((deployment) => deployment.id === currentDeploymentId)
+      ) {
+        return currentDeploymentId;
+      }
+
+      return preferredDeploymentId;
+    });
+  }, [deployments, preferredDeploymentId]);
+
+  const selectedDeployment = useMemo(() => {
+    if (!selectedDeploymentId) {
+      return null;
+    }
+
+    return deployments.find((deployment) => deployment.id === selectedDeploymentId) ?? null;
+  }, [deployments, selectedDeploymentId]);
+
+  const resolvedLogDeploymentId = selectedDeployment?.id ?? selectedDeploymentId ?? data?.latestDeploy?.id;
+  const resolvedLogDeploymentStatus = selectedDeployment?.status ?? data?.latestDeploy?.status;
 
   const handleDeployNow = async () => {
     if (!data || isDeploying) {
@@ -102,6 +140,8 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
 
   return {
     deleteErrorMessage: deleteError ? getErrorMessage(deleteError) : '',
+    deploymentErrorMessage: getErrorMessage(deploymentsQuery.error),
+    deployments,
     deployErrorMessage: deploymentError ? getErrorMessage(deploymentError) : '',
     error,
     errorMessage: getErrorMessage(error),
@@ -109,11 +149,18 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
     isDeleting,
     isDeployDisabled,
     isDeploying,
+    isDeploymentsError: deploymentsQuery.isError,
+    isDeploymentsLoading: deploymentsQuery.isLoading,
     isError,
     isLoading,
     onDeleteProject: () => void handleDeleteProject(),
     onDeployNow: () => void handleDeployNow(),
     onRetry: () => void refetch(),
+    onRetryDeployments: () => void deploymentsQuery.refetch(),
+    onSelectDeployment: setSelectedDeploymentId,
     project: data,
+    resolvedLogDeploymentId,
+    resolvedLogDeploymentStatus,
+    selectedDeploymentId,
   };
 }

@@ -42,6 +42,7 @@ export function useCreateDeployment(projectId: string) {
       });
 
       void queryClient.invalidateQueries({ queryKey });
+      void queryClient.invalidateQueries({ queryKey: ['project-deployments', projectId] });
     },
   });
 
