@@ -99,7 +99,8 @@ export function useDetailPageAction({ projectId }: UseDetailPageActionOptions) {
     }
 
     try {
-      await createDeployment();
+      const deployment = await createDeployment();
+      setSelectedDeploymentId(deployment.id);
       toast.success(t('toast.deployQueued'));
     } catch {
       // Error state is surfaced through the mutation and rendered in the card.

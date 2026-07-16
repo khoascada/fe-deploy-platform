@@ -147,6 +147,7 @@ export function ProjectDetailPageView({
           deployments={deployments}
           isDeploymentsError={isDeploymentsError}
           isDeploymentsLoading={isDeploymentsLoading}
+          isSelectionDisabled={isDeployDisabled}
           onRetryDeployments={onRetryDeployments}
           onSelectDeployment={onSelectDeployment}
           selectedDeploymentId={selectedDeploymentId}

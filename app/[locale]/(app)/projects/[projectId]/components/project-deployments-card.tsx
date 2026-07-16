@@ -13,6 +13,7 @@ interface ProjectDeploymentsCardProps {
   deployments: DeployListItem[];
   isDeploymentsError: boolean;
   isDeploymentsLoading: boolean;
+  isSelectionDisabled: boolean;
   onRetryDeployments: () => void;
   onSelectDeployment: (deploymentId: string) => void;
   selectedDeploymentId?: string | null;
@@ -40,6 +41,7 @@ export function ProjectDeploymentsCard({
   deployments,
   isDeploymentsError,
   isDeploymentsLoading,
+  isSelectionDisabled,
   onRetryDeployments,
   onSelectDeployment,
   selectedDeploymentId,
@@ -92,9 +94,11 @@ export function ProjectDeploymentsCard({
                   key={deployment.id}
                   aria-pressed={isSelected}
                   className={cn(
-                    'w-full rounded-2xl border px-4 py-4 text-left transition-colors',
-                    isSelected ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/40'
+                    'w-full rounded-2xl border px-4 py-4 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+                    isSelected ? 'border-primary bg-primary/5' : 'border-border hover:bg-muted/40',
+                    isSelectionDisabled && !isSelected ? 'hover:bg-transparent' : ''
                   )}
+                  disabled={isSelectionDisabled}
                   onClick={() => onSelectDeployment(deployment.id)}
                   type="button"
                 >
