@@ -137,7 +137,6 @@
         "notAvailable": "Chưa có",
         "notDeployed": "Chưa có lần deploy nào"
       },
-
       "actions": {
         "viewDetail": "Xem chi tiết",
         "deployNow": "Deploy ngay",
@@ -174,6 +173,19 @@
       "actions": {
         "openRepository": "Mở repository"
       },
+      "toast": {
+        "deployQueued": "Đã đưa deployment vào hàng chờ.",
+        "projectDeleted": "Đã xóa {projectName}."
+      },
+      "confirm": {
+        "deployTitle": "Deploy {projectName}?",
+        "deployDescription": "Deploy branch {branch} ngay bây giờ?",
+        "confirmAction": "Deploy ngay",
+        "cancelAction": "Hủy",
+        "deleteProjectTitle": "Xóa {projectName}?",
+        "deleteProjectDescription": "Hành động này sẽ xóa vĩnh viễn project và các cấu hình liên quan.",
+        "deleteProjectAction": "Xóa project"
+      },
       "states": {
         "errorTitle": "Không thể tải chi tiết dự án",
         "errorDescription": "Đã có lỗi xảy ra khi tải trang chi tiết dự án.",
@@ -189,6 +201,8 @@
         "CANCELED": "Đã hủy"
       },
       "trigger": {
+        "MANUAL": "Thủ công",
+        "GITHUB_PUSH": "Webhook",
         "manual": "Thủ công",
         "webhook": "Webhook"
       },
@@ -274,7 +288,112 @@
         "nextStepTitle": "Bước tiếp theo",
         "nextStepConnected": "Khi phase deployment hoàn thiện, card này có thể mở rộng để hiển thị health và hoạt động webhook gần đây.",
         "nextStepPending": "Sau khi backend provision xong webhook, khu vực này có thể hiển thị ID và sức khỏe nhận event.",
-        "notAvailableShort": "Đang chờ"
+        "notAvailableShort": "Đang chờ",
+        "latest": {
+          "title": "Event gần nhất",
+          "notConnected": "Hãy kết nối webhook của repository để theo dõi hoạt động delivery tại đây.",
+          "waitingFirstDelivery": "Webhook đã kết nối và đang chờ delivery đầu tiên.",
+          "received": "Đã nhận {time}"
+        },
+        "eventStatus": {
+          "RECEIVED": "Đã nhận",
+          "PENDING": "Đang chờ deployment hiện tại",
+          "PROCESSED": "Đã tạo deployment",
+          "IGNORED": "Đã bỏ qua",
+          "FAILED": "Xử lý thất bại",
+          "SUPERSEDED": "Đã được push mới thay thế"
+        }
+      },
+      "envVars": {
+        "eyebrow": "Biến môi trường",
+        "title": "Biến môi trường",
+        "description": "Lưu secret và config theo từng project cho runtime, build time, hoặc cả hai.",
+        "maskedValue": "Secret đang được lưu an toàn",
+        "actions": {
+          "add": "Thêm biến mới",
+          "retry": "Thử lại",
+          "edit": "Chỉnh sửa",
+          "delete": "Xóa",
+          "enable": "Bật",
+          "disable": "Tắt",
+          "toggle": "Chuyển trạng thái {key}"
+        },
+        "states": {
+          "errorTitle": "Không thể tải danh sách biến môi trường",
+          "errorDescription": "Đã có lỗi xảy ra khi tải danh sách biến môi trường của project.",
+          "emptyTitle": "Chưa có biến môi trường nào",
+          "emptyDescription": "Thêm biến cho runtime hoặc build tại đây để project sẵn sàng cho phase deploy tiếp theo."
+        },
+        "status": {
+          "enabled": "Đang bật",
+          "disabled": "Đang tắt"
+        },
+        "scope": {
+          "runtime": "Runtime",
+          "build": "Build",
+          "both": "Runtime + Build"
+        },
+        "row": {
+          "updatedAt": "Cập nhật {date}"
+        },
+        "dialog": {
+          "createTitle": "Thêm biến môi trường",
+          "createDescription": "Tạo từng biến một và chọn xem biến đó dùng cho build, runtime, hay cả hai.",
+          "editTitle": "Chỉnh sửa biến môi trường",
+          "editDescription": "Cập nhật key, scope, trạng thái bật tắt, hoặc thay secret đang được lưu.",
+          "fields": {
+            "key": {
+              "label": "Tên biến",
+              "description": "Dùng key an toàn cho shell như DATABASE_URL hoặc NEXT_PUBLIC_API_URL.",
+              "placeholder": "DATABASE_URL"
+            },
+            "value": {
+              "label": "Giá trị secret",
+              "description": "Giá trị sẽ được mã hóa trước khi lưu.",
+              "editDescription": "Để trống để giữ nguyên secret hiện tại. Nhập giá trị mới để thay thế.",
+              "placeholder": "Nhập giá trị secret",
+              "editPlaceholder": "Để trống để giữ secret hiện tại"
+            },
+            "scope": {
+              "label": "Biến này sẽ khả dụng ở đâu?",
+              "description": "Chọn ít nhất một phase.",
+              "runtime": "Runtime",
+              "runtimeDescription": "Sẽ được ghi vào file .env runtime khi deployment chạy.",
+              "build": "Build",
+              "buildDescription": "Sẽ được truyền vào docker build như biến ở thời điểm build."
+            },
+            "enabled": {
+              "label": "Đang bật",
+              "description": "Biến bị tắt vẫn được lưu nhưng sẽ bị bỏ qua ở các phase deploy sau này."
+            }
+          },
+          "actions": {
+            "cancel": "Hủy",
+            "create": "Tạo biến",
+            "creating": "Đang tạo biến...",
+            "save": "Lưu thay đổi",
+            "saving": "Đang lưu thay đổi..."
+          }
+        },
+        "confirm": {
+          "deleteTitle": "Xóa {key}?",
+          "deleteDescription": "Biến này sẽ bị gỡ khỏi cấu hình của project.",
+          "deleteAction": "Xóa biến",
+          "cancelAction": "Hủy"
+        },
+        "toast": {
+          "created": "Đã tạo biến môi trường.",
+          "updated": "Đã cập nhật biến môi trường.",
+          "deleted": "Đã xóa {key}.",
+          "enabled": "Đã bật {key}.",
+          "disabled": "Đã tắt {key}."
+        },
+        "validation": {
+          "keyRequired": "Tên biến là bắt buộc.",
+          "keyInvalid": "Chỉ dùng chữ cái, số, dấu gạch dưới và phải bắt đầu bằng chữ cái hoặc dấu gạch dưới.",
+          "valueRequired": "Giá trị secret là bắt buộc.",
+          "scopeRequired": "Hãy chọn ít nhất một nơi sử dụng biến này."
+        }
       },
       "future": {
         "shared": {
@@ -294,16 +413,113 @@
         "logs": {
           "eyebrow": "Realtime logs",
           "title": "Realtime logs",
-          "description": "Bề mặt log trong tương lai cho build và runtime output mà không làm page đầu tiên bị quá nặng.",
           "helperTitle": "Khung log stream đã sẵn sàng",
           "helperDescription": "Layout này được chừa kích thước phù hợp cho terminal stream, filter, và tail controls ở phase kế tiếp.",
-          "action": "Mở live logs"
+          "action": "Mở live logs",
+          "summary": {
+            "totalLines": "Total lines",
+            "latestLevel": "Latest level",
+            "latestEvent": "Latest event",
+            "sources": "Sources",
+            "emptyValue": "Đang chờ"
+          },
+          "listTitle": "Stream preview",
+          "listHint": "SYSTEM là log do platform tự ghi, còn STDOUT và STDERR phản ánh output từ command.",
+          "listAriaLabel": "Vùng xem trước luồng log deployment theo thời gian thực",
+          "emptyTitle": "Đang chờ output từ deployment",
+          "emptyDescription": "Các sự kiện từ platform, output của command, và cập nhật health check sẽ xuất hiện tại đây khi deployment bắt đầu phát log.",
+          "levels": {
+            "DEBUG": "Debug",
+            "INFO": "Info",
+            "WARN": "Cảnh báo",
+            "ERROR": "Lỗi"
+          },
+          "streams": {
+            "SYSTEM": "System",
+            "STDOUT": "Stdout",
+            "STDERR": "Stderr"
+          }
         }
+      },
+      "settings": {
+        "title": "Cấu hình project",
+        "description": "Cấu hình nhánh deploy, đường dẫn build, port runtime và deploy tự động.",
+        "activeDeployment": "Cấu hình đang bị khóa khi deployment hoạt động. Hãy thử lại sau khi deployment kết thúc.",
+        "autoDeployDescription": "Tự động deploy commit mới được push lên nhánh đã chọn.",
+        "fields": {
+          "deployBranch": "Nhánh deploy", "rootDirectory": "Thư mục gốc", "dockerfilePath": "Đường dẫn Dockerfile",
+          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Bật auto deploy"
+        },
+        "placeholders": { "deployBranch": "Chọn một nhánh" },
+        "actions": { "edit": "Chỉnh sửa", "cancel": "Hủy", "save": "Lưu thay đổi", "saving": "Đang lưu..." },
+        "validation": { "deployBranchRequired": "Nhánh deploy là bắt buộc.", "invalidPort": "Hãy nhập số nguyên dương." },
+        "toast": { "updated": "Đã cập nhật cấu hình project." }
+      },
+      "deleteProject": {
+        "eyebrow": "Vùng nguy hiểm",
+        "title": "Xóa project",
+        "warningTitle": "{projectName} sẽ bị xóa vĩnh viễn.",
+        "description": "Hành động này sẽ xóa project và các cấu hình liên quan khỏi workspace. Bạn sẽ không thể hoàn tác.",
+        "action": "Xóa project",
+        "deletingAction": "Đang xóa project..."
       }
     },
     "logs": {
       "title": "Nhật ký",
-      "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng."
+      "description": "Theo dõi log build, log runtime, và các sự kiện vận hành trên nền tảng.",
+      "retry": "Thử lại",
+      "notSelected": "Chưa chọn",
+      "selectionSummaryTitle": "Lựa chọn hiện tại",
+      "selectionSummaryDescription": "Trên màn hình nhỏ, dùng các selector bên trên để chuyển nhanh giữa project và deployment run.",
+      "projects": {
+        "title": "Projects",
+        "description": "Chọn một project trước, rồi xem các deployment run gần đây của project đó.",
+        "searchPlaceholder": "Tìm project...",
+        "mobileLabel": "Chọn project",
+        "mobilePlaceholder": "Chọn một project",
+        "errorTitle": "Không thể tải danh sách project",
+        "errorDescription": "Đã có lỗi xảy ra khi tải cột project.",
+        "emptyTitle": "Chưa có project nào",
+        "emptyDescription": "Project sẽ xuất hiện ở đây sau khi bạn kết nối repository đầu tiên.",
+        "noResultsTitle": "Không tìm thấy project phù hợp",
+        "noResultsDescription": "Hãy thử từ khóa khác hoặc xóa từ khóa tìm kiếm hiện tại.",
+        "latestDeploy": "Deploy gần nhất {time}",
+        "noDeployYet": "Chưa có deployment nào"
+      },
+      "deployments": {
+        "title": "Deployments",
+        "description": "Các run gần đây của project đang chọn, sắp xếp từ mới nhất đến cũ hơn.",
+        "mobileLabel": "Chọn deployment",
+        "mobilePlaceholder": "Chọn một deployment",
+        "errorTitle": "Không thể tải lịch sử deployment",
+        "errorDescription": "Chưa thể tải lịch sử deployment cho project này.",
+        "emptyTitle": "Project này chưa có deployment",
+        "emptyDescription": "Hãy trigger deployment trước, rồi lịch sử run sẽ xuất hiện ở đây.",
+        "noCommitMessage": "Chưa có commit message cho run này."
+      },
+      "terminal": {
+        "eyebrow": "Terminal",
+        "title": "Luồng log deployment",
+        "titleWithProject": "Luồng log của {projectName}",
+        "description": "Chọn project và deployment run để xem output theo kiểu terminal.",
+        "meta": "Branch {branch} · trạng thái {status}",
+        "logAriaLabel": "Vùng terminal hiển thị log deployment",
+        "jumpToLatest": "Nhảy xuống cuối",
+        "connection": {
+          "live": "Đang tail realtime",
+          "snapshot": "Ảnh chụp tĩnh"
+        },
+        "states": {
+          "errorTitle": "Không thể tải logs",
+          "errorDescription": "Chưa thể tải output terminal của deployment này.",
+          "noProjectTitle": "Hãy chọn một project",
+          "noProjectDescription": "Khi đã chọn project, các deployment run gần đây sẽ xuất hiện cạnh terminal.",
+          "noDeploymentTitle": "Hãy chọn một deployment run",
+          "noDeploymentDescription": "Chọn một deployment run để xem output log của nó.",
+          "emptyTitle": "Đang chờ output từ deployment",
+          "emptyDescription": "Deployment này chưa phát ra dòng log nào."
+        }
+      }
     },
     "dashboard": {
       "title": "Bảng điều khiển",
@@ -424,6 +640,17 @@
     "INSUFFICIENT_ROLE": "Tài khoản của bạn không đủ quyền để thực hiện hành động này.",
     "USER_NOT_FOUND": "Không tìm thấy người dùng.",
     "NOT_CONNECTED_GITHUB_YET": "Bạn chưa connect với Github",
-    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!"
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Không thể lấy repo từ Github! Vui lòng thử lại!",
+    "NOT_ACCESS_TO_PROJECT": "Bạn không có quyền truy cập dự án này.",
+    "PROJECT_NOT_FOUND": "Không tìm thấy dự án.",
+    "PROJECT_NOT_DEPLOYABLE": "Dự án này chưa thể deploy với cấu hình hiện tại.",
+    "PROJECT_NOT_ACTIVE": "Chỉ dự án đang hoạt động mới có thể deploy.",
+    "PROJECT_RUNNER_NOT_SUPPORTED": "Trình chạy deployment của dự án này chưa được hỗ trợ.",
+    "PROJECT_DEPLOY_CONFIG_MISSING": "Dự án đang thiếu cấu hình bắt buộc để deploy.",
+    "ACTIVE_DEPLOYMENT_EXISTS": "Dự án này đang có một deployment được thực thi.",
+    "HOST_PORT_ALREADY_EXISTS": "host port đã được sử dụng. Vui lòng sử dụng port khác!",
+    "GITHUB_REPO_ALREADY_EXISTS": "github repo này đã được tạo!",
+    "PROJECT_SLUG_ALREADY_EXISTS": "slug đã tồn tại!",
+    "CONTAINER_NAME_ALREADY_EXISTS": "container name đã tồn tại!"
   }
 }

@@ -173,6 +173,19 @@
       "actions": {
         "openRepository": "Open repository"
       },
+      "toast": {
+        "deployQueued": "Deployment queued successfully.",
+        "projectDeleted": "Deleted {projectName}."
+      },
+      "confirm": {
+        "deployTitle": "Deploy {projectName}?",
+        "deployDescription": "Deploy branch {branch} now?",
+        "confirmAction": "Deploy now",
+        "cancelAction": "Cancel",
+        "deleteProjectTitle": "Delete {projectName}?",
+        "deleteProjectDescription": "This action permanently removes the project and its related configuration.",
+        "deleteProjectAction": "Delete project"
+      },
       "states": {
         "errorTitle": "Could not load this project",
         "errorDescription": "Something went wrong while loading the project detail page.",
@@ -188,6 +201,8 @@
         "CANCELED": "Canceled"
       },
       "trigger": {
+        "MANUAL": "Manual",
+        "GITHUB_PUSH": "Webhook",
         "manual": "Manual",
         "webhook": "Webhook"
       },
@@ -273,7 +288,112 @@
         "nextStepTitle": "Next step",
         "nextStepConnected": "When deployment execution is added, this card can expand with delivery health and recent webhook activity.",
         "nextStepPending": "Once the backend finishes provisioning a webhook, the ID and delivery health can live here.",
-        "notAvailableShort": "Pending"
+        "notAvailableShort": "Pending",
+        "latest": {
+          "title": "Latest event",
+          "notConnected": "Connect the repository webhook before delivery activity can appear here.",
+          "waitingFirstDelivery": "The webhook is connected and waiting for its first delivery.",
+          "received": "Received {time}"
+        },
+        "eventStatus": {
+          "RECEIVED": "Received",
+          "PENDING": "Waiting for current deployment",
+          "PROCESSED": "Deployment created",
+          "IGNORED": "Ignored",
+          "FAILED": "Processing failed",
+          "SUPERSEDED": "Replaced by a newer push"
+        }
+      },
+      "envVars": {
+        "eyebrow": "Environment variables",
+        "title": "Environment variables",
+        "description": "Store secrets and config per project for runtime, build time, or both.",
+        "maskedValue": "Secret stored securely",
+        "actions": {
+          "add": "Add variable",
+          "retry": "Try again",
+          "edit": "Edit",
+          "delete": "Delete",
+          "enable": "Enable",
+          "disable": "Disable",
+          "toggle": "Toggle {key}"
+        },
+        "states": {
+          "errorTitle": "Could not load environment variables",
+          "errorDescription": "Something went wrong while loading the environment variable list.",
+          "emptyTitle": "No environment variables yet",
+          "emptyDescription": "Add runtime or build variables here so this project is ready for the next deployment phase."
+        },
+        "status": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        },
+        "scope": {
+          "runtime": "Runtime",
+          "build": "Build",
+          "both": "Runtime + Build"
+        },
+        "row": {
+          "updatedAt": "Updated {date}"
+        },
+        "dialog": {
+          "createTitle": "Add environment variable",
+          "createDescription": "Create one variable at a time and choose whether it should be available during build, runtime, or both.",
+          "editTitle": "Edit environment variable",
+          "editDescription": "Update the key, scope, enabled state, or replace the stored secret value.",
+          "fields": {
+            "key": {
+              "label": "Variable key",
+              "description": "Use a shell-safe key such as DATABASE_URL or NEXT_PUBLIC_API_URL.",
+              "placeholder": "DATABASE_URL"
+            },
+            "value": {
+              "label": "Secret value",
+              "description": "The value is encrypted before it is stored.",
+              "editDescription": "Leave this blank to keep the current secret. Enter a new value to replace it.",
+              "placeholder": "Enter the secret value",
+              "editPlaceholder": "Leave blank to keep the current secret"
+            },
+            "scope": {
+              "label": "Where should this variable be available?",
+              "description": "Choose at least one phase.",
+              "runtime": "Runtime",
+              "runtimeDescription": "Write it into the runtime .env file when deployments run.",
+              "build": "Build",
+              "buildDescription": "Pass it into docker build as a build-time variable."
+            },
+            "enabled": {
+              "label": "Enabled",
+              "description": "Disabled variables stay stored but will be skipped in later deployment phases."
+            }
+          },
+          "actions": {
+            "cancel": "Cancel",
+            "create": "Create variable",
+            "creating": "Creating variable...",
+            "save": "Save changes",
+            "saving": "Saving changes..."
+          }
+        },
+        "confirm": {
+          "deleteTitle": "Delete {key}?",
+          "deleteDescription": "This variable will be removed from the project configuration.",
+          "deleteAction": "Delete variable",
+          "cancelAction": "Cancel"
+        },
+        "toast": {
+          "created": "Environment variable created.",
+          "updated": "Environment variable updated.",
+          "deleted": "Deleted {key}.",
+          "enabled": "Enabled {key}.",
+          "disabled": "Disabled {key}."
+        },
+        "validation": {
+          "keyRequired": "Variable key is required.",
+          "keyInvalid": "Use only letters, numbers, and underscores, and start with a letter or underscore.",
+          "valueRequired": "Secret value is required.",
+          "scopeRequired": "Select at least one availability option."
+        }
       },
       "future": {
         "shared": {
@@ -293,16 +413,113 @@
         "logs": {
           "eyebrow": "Realtime logs",
           "title": "Realtime logs",
-          "description": "A future log surface for streaming build and runtime output without crowding the first release of this page.",
           "helperTitle": "Log stream container is ready",
           "helperDescription": "This layout is intentionally sized for a terminal-like stream, filters, and tail controls in the next phase.",
-          "action": "Open live logs"
+          "action": "Open live logs",
+          "summary": {
+            "totalLines": "Total lines",
+            "latestLevel": "Latest level",
+            "latestEvent": "Latest event",
+            "sources": "Sources",
+            "emptyValue": "Waiting"
+          },
+          "listTitle": "Stream preview",
+          "listHint": "SYSTEM logs come from the platform itself, while STDOUT and STDERR reflect command output.",
+          "listAriaLabel": "Realtime deployment log stream preview",
+          "emptyTitle": "Waiting for deployment output",
+          "emptyDescription": "Platform events, command output, and health updates will appear here once a deployment starts emitting log lines.",
+          "levels": {
+            "DEBUG": "Debug",
+            "INFO": "Info",
+            "WARN": "Warn",
+            "ERROR": "Error"
+          },
+          "streams": {
+            "SYSTEM": "System",
+            "STDOUT": "Stdout",
+            "STDERR": "Stderr"
+          }
         }
+      },
+      "settings": {
+        "title": "Project settings",
+        "description": "Configure the branch, build paths, runtime ports, and automatic deployments.",
+        "activeDeployment": "Settings are locked while a deployment is active. Try again after it finishes.",
+        "autoDeployDescription": "Automatically deploy new commits pushed to the selected branch.",
+        "fields": {
+          "deployBranch": "Deploy branch", "rootDirectory": "Root directory", "dockerfilePath": "Dockerfile path",
+          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Enable auto deploy"
+        },
+        "placeholders": { "deployBranch": "Select a branch" },
+        "actions": { "edit": "Edit", "cancel": "Cancel", "save": "Save changes", "saving": "Saving..." },
+        "validation": { "deployBranchRequired": "Deploy branch is required.", "invalidPort": "Enter a positive whole number." },
+        "toast": { "updated": "Project settings updated." }
+      },
+      "deleteProject": {
+        "eyebrow": "Danger zone",
+        "title": "Delete project",
+        "warningTitle": "{projectName} will be permanently removed.",
+        "description": "This action removes the project and its related configuration from the workspace. You cannot undo it.",
+        "action": "Delete project",
+        "deletingAction": "Deleting project..."
       }
     },
     "logs": {
       "title": "Logs",
-      "description": "Inspect build output, runtime logs, and operational events across your platform."
+      "description": "Inspect build output, runtime logs, and operational events across your platform.",
+      "retry": "Try again",
+      "notSelected": "Not selected yet",
+      "selectionSummaryTitle": "Current selection",
+      "selectionSummaryDescription": "Use the selectors above to jump between projects and deployment runs on smaller screens.",
+      "projects": {
+        "title": "Projects",
+        "description": "Pick a project first, then inspect its recent deployment runs.",
+        "searchPlaceholder": "Search projects...",
+        "mobileLabel": "Select project",
+        "mobilePlaceholder": "Choose a project",
+        "errorTitle": "Could not load projects",
+        "errorDescription": "Something went wrong while loading the project rail.",
+        "emptyTitle": "No projects yet",
+        "emptyDescription": "Projects will appear here after your first repository is connected.",
+        "noResultsTitle": "No matching projects",
+        "noResultsDescription": "Try another keyword or clear the current search.",
+        "latestDeploy": "Latest deploy {time}",
+        "noDeployYet": "No deployments yet"
+      },
+      "deployments": {
+        "title": "Deployments",
+        "description": "Recent runs for the selected project, sorted from newest to oldest.",
+        "mobileLabel": "Select deployment",
+        "mobilePlaceholder": "Choose a deployment",
+        "errorTitle": "Could not load deployments",
+        "errorDescription": "We could not load deployment history for this project.",
+        "emptyTitle": "No deployments for this project",
+        "emptyDescription": "Trigger a deployment first, then its run history will appear here.",
+        "noCommitMessage": "No commit message captured for this run."
+      },
+      "terminal": {
+        "eyebrow": "Terminal",
+        "title": "Deployment log stream",
+        "titleWithProject": "{projectName} log stream",
+        "description": "Choose a project and deployment run to inspect the terminal output.",
+        "meta": "Branch {branch} Ãƒâ€šÃ‚Â· status {status}",
+        "logAriaLabel": "Deployment logs terminal output",
+        "jumpToLatest": "Jump to latest",
+        "connection": {
+          "live": "Live tailing",
+          "snapshot": "Snapshot"
+        },
+        "states": {
+          "errorTitle": "Could not load logs",
+          "errorDescription": "We could not load the terminal output for this deployment.",
+          "noProjectTitle": "Pick a project to start",
+          "noProjectDescription": "Once a project is selected, its recent deployment runs will appear beside the terminal.",
+          "noDeploymentTitle": "Pick a deployment run",
+          "noDeploymentDescription": "Select one deployment run to inspect its log output.",
+          "emptyTitle": "Waiting for deployment output",
+          "emptyDescription": "This deployment has not emitted any log lines yet."
+        }
+      }
     },
     "dashboard": {
       "title": "Dashboard",
@@ -423,6 +640,18 @@
     "INSUFFICIENT_ROLE": "Your account does not have the required permissions.",
     "USER_NOT_FOUND": "User not found.",
     "NOT_CONNECTED_GITHUB_YET": "You are not connect Github yet",
-    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!"
+    "CANNOT_GET_LIST_REPOS_FROM_GITHUB": "Unable to fetch repositories from GitHub! Please try again!",
+    "NOT_ACCESS_TO_PROJECT": "You do not have permission to access this project.",
+    "PROJECT_NOT_FOUND": "Project not found.",
+    "PROJECT_NOT_DEPLOYABLE": "This project cannot be deployed with its current configuration.",
+    "PROJECT_NOT_ACTIVE": "Only active projects can be deployed.",
+    "PROJECT_RUNNER_NOT_SUPPORTED": "This project's deployment runner is not supported yet.",
+    "PROJECT_DEPLOY_CONFIG_MISSING": "This project is missing required deployment configuration.",
+    "ACTIVE_DEPLOYMENT_EXISTS": "A deployment is already in progress for this project.",
+    "HOST_PORT_ALREADY_EXISTS": "Host port is already in use. Please use a different port!",
+    "GITHUB_REPO_ALREADY_EXISTS": "This GitHub repo has already been created!",
+    "PROJECT_SLUG_ALREADY_EXISTS": "Slug already exists!",
+    "CONTAINER_NAME_ALREADY_EXISTS": "Container name already exists!",
+    "ENV_VAR_KEY_ALREADY_EXISTS": "This environment variable key already exists in the project."
   }
 }

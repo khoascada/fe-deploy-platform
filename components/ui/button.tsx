@@ -74,7 +74,11 @@ const buttonVariants = cva(
         color: 'warning',
         class: 'bg-warning text-primary-foreground hover:bg-warning/90',
       },
-      { variant: 'default', color: 'info', class: 'bg-info text-primary-foreground hover:bg-info/90' },
+      {
+        variant: 'default',
+        color: 'info',
+        class: 'bg-info text-primary-foreground hover:bg-info/90',
+      },
       { variant: 'default', color: 'reset', class: 'bg-reset text-text-reset hover:bg-reset/90' },
       {
         variant: 'default',

@@ -40,7 +40,7 @@ function OverviewItem({
         <Icon className="size-4" />
         {label}
       </div>
-      <p className="mt-3 break-all text-sm font-medium leading-6">{value}</p>
+      <p className="mt-3 text-sm leading-6 font-medium break-all">{value}</p>
     </div>
   );
 }
@@ -57,8 +57,12 @@ export function ProjectOverviewCard({ project }: ProjectOverviewCardProps) {
             <CardTitle className="text-xl uppercase">{t('overview.eyebrow')}</CardTitle>
           </div>
           <div className="flex flex-wrap gap-2">
-            <StatusBadge tone={getProjectStatusTone(project.status)}>{t(`projectStatus.${project.status}`)}</StatusBadge>
-            <StatusBadge tone={getRunnerTone(project.runnerType)}>{t(`runnerType.${project.runnerType}`)}</StatusBadge>
+            <StatusBadge tone={getProjectStatusTone(project.status)}>
+              {t(`projectStatus.${project.status}`)}
+            </StatusBadge>
+            <StatusBadge tone={getRunnerTone(project.runnerType)}>
+              {t(`runnerType.${project.runnerType}`)}
+            </StatusBadge>
           </div>
         </div>
       </CardHeader>
@@ -66,8 +70,16 @@ export function ProjectOverviewCard({ project }: ProjectOverviewCardProps) {
       <CardContent className="space-y-6 p-6">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(320px,0.65fr)]">
           <div className="grid gap-4 sm:grid-cols-2">
-            <OverviewItem icon={Globe} label={t('overview.fields.repository')} value={project.repoFullName} />
-            <OverviewItem icon={GitBranch} label={t('overview.fields.deployBranch')} value={project.deployBranch} />
+            <OverviewItem
+              icon={Globe}
+              label={t('overview.fields.repository')}
+              value={project.repoFullName}
+            />
+            <OverviewItem
+              icon={GitBranch}
+              label={t('overview.fields.deployBranch')}
+              value={project.deployBranch}
+            />
             <OverviewItem
               icon={FolderTree}
               label={t('overview.fields.rootDirectory')}
@@ -112,14 +124,18 @@ export function ProjectOverviewCard({ project }: ProjectOverviewCardProps) {
                   <p className="mt-2 text-sm font-semibold">{project.containerPort}</p>
                 </div>
                 <div className="bg-muted/50 rounded-2xl p-4">
-                  <p className="text-muted-foreground text-xs uppercase">{t('overview.runtime.hostPort')}</p>
-                  <p className="mt-2 text-sm font-semibold">{project.hostPort ?? t('overview.unset')}</p>
+                  <p className="text-muted-foreground text-xs uppercase">
+                    {t('overview.runtime.hostPort')}
+                  </p>
+                  <p className="mt-2 text-sm font-semibold">
+                    {project.hostPort ?? t('overview.unset')}
+                  </p>
                 </div>
                 <div className="bg-muted/50 rounded-2xl p-4">
                   <p className="text-muted-foreground text-xs uppercase">
                     {t('overview.runtime.containerName')}
                   </p>
-                  <p className="mt-2 break-all text-sm font-semibold">
+                  <p className="mt-2 text-sm font-semibold break-all">
                     {project.containerName || t('overview.unset')}
                   </p>
                 </div>
@@ -132,7 +148,11 @@ export function ProjectOverviewCard({ project }: ProjectOverviewCardProps) {
           <OverviewItem
             icon={Waypoints}
             label={t('overview.fields.autoDeploy')}
-            value={project.autoDeploy ? t('overview.autoDeployEnabled') : t('overview.autoDeployDisabled')}
+            value={
+              project.autoDeploy
+                ? t('overview.autoDeployEnabled')
+                : t('overview.autoDeployDisabled')
+            }
           />
           <OverviewItem
             icon={ServerCog}

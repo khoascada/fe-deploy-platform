@@ -27,7 +27,6 @@ Colocate everything related to a component:
 src/components/
   TaskList/
     TaskList.tsx          # Component implementation
-    TaskList.test.tsx     # Tests
     TaskList.stories.tsx  # Storybook stories (if using)
     use-task-list.ts      # Custom hook (if complex state)
     types.ts              # Component-specific types (if needed)
@@ -294,7 +293,7 @@ function useToggleTask() {
 
 ## See Also
 
-For detailed accessibility requirements and testing tools, see `references/accessibility-checklist.md`.
+For detailed accessibility requirements and manual check guidance, see `references/accessibility-checklist.md`.
 
 ## Common Rationalizations
 
@@ -311,7 +310,7 @@ For detailed accessibility requirements and testing tools, see `references/acces
 - Components with more than 200 lines (split them)
 - Inline styles or arbitrary pixel values
 - Missing error states, loading states, or empty states
-- No keyboard navigation testing
+- No keyboard navigation check
 - Color as the sole indicator of state (red/green without text or icons)
 - Generic "AI look" (purple gradients, oversized cards, stock layouts)
 

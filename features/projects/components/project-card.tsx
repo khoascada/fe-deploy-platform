@@ -168,7 +168,7 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
           </CardContent>
         </div>
 
-        <CardFooter className="flex flex-wrap gap-2 p-5 pt-0 lg:flex-col">
+        {/* <CardFooter className="flex flex-wrap gap-2 p-5 pt-0 lg:flex-col">
           <Button variant="outline" className="flex-1 lg:w-full" asChild>
             <Link href={'/projects/' + project.id}>{t('actions.viewDetail')}</Link>
           </Button>
@@ -179,7 +179,7 @@ export function ProjectCard({ project, viewMode }: ProjectCardProps) {
             <SquareTerminal className="h-4 w-4" />
             {t('actions.viewLogs')}
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </div>
     </Card>
   );

@@ -14,9 +14,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const setDrawerOpen = useMobileDrawerStore((state) => state.setDrawerOpen);
 
   const isMobile = useIsMobile();
-  // đặt noti-obser và invi-obser, sse ở đây vì nó chỉ obser khi user đăng nhập.
-  // useSseConnection();
-
   return (
     <div className="bg-background text-foreground relative flex min-h-[100dvh] flex-col">
       <ErrorBoundary variant="header">

@@ -58,6 +58,36 @@ export interface CreateProjectRequest {
 // Dùng cho trang Project Detail (GET /projects/:id) — chi tiết 1 project
 export type ProjectRunnerType = 'LOCAL' | 'SSH';
 export type ProjectStatus = 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+export type WebhookEventStatus =
+    | 'RECEIVED'
+    | 'PENDING'
+    | 'PROCESSED'
+    | 'IGNORED'
+    | 'FAILED'
+    | 'SUPERSEDED';
+
+export interface LatestWebhookEvent {
+    id: string;
+    eventName: string;
+    status: WebhookEventStatus;
+    statusReason: string | null;
+    isVerified: boolean;
+    receivedAt: string;
+    processedAt: string | null;
+    branch: string | null;
+    commitSha: string | null;
+    commitMessage: string | null;
+}
+
+export interface UpdateProjectRequest {
+    deployBranch?: string;
+    rootDirectory?: string;
+    dockerfilePath?: string;
+    buildContext?: string;
+    containerPort?: number;
+    hostPort?: number | null;
+    autoDeploy?: boolean;
+}
 
 // Response from GET /projects/:id.
 export interface ProjectDetail {
@@ -88,6 +118,7 @@ export interface ProjectDetail {
     autoDeploy: boolean;
     webhookId: string | null;
     latestDeploy: LatestDeploy | null;
+    latestWebhookEvent: LatestWebhookEvent | null;
     status: ProjectStatus;
     createdAt: string;
     updatedAt: string;
@@ -96,11 +127,16 @@ export interface ProjectDetail {
 // Dùng cho trang Deployment History (GET /projects/:id/deploys)
 export interface DeployListItem {
     id: string;
+    projectId: string;
+    deploymentNumber: number;
     status: DeployStatus;
-    commitSha: string;
-    commitMsg: string | null;
+    trigger: 'MANUAL' | 'GITHUB_PUSH';
+    branch: string;
+    commitSha: string | null;
+    commitMessage: string | null;
+    queuedAt: string;
     createdAt: string;
     finishedAt: string | null;
-    containerId: string | null;
-    port: number | null;
+    containerId?: string | null;
+    port?: number | null;
 }

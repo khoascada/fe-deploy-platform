@@ -41,7 +41,7 @@ export default function AppHeader({
     <header className="bg-background/80 border-border sticky top-0 z-50 flex flex-col border-b px-6 backdrop-blur-xl md:px-8">
       <div className="flex h-[64px] w-full items-center justify-between py-4">
         <div className="flex items-center gap-2">
-          <Link href="/" className="text-lg font-semibold text-foreground">
+          <Link href="/" className="text-foreground text-lg font-semibold">
             <Image
               src="/bee.svg"
               alt={t('logoAlt')}

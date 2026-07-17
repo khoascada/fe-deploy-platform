@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (variant === 'header') {
       return (
         <div className="bg-background/80 border-border sticky top-0 z-50 flex h-[64px] items-center justify-center gap-4 border-b p-4 backdrop-blur-xl">
-          <span className="text-sm text-muted-foreground">{msg.title}</span>
+          <span className="text-muted-foreground text-sm">{msg.title}</span>
           <Button onClick={this.handleReset} variant="default" size="sm">
             <RotateCcw size={14} />
             <span>{msg.tryAgain}</span>
@@ -80,8 +80,8 @@ export class ErrorBoundary extends Component<Props, State> {
 
     if (variant === 'sidebar') {
       return (
-        <div className="border-border flex w-[220px] flex-col items-center justify-center gap-2 overflow-y-auto border-r bg-card">
-          <span className="text-sm text-muted-foreground">{msg.title}</span>
+        <div className="border-border bg-card flex w-[220px] flex-col items-center justify-center gap-2 overflow-y-auto border-r">
+          <span className="text-muted-foreground text-sm">{msg.title}</span>
           <Button onClick={this.handleReset} variant="default" size="sm">
             <RotateCcw size={14} />
             <span className="ml-1">{msg.tryAgain}</span>
@@ -93,9 +93,9 @@ export class ErrorBoundary extends Component<Props, State> {
     return (
       <div className="flex min-h-[400px] w-full items-center justify-center p-4">
         <div className="flex flex-col items-center gap-4 text-center">
-          <div className="rounded-full bg-destructive/10 p-4">
+          <div className="bg-destructive/10 rounded-full p-4">
             <svg
-              className="h-12 w-12 text-destructive"
+              className="text-destructive h-12 w-12"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -110,16 +110,14 @@ export class ErrorBoundary extends Component<Props, State> {
           </div>
 
           <div>
-            <h1 className="mb-2 text-2xl font-bold text-foreground">
-              {msg.title}
-            </h1>
-            <p className="text-sm text-muted-foreground">{msg.description}</p>
+            <h1 className="text-foreground mb-2 text-2xl font-bold">{msg.title}</h1>
+            <p className="text-muted-foreground text-sm">{msg.description}</p>
             {process.env.NODE_ENV === 'development' && error && (
               <details className="bg-muted mt-4 max-w-md rounded p-3 text-left text-xs">
-                <summary className="cursor-pointer font-semibold text-foreground">
+                <summary className="text-foreground cursor-pointer font-semibold">
                   Chi tiết lỗi (Dev only)
                 </summary>
-                <pre className="mt-2 overflow-auto text-destructive">
+                <pre className="text-destructive mt-2 overflow-auto">
                   {error.message}
                   {'\n\n'}
                   {error.stack}

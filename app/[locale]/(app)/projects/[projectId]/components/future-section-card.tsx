@@ -2,36 +2,21 @@
 
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@components/ui';
 import { useTranslations } from 'next-intl';
-import { History, ScrollText, TerminalSquare } from 'lucide-react';
+import { History, ScrollText } from 'lucide-react';
 import { EmptyMetric } from './project-detail-utils';
 
-interface FutureSectionCardProps {
-  kind: 'history' | 'logs';
-}
-
-export function FutureSectionCard({ kind }: FutureSectionCardProps) {
+export function FutureSectionCard() {
   const t = useTranslations('pages.projectDetail');
 
-  const config =
-    kind === 'history'
-      ? {
-          icon: History,
-          actionLabel: t('future.history.action'),
-          description: t('future.history.description'),
-          eyebrow: t('future.history.eyebrow'),
-          helperDescription: t('future.history.helperDescription'),
-          helperTitle: t('future.history.helperTitle'),
-          title: t('future.history.title'),
-        }
-      : {
-          icon: TerminalSquare,
-          actionLabel: t('future.logs.action'),
-          description: t('future.logs.description'),
-          eyebrow: t('future.logs.eyebrow'),
-          helperDescription: t('future.logs.helperDescription'),
-          helperTitle: t('future.logs.helperTitle'),
-          title: t('future.logs.title'),
-        };
+  const config = {
+    actionLabel: t('future.history.action'),
+    description: t('future.history.description'),
+    eyebrow: t('future.history.eyebrow'),
+    helperDescription: t('future.history.helperDescription'),
+    helperTitle: t('future.history.helperTitle'),
+    icon: History,
+    title: t('future.history.title'),
+  };
 
   const Icon = config.icon;
 
@@ -57,12 +42,18 @@ export function FutureSectionCard({ kind }: FutureSectionCardProps) {
               <ScrollText className="size-4" />
               {t('future.shared.previewTitle')}
             </div>
-            <p className="mt-2 text-sm font-medium leading-6">{t('future.shared.previewDescription')}</p>
+            <p className="mt-2 text-sm leading-6 font-medium">
+              {t('future.shared.previewDescription')}
+            </p>
           </div>
 
           <div className="bg-muted/50 rounded-2xl p-4">
-            <div className="text-muted-foreground text-xs uppercase">{t('future.shared.placeholderTitle')}</div>
-            <p className="mt-2 text-sm font-medium leading-6">{t('future.shared.placeholderDescription')}</p>
+            <div className="text-muted-foreground text-xs uppercase">
+              {t('future.shared.placeholderTitle')}
+            </div>
+            <p className="mt-2 text-sm leading-6 font-medium">
+              {t('future.shared.placeholderDescription')}
+            </p>
           </div>
         </div>
 

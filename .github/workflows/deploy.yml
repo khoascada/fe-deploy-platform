@@ -54,11 +54,11 @@ jobs:
             flock -w 600 9
 
             # Cập nhật source frontend và infra
-            sync_sha fe-deploy-platform "$DEPLOY_SHA"
-            sync_branch mini-deploy-infra main
+            sync_sha fe "$DEPLOY_SHA"
+            sync_branch infra main
 
             # Build lại image và restart container frontend
-            cd "$APP_ROOT/mini-deploy-infra"
+            cd "$APP_ROOT/infra"
             docker compose build frontend
             docker compose up -d --no-deps frontend
             docker compose ps

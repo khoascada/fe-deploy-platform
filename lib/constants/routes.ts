@@ -10,7 +10,7 @@ export const ROUTES: Record<string, RouteConfig> = {
   LANDING: { path: '/', access: 'public' },
   LOGIN: { path: '/login', access: 'auth-only' },
   REGISTER: { path: '/register', access: 'auth-only' },
-  PROJECTS: { path: '/projects', access: 'protected' }
+  PROJECTS: { path: '/projects', access: 'protected' },
 };
 
 export const PathnameUtils = {
@@ -59,7 +59,7 @@ export const RouteHelpers = {
         PathnameUtils.matchesRoute(normalized, route.path, getExactValue(route))
     );
   },
-  
+
   /**
    * Check if a route is auth-only (redirect if already authenticated)
    */

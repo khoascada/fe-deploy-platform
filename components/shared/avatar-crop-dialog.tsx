@@ -71,7 +71,7 @@ export const AvatarCropDialog = ({
 
           <div className="w-full space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Zoom</label>
+              <label className="text-foreground text-sm font-medium">Zoom</label>
               <input
                 type="range"
                 min="1"

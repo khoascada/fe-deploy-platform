@@ -1,0 +1,679 @@
+*** Begin Patch
+*** Add File: services/deployment.service.ts
++import apiClient from '@lib/api/api-client';
++import type { ApiResponse } from '@lib/types/base';
++import type { CreateDeploymentResponse } from '@/types/deployment';
++
++export const deploymentApi = {
++  async createDeployment(projectId: string): Promise<CreateDeploymentResponse> {
++    const response = await apiClient.post<ApiResponse<CreateDeploymentResponse>>(
++      `/projects/${projectId}/deployments`
++    );
++
++    return response.data.data;
++  },
++};
+*** Add File: features/deployments/hooks/use-create-deployment.ts
++'use client';
++
++import type { CreateDeploymentResponse } from '@/types/deployment';
++import type { ProjectDetail } from '@/types/project';
++import { useAppMutation } from '@lib/hooks/use-react-query';
++import { deploymentApi } from '@services/deployment.service';
++import { useQueryClient } from '@tanstack/react-query';
++
++function buildQueuedLatestDeploy(
++  deploymentId: string,
++  previousProject: ProjectDetail | undefined
++): ProjectDetail['latestDeploy'] {
++  const previousLatestDeploy = previousProject?.latestDeploy;
++
++  return {
++    id: deploymentId,
++    status: 'QUEUED',
++    commitSha: previousLatestDeploy?.commitSha ?? '',
++    commitMessage: previousLatestDeploy?.commitMessage ?? null,
++    createdAt: new Date().toISOString(),
++    finishedAt: null,
++    trigger: 'MANUAL',
++  };
++}
++
++export function useCreateDeployment(projectId: string) {
++  const queryClient = useQueryClient();
++  const queryKey = ['projects', 'detail', projectId] as const;
++
++  const mutation = useAppMutation({
++    mutationFn: () => deploymentApi.createDeployment(projectId),
++    onSuccess: (deployment: CreateDeploymentResponse) => {
++      queryClient.setQueryData<ProjectDetail | undefined>(queryKey, (previousProject) => {
++        if (!previousProject) {
++          return previousProject;
++        }
++
++        return {
++          ...previousProject,
++          latestDeploy: buildQueuedLatestDeploy(deployment.id, previousProject),
++        };
++      });
++
++      void queryClient.invalidateQueries({ queryKey });
++    },
++  });
++
++  const createDeployment = async () => {
++    return mutation.mutateAsync();
++  };
++
++  return {
++    ...mutation,
++    createDeployment,
++  };
++}
+*** Add File: types/deployment.ts
++import type { DeployListItem, DeployStatus, LatestDeploy } from './project';
++
++export type { DeployListItem, DeployStatus, LatestDeploy };
++
++export interface CreateDeploymentResponse {
++  id: string;
++}
+*** Update File: app\[locale]\(app)\projects\[projectId]\project-detail-page-client.tsx
+@@
+ 'use client';
+ 
++import { useCreateDeployment } from '@/features/deployments/hooks/use-create-deployment';
+ import { useGetProjectDetail } from '@/features/projects/hooks';
++import { useConfirm, useTranslateError } from '@lib/hooks';
+ import { getApiErrorMessage } from '@lib/utils/error';
++import { toast } from 'sonner';
+ import { ProjectDetailPageView } from './project-detail-page-view';
+@@
+ interface ProjectDetailPageClientProps {
+   projectId: string;
+ }
+ 
++const ACTIVE_DEPLOYMENT_STATUSES = new Set(['QUEUED', 'PULLING', 'BUILDING', 'DEPLOYING']);
++
+ export function ProjectDetailPageClient({ projectId }: ProjectDetailPageClientProps) {
+   const { data, error, isError, isLoading, refetch } = useGetProjectDetail(projectId);
++  const confirm = useConfirm();
++  const { getErrorMessage } = useTranslateError();
++  const {
++    createDeployment,
++    error: deploymentError,
++    isPending: isDeploying,
++    reset: resetCreateDeployment,
++  } = useCreateDeployment(projectId);
++
++  const handleDeployNow = async () => {
++    if (!data || isDeploying) {
++      return;
++    }
++
++    resetCreateDeployment();
++
++    const isConfirmed = await confirm({
++      title: `Deploy ${data.name}?`,
++      description: `Deploy branch ${data.deployBranch} now?`,
++      confirmText: 'Deploy now',
++      cancelText: 'Cancel',
++    });
++
++    if (!isConfirmed) {
++      return;
++    }
++
++    try {
++      await createDeployment();
++      toast.success('Deployment queued successfully.');
++    } catch {
++      // Error state is surfaced through the mutation and rendered in the card.
++    }
++  };
++
++  const isDeployDisabled =
++    isDeploying ||
++    (data?.latestDeploy ? ACTIVE_DEPLOYMENT_STATUSES.has(data.latestDeploy.status) : false);
+ 
+   return (
+     <ProjectDetailPageView
++      deployErrorMessage={deploymentError ? getErrorMessage(deploymentError) : ''}
+       project={data}
++      isDeployDisabled={isDeployDisabled}
++      isDeploying={isDeploying}
+       error={error}
+       errorMessage={getApiErrorMessage(error)}
+       isError={isError}
+       isLoading={isLoading}
++      onDeployNow={() => void handleDeployNow()}
+       onRetry={() => void refetch()}
+     />
+   );
+ }
+*** Update File: app\[locale]\(app)\projects\[projectId]\project-detail-page-view.tsx
+@@
+ interface ProjectDetailPageViewProps {
++  deployErrorMessage: string;
+   error: ApiError | null
+   errorMessage?: string;
++  isDeployDisabled: boolean;
++  isDeploying: boolean;
+   isError: boolean;
+   isLoading: boolean;
++  onDeployNow: () => void;
+   onRetry: () => void;
+   project?: ProjectDetail;
+ }
+ 
+ export function ProjectDetailPageView({
++  deployErrorMessage,
+   error,
+   errorMessage,
++  isDeployDisabled,
++  isDeploying,
+   isError,
+   isLoading,
++  onDeployNow,
+   onRetry,
+   project,
+ }: ProjectDetailPageViewProps) {
+@@
+       </header>
+ 
+       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.7fr)_minmax(280px,0.7fr)]">
+-        <DeploymentStatusCard project={project} />
++        <DeploymentStatusCard
++          deployErrorMessage={deployErrorMessage}
++          isDeployDisabled={isDeployDisabled}
++          isDeploying={isDeploying}
++          onDeployNow={onDeployNow}
++          project={project}
++        />
+         <WebhookInfoCard project={project} />
+       </div>
+*** Update File: app\[locale]\(app)\projects\[projectId]\components\deployment-status-card.tsx
+@@
+ import type { ProjectDetail } from '@/types/project';
+ import { Button, Card, CardContent, CardHeader, CardTitle, Progress } from '@components/ui';
+ import { useLocale, useTranslations } from 'next-intl';
+ import {
++  AlertCircle,
+   ArrowUpRight,
+   Clock3,
+   GitCommitHorizontal,
++  Loader2,
+   LoaderCircle,
+   Rocket,
+   TimerReset,
+@@
+ interface DeploymentStatusCardProps {
++  deployErrorMessage: string;
++  isDeployDisabled: boolean;
++  isDeploying: boolean;
++  onDeployNow: () => void;
+   project: ProjectDetail;
+ }
+@@
+-export function DeploymentStatusCard({ project }: DeploymentStatusCardProps) {
++export function DeploymentStatusCard({
++  deployErrorMessage,
++  isDeployDisabled,
++  isDeploying,
++  onDeployNow,
++  project,
++}: DeploymentStatusCardProps) {
+   const t = useTranslations('pages.projectDetail');
+   const locale = useLocale();
+   const latestDeploy = project.latestDeploy;
+@@
+               <div className="space-y-1">
+                 <p className="text-base font-semibold">{t('deploymentStatus.emptyTitle')}</p>
+                 <p className="text-muted-foreground text-sm leading-6">
+                   {t('deploymentStatus.emptyDescription')}
+                 </p>
+               </div>
+-              <Button disabled className="w-full sm:w-auto">
+-                {t('deploymentStatus.primaryAction')}
++              {deployErrorMessage ? (
++                <div
++                  className="border-destructive/30 bg-destructive/8 text-destructive rounded-2xl border px-4 py-3 text-sm"
++                  role="alert"
++                >
++                  <div className="flex items-start gap-2">
++                    <AlertCircle className="mt-0.5 size-4 shrink-0" />
++                    <span>{deployErrorMessage}</span>
++                  </div>
++                </div>
++              ) : null}
++              <Button
++                className="w-full sm:w-auto"
++                disabled={isDeployDisabled}
++                onClick={onDeployNow}
++              >
++                {isDeploying ? <Loader2 className="size-4 animate-spin" /> : null}
++                {t('deploymentStatus.primaryAction')}
+               </Button>
+             </div>
+           </div>
+@@
+-        <div className="flex flex-wrap gap-3">
+-          <Button disabled>{t('deploymentStatus.primaryAction')}</Button>
++        {deployErrorMessage ? (
++          <div
++            className="border-destructive/30 bg-destructive/8 text-destructive rounded-2xl border px-4 py-3 text-sm"
++            role="alert"
++          >
++            <div className="flex items-start gap-2">
++              <AlertCircle className="mt-0.5 size-4 shrink-0" />
++              <span>{deployErrorMessage}</span>
++            </div>
++          </div>
++        ) : null}
++
++        <div className="flex flex-wrap gap-3">
++          <Button disabled={isDeployDisabled} onClick={onDeployNow}>
++            {isDeploying ? <Loader2 className="size-4 animate-spin" /> : null}
++            {t('deploymentStatus.primaryAction')}
++          </Button>
+           <Button variant="outline" disabled>
+             {t('deploymentStatus.secondaryAction')}
+             <ArrowUpRight className="size-4" />
+           </Button>
+         </div>
+*** Update File: messages\en.json
+@@
+       "actions": {
+         "openRepository": "Open repository"
+       },
++      "toast": {
++        "deployQueued": "Deployment queued successfully."
++      },
++      "confirm": {
++        "deployTitle": "Deploy {projectName}?",
++        "deployDescription": "Deploy branch {branch} now?",
++        "confirmAction": "Deploy now",
++        "cancelAction": "Cancel"
++      },
+       "states": {
+         "errorTitle": "Could not load this project",
+         "errorDescription": "Something went wrong while loading the project detail page.",
+@@
+       "trigger": {
++        "MANUAL": "Manual",
++        "GITHUB_PUSH": "Webhook",
+         "manual": "Manual",
+         "webhook": "Webhook"
+       },
+*** Update File: messages\vi.json
+@@
+       "actions": {
+         "openRepository": "Mở repository"
+       },
++      "toast": {
++        "deployQueued": "Đã đưa deployment vào hàng chờ."
++      },
++      "confirm": {
++        "deployTitle": "Deploy {projectName}?",
++        "deployDescription": "Deploy branch {branch} ngay bây giờ?",
++        "confirmAction": "Deploy ngay",
++        "cancelAction": "Hủy"
++      },
+       "states": {
+         "errorTitle": "Không thể tải chi tiết dự án",
+         "errorDescription": "Đã có lỗi xảy ra khi tải trang chi tiết dự án.",
+@@
+       "trigger": {
++        "MANUAL": "Thủ công",
++        "GITHUB_PUSH": "Webhook",
+         "manual": "Thủ công",
+         "webhook": "Webhook"
+       },
+*** Add File: features/deployments/hooks/use-create-deployment.test.tsx
++import { renderHook, waitFor } from '@testing-library/react';
++import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
++import { describe, expect, it, vi } from 'vitest';
++import { useCreateDeployment } from './use-create-deployment';
++import { deploymentApi } from '@services/deployment.service';
++import type { ProjectDetail } from '@/types/project';
++import type { ApiError } from '@lib/types/base';
++
++vi.mock('@services/deployment.service', () => ({
++  deploymentApi: {
++    createDeployment: vi.fn(),
++  },
++}));
++
++function createWrapper(queryClient: QueryClient) {
++  return function Wrapper({ children }: { children: React.ReactNode }) {
++    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
++  };
++}
++
++function createProjectDetail(): ProjectDetail {
++  return {
++    id: 'project-1',
++    ownerId: 'owner-1',
++    name: 'Web App',
++    slug: 'web-app',
++    repoFullName: 'acme/web-app',
++    repoOwner: 'acme',
++    repoName: 'web-app',
++    repoUrl: 'https://github.com/acme/web-app',
++    githubRepoId: '101',
++    githubDefaultBranch: 'main',
++    deployBranch: 'main',
++    rootDirectory: '.',
++    dockerfilePath: 'Dockerfile',
++    buildContext: '.',
++    runnerType: 'LOCAL',
++    localRepoPath: null,
++    sshHost: null,
++    sshPort: null,
++    sshUser: null,
++    sshKeyEncrypted: null,
++    containerPort: 3000,
++    hostPort: 8080,
++    containerName: 'web-app',
++    imageName: 'web-app:latest',
++    autoDeploy: true,
++    webhookId: 'wh_1',
++    latestDeploy: {
++      id: 'deploy-1',
++      status: 'SUCCESS',
++      commitSha: 'abcdef1234567890',
++      commitMessage: 'Ship homepage tweaks',
++      createdAt: '2026-06-28T08:00:00.000Z',
++      finishedAt: '2026-06-28T08:03:00.000Z',
++      trigger: 'MANUAL',
++    },
++    status: 'ACTIVE',
++    createdAt: '2026-06-27T08:00:00.000Z',
++    updatedAt: '2026-06-28T08:03:00.000Z',
++  };
++}
++
++function createApiError(): ApiError {
++  return {
++    success: false,
++    statusCode: 422,
++    error: {
++      code: 'VALIDATION_ERROR',
++      message: 'Deploy branch is invalid.',
++      statusCode: 422,
++    },
++  };
++}
++
++describe('useCreateDeployment', () => {
++  it('calls create deployment with the project id', async () => {
++    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
++    const createDeploymentMock = vi.mocked(deploymentApi.createDeployment).mockResolvedValue({
++      id: 'deploy-2',
++    });
++
++    const { result } = renderHook(() => useCreateDeployment('project-1'), {
++      wrapper: createWrapper(queryClient),
++    });
++
++    await result.current.createDeployment();
++
++    expect(createDeploymentMock).toHaveBeenCalledWith('project-1');
++  });
++
++  it('exposes pending state while the mutation is running', async () => {
++    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
++    let resolveRequest: ((value: { id: string }) => void) | null = null;
++
++    vi.mocked(deploymentApi.createDeployment).mockImplementation(
++      () =>
++        new Promise((resolve) => {
++          resolveRequest = resolve;
++        })
++    );
++
++    const { result } = renderHook(() => useCreateDeployment('project-1'), {
++      wrapper: createWrapper(queryClient),
++    });
++
++    const mutationPromise = result.current.createDeployment();
++
++    await waitFor(() => {
++      expect(result.current.isPending).toBe(true);
++    });
++
++    resolveRequest?.({ id: 'deploy-2' });
++    await mutationPromise;
++
++    await waitFor(() => {
++      expect(result.current.isPending).toBe(false);
++    });
++  });
++
++  it('patches project detail to queued and invalidates the detail query on success', async () => {
++    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
++    const invalidateQueriesSpy = vi
++      .spyOn(queryClient, 'invalidateQueries')
++      .mockResolvedValue(undefined);
++    const projectDetail = createProjectDetail();
++
++    queryClient.setQueryData(['projects', 'detail', 'project-1'], projectDetail);
++    vi.mocked(deploymentApi.createDeployment).mockResolvedValue({ id: 'deploy-2' });
++
++    const { result } = renderHook(() => useCreateDeployment('project-1'), {
++      wrapper: createWrapper(queryClient),
++    });
++
++    await result.current.createDeployment();
++
++    const updatedProject = queryClient.getQueryData<ProjectDetail>([
++      'projects',
++      'detail',
++      'project-1',
++    ]);
++
++    expect(updatedProject?.latestDeploy).toMatchObject({
++      id: 'deploy-2',
++      status: 'QUEUED',
++      commitSha: projectDetail.latestDeploy?.commitSha,
++      commitMessage: projectDetail.latestDeploy?.commitMessage,
++      trigger: 'MANUAL',
++      finishedAt: null,
++    });
++    expect(invalidateQueriesSpy).toHaveBeenCalledWith({
++      queryKey: ['projects', 'detail', 'project-1'],
++    });
++  });
++
++  it('surfaces backend errors for the UI to render', async () => {
++    const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
++    const apiError = createApiError();
++
++    vi.mocked(deploymentApi.createDeployment).mockRejectedValue(apiError);
++
++    const { result } = renderHook(() => useCreateDeployment('project-1'), {
++      wrapper: createWrapper(queryClient),
++    });
++
++    await expect(result.current.createDeployment()).rejects.toEqual(apiError);
++
++    await waitFor(() => {
++      expect(result.current.error).toEqual(apiError);
++    });
++  });
++});
+*** Add File: app\[locale]\(app)\projects\[projectId]\project-detail-page-client.test.tsx
++import * as React from 'react';
++import { NextIntlClientProvider } from 'next-intl';
++import userEvent from '@testing-library/user-event';
++import { render, screen, waitFor } from '@lib/test/test-utils';
++import { ConfirmProvider } from '@lib/hooks/use-confirm';
++import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
++import { beforeEach, describe, expect, it, vi } from 'vitest';
++import enMessages from '../../../../../messages/en.json';
++import { ProjectDetailPageClient } from './project-detail-page-client';
++import { projectApi } from '@services/project.service';
++import { deploymentApi } from '@services/deployment.service';
++import { toast } from 'sonner';
++import type { ProjectDetail } from '@/types/project';
++
++vi.mock('@services/project.service', () => ({
++  projectApi: {
++    getProject: vi.fn(),
++  },
++}));
++
++vi.mock('@services/deployment.service', () => ({
++  deploymentApi: {
++    createDeployment: vi.fn(),
++  },
++}));
++
++vi.mock('sonner', async () => {
++  const actual = await vi.importActual<typeof import('sonner')>('sonner');
++
++  return {
++    ...actual,
++    toast: {
++      success: vi.fn(),
++    },
++  };
++});
++
++function createProjectDetail(overrides?: Partial<ProjectDetail>): ProjectDetail {
++  return {
++    id: 'project-1',
++    ownerId: 'owner-1',
++    name: 'Web App',
++    slug: 'web-app',
++    repoFullName: 'acme/web-app',
++    repoOwner: 'acme',
++    repoName: 'web-app',
++    repoUrl: 'https://github.com/acme/web-app',
++    githubRepoId: '101',
++    githubDefaultBranch: 'main',
++    deployBranch: 'main',
++    rootDirectory: '.',
++    dockerfilePath: 'Dockerfile',
++    buildContext: '.',
++    runnerType: 'LOCAL',
++    localRepoPath: null,
++    sshHost: null,
++    sshPort: null,
++    sshUser: null,
++    sshKeyEncrypted: null,
++    containerPort: 3000,
++    hostPort: 8080,
++    containerName: 'web-app',
++    imageName: 'web-app:latest',
++    autoDeploy: true,
++    webhookId: 'wh_1',
++    latestDeploy: null,
++    status: 'ACTIVE',
++    createdAt: '2026-06-27T08:00:00.000Z',
++    updatedAt: '2026-06-28T08:03:00.000Z',
++    ...overrides,
++  };
++}
++
++function createWrapper() {
++  const queryClient = new QueryClient({
++    defaultOptions: {
++      queries: {
++        retry: false,
++      },
++    },
++  });
++
++  return function Wrapper({ children }: { children: React.ReactNode }) {
++    return (
++      <QueryClientProvider client={queryClient}>
++        <NextIntlClientProvider locale="en" messages={enMessages}>
++          <ConfirmProvider>{children}</ConfirmProvider>
++        </NextIntlClientProvider>
++      </QueryClientProvider>
++    );
++  };
++}
++
++describe('ProjectDetailPageClient', () => {
++  beforeEach(() => {
++    vi.clearAllMocks();
++  });
++
++  it('queues a deployment, prevents duplicate submit, and updates the detail UI', async () => {
++    const user = userEvent.setup();
++    let resolveDeployment: ((value: { id: string }) => void) | null = null;
++
++    vi.mocked(projectApi.getProject).mockResolvedValue(createProjectDetail());
++    vi.mocked(deploymentApi.createDeployment).mockImplementation(
++      () =>
++        new Promise((resolve) => {
++          resolveDeployment = resolve;
++        })
++    );
++
++    render(<ProjectDetailPageClient projectId="project-1" />, { wrapper: createWrapper() });
++
++    const deployButton = await screen.findByRole('button', { name: 'Deploy now' });
++    await user.click(deployButton);
++
++    expect(screen.getByText('Deploy branch main now?')).toBeInTheDocument();
++
++    await user.click(screen.getByRole('button', { name: 'Deploy now' }));
++
++    await waitFor(() => {
++      expect(deploymentApi.createDeployment).toHaveBeenCalledTimes(1);
++    });
++
++    await waitFor(() => {
++      expect(screen.getAllByRole('button', { name: 'Deploy now' })[0]).toBeDisabled();
++    });
++
++    await user.click(screen.getAllByRole('button', { name: 'Deploy now' })[0]);
++    expect(deploymentApi.createDeployment).toHaveBeenCalledTimes(1);
++
++    resolveDeployment?.({ id: 'deploy-2' });
++
++    await waitFor(() => {
++      expect(screen.getAllByText('Queued').length).toBeGreaterThan(0);
++    });
++
++    expect(toast.success).toHaveBeenCalledWith('Deployment queued successfully.');
++  });
++
++  it('shows translated backend errors and allows retry', async () => {
++    const user = userEvent.setup();
++    const validationError = {
++      success: false,
++      statusCode: 422,
++      error: {
++        code: 'VALIDATION_ERROR',
++        message: 'Deploy branch is invalid.',
++        statusCode: 422,
++      },
++    };
++
++    vi.mocked(projectApi.getProject).mockResolvedValue(createProjectDetail());
++    vi.mocked(deploymentApi.createDeployment)
++      .mockRejectedValueOnce(validationError)
++      .mockResolvedValueOnce({ id: 'deploy-3' });
++
++    render(<ProjectDetailPageClient projectId="project-1" />, { wrapper: createWrapper() });
++
++    await user.click(await screen.findByRole('button', { name: 'Deploy now' }));
++    await user.click(screen.getByRole('button', { name: 'Deploy now' }));
++
++    expect(await screen.findByRole('alert')).toHaveTextContent(
++      'Submitted data is invalid. Please review and try again.'
++    );
++
++    await user.click(screen.getAllByRole('button', { name: 'Deploy now' })[0]);
++    await user.click(screen.getByRole('button', { name: 'Deploy now' }));
++
++    await waitFor(() => {
++      expect(deploymentApi.createDeployment).toHaveBeenCalledTimes(2);
++    });
++  });
++});
+*** End Patch
