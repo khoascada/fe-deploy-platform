@@ -50,6 +50,30 @@
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu.",
       "passwordNotMatch": "Mật khẩu xác nhận không khớp.",
       "roleRequired": "Vui lòng chọn vai trò."
+    },
+    "success": {
+      "changePassword": "Đổi mật khẩu thành công!"
+    },
+    "errors": {
+      "changePasswordFailed": "Đổi mật khẩu thất bại. Vui lòng thử lại."
+    },
+    "changePassword": {
+      "title": "Đổi mật khẩu",
+      "description": "Cập nhật mật khẩu để bảo vệ tài khoản.",
+      "currentPassword": "Mật khẩu hiện tại",
+      "newPassword": "Mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu mới",
+      "submitButton": "Đổi mật khẩu",
+      "cancelButton": "Hủy",
+      "validation": {
+        "currentPasswordRequired": "Mật khẩu hiện tại là bắt buộc.",
+        "currentPasswordMin": "Mật khẩu hiện tại phải có ít nhất 6 ký tự.",
+        "newPasswordRequired": "Mật khẩu mới là bắt buộc.",
+        "newPasswordMin": "Mật khẩu mới phải có ít nhất 6 ký tự.",
+        "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới.",
+        "newPasswordNotMatch": "Mật khẩu xác nhận không khớp.",
+        "newPasswordMustDifferent": "Mật khẩu mới phải khác mật khẩu hiện tại."
+      }
     }
   },
   "header": {
@@ -758,5 +782,33 @@
     "GITHUB_REPO_ALREADY_EXISTS": "github repo này đã được tạo!",
     "PROJECT_SLUG_ALREADY_EXISTS": "slug đã tồn tại!",
     "CONTAINER_NAME_ALREADY_EXISTS": "container name đã tồn tại!"
+  },
+  "settings": {
+    "title": "Cài đặt tài khoản",
+    "description": "Cập nhật thông tin cá nhân và thiết lập tài khoản của bạn.",
+    "security": "Bảo mật",
+    "changePassword": "Đổi mật khẩu",
+    "updateYourPassword": "Cập nhật mật khẩu để bảo vệ tài khoản.",
+    "verifyEmail": "Xác minh email",
+    "notVerified": "Chưa xác minh",
+    "verified": "Đã xác minh",
+    "verifyEmailDescription": "Xác minh email để kích hoạt đầy đủ tính năng.",
+    "appearance": "Giao diện",
+    "theme": "Giao diện tối",
+    "themeDescription": "Chuyển đổi giữa giao diện sáng và tối.",
+    "language": "Ngôn ngữ hiển thị",
+    "languages": {
+      "vi": "Tiếng Việt",
+      "en": "English"
+    },
+    "languageError": "Không thể cập nhật cài đặt ngôn ngữ.",
+    "editProfile": "Chỉnh sửa thông tin cá nhân",
+    "nameLabel": "Họ và tên",
+    "avatarLabel": "Ảnh đại diện",
+    "save": "Lưu thay đổi",
+    "cancel": "Hủy",
+    "saving": "Đang lưu...",
+    "successUpdateProfile": "Cập nhật profile thành công!",
+    "failedUpdateProfile": "Cập nhật profile thất bại!"
   }
 }

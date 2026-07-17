@@ -15,16 +15,7 @@ export function useUploadAvatar() {
       const response = await mutation.mutateAsync(data);
       const avatarUrl = response?.url;
 
-      if (avatarUrl) {
-        queryClient.setQueryData<Me>(['me'], (oldData) => {
-          if (!oldData) return oldData;
-          return {
-            ...oldData,
-            avatarUrl,
-          } as Me;
-        });
-        return avatarUrl;
-      }
+      return avatarUrl;
     } catch (err) {
       console.error(err);
       throw err;

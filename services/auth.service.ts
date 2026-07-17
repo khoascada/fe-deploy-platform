@@ -32,12 +32,12 @@ export const authApi = {
     },
 
     updateProfile: async (data: UpdateProfileData) => {
-        const response = await apiClient.patch<ApiResponse<void>>('/user/me', data);
+        const response = await apiClient.patch<ApiResponse<void>>('/users/me', data);
         return response.data;
     },
 
     uploadAvatar: async (data: FormData) => {
-        const response = await apiClient.post<ApiResponse<{ url: string }>>('/user/me/upload', data, {
+        const response = await apiClient.post<ApiResponse<{ url: string }>>('/users/me/upload', data, {
             headers: {
                 'Content-Type': undefined,
                 // cần xóa content type mặc định mà ta config để axios tự định nghĩa multipart/form-data để có gửi boundary
@@ -47,7 +47,7 @@ export const authApi = {
     },
 
     changePassword: async (data: ChangePasswordData) => {
-        const response = await apiClient.patch<ApiResponse<void>>('/user/me/change-password', data);
+        const response = await apiClient.patch<ApiResponse<void>>('/users/me/change-password', data);
         return response.data;
     },
 

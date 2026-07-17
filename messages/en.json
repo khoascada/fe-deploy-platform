@@ -50,6 +50,30 @@
       "confirmPasswordRequired": "Please confirm your password.",
       "passwordNotMatch": "Passwords do not match.",
       "roleRequired": "Please select a role."
+    },
+    "success": {
+      "changePassword": "Password changed successfully!"
+    },
+    "errors": {
+      "changePasswordFailed": "Failed to change password. Please try again."
+    },
+    "changePassword": {
+      "title": "Change Password",
+      "description": "Update your password to secure your account.",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "submitButton": "Change Password",
+      "cancelButton": "Cancel",
+      "validation": {
+        "currentPasswordRequired": "Current password is required.",
+        "currentPasswordMin": "Current password must be at least 6 characters.",
+        "newPasswordRequired": "New password is required.",
+        "newPasswordMin": "New password must be at least 6 characters.",
+        "confirmPasswordRequired": "Please confirm your new password.",
+        "newPasswordNotMatch": "Confirm password does not match.",
+        "newPasswordMustDifferent": "New password must be different from current password."
+      }
     }
   },
   "header": {
@@ -759,5 +783,33 @@
     "PROJECT_SLUG_ALREADY_EXISTS": "Slug already exists!",
     "CONTAINER_NAME_ALREADY_EXISTS": "Container name already exists!",
     "ENV_VAR_KEY_ALREADY_EXISTS": "This environment variable key already exists in the project."
+  },
+  "settings": {
+    "title": "Account Settings",
+    "description": "Update your personal profile and account settings.",
+    "security": "Security",
+    "changePassword": "Change Password",
+    "updateYourPassword": "Update your password to secure your account.",
+    "verifyEmail": "Verify Email",
+    "notVerified": "Not Verified",
+    "verified": "Verified",
+    "verifyEmailDescription": "Verify your email to enable all platform features.",
+    "appearance": "Appearance",
+    "theme": "Dark Mode",
+    "themeDescription": "Toggle between light and dark themes.",
+    "language": "Display Language",
+    "languages": {
+      "vi": "Tiếng Việt",
+      "en": "English"
+    },
+    "languageError": "Failed to update language setting.",
+    "editProfile": "Edit Profile",
+    "nameLabel": "Full Name",
+    "avatarLabel": "Avatar",
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "successUpdateProfile": "Profile updated successfully!",
+    "failedUpdateProfile": "Failed to update profile!"
   }
 }
