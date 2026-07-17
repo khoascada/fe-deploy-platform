@@ -36,12 +36,7 @@ export const SidebarContent = () => {
           label: t('menu.logs'),
           icon: <Logs size={18} />,
           path: '/logs',
-        },
-        {
-          label: t('menu.dashboard'),
-          icon: <LayoutDashboard size={18} />,
-          path: '/dashboard',
-        },
+        }
       ],
     },
   ];
@@ -59,12 +54,7 @@ export const SidebarContent = () => {
           label: t('menu.logs'),
           icon: <Logs size={18} />,
           path: '/logs',
-        },
-        {
-          label: t('menu.dashboard'),
-          icon: <LayoutDashboard size={18} />,
-          path: '/dashboard',
-        },
+        }
       ],
     },
   ];

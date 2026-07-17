@@ -447,12 +447,25 @@
         "activeDeployment": "Settings are locked while a deployment is active. Try again after it finishes.",
         "autoDeployDescription": "Automatically deploy new commits pushed to the selected branch.",
         "fields": {
-          "deployBranch": "Deploy branch", "rootDirectory": "Root directory", "dockerfilePath": "Dockerfile path",
-          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Enable auto deploy"
+          "deployBranch": "Deploy branch",
+          "rootDirectory": "Root directory",
+          "dockerfilePath": "Dockerfile path",
+          "buildContext": "Build context",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "autoDeploy": "Enable auto deploy"
         },
         "placeholders": { "deployBranch": "Select a branch" },
-        "actions": { "edit": "Edit", "cancel": "Cancel", "save": "Save changes", "saving": "Saving..." },
-        "validation": { "deployBranchRequired": "Deploy branch is required.", "invalidPort": "Enter a positive whole number." },
+        "actions": {
+          "edit": "Edit",
+          "cancel": "Cancel",
+          "save": "Save changes",
+          "saving": "Saving..."
+        },
+        "validation": {
+          "deployBranchRequired": "Deploy branch is required.",
+          "invalidPort": "Enter a positive whole number."
+        },
         "toast": { "updated": "Project settings updated." }
       },
       "deleteProject": {
@@ -618,6 +631,99 @@
         "selectRepositoryFirst": "Select a repository to load branches first.",
         "refresh": "Refresh branches"
       }
+    }
+  },
+  "landing": {
+    "header": {
+      "title": "Deploy Platform",
+      "subtitle": "Internal control room",
+      "signIn": "Sign in",
+      "navAriaLabel": "Primary navigation"
+    },
+    "hero": {
+      "badge": "Modern GitOps Platform",
+      "title": "Deploy projects from your repository in seconds.",
+      "description": "Connect your GitHub repository, configure settings, auto-build, and monitor your containers with real-time logs and environment status.",
+      "startNow": "Start now"
+    },
+    "snapshot": {
+      "title": "Deployment control room",
+      "subtitle": "Projects, builds, and logs in one reviewable flow.",
+      "live": "Live",
+      "buildStatus": "Build status",
+      "envSignals": "Environment signals",
+      "production": "Production",
+      "healthy": "Healthy",
+      "previewQueue": "Preview queue",
+      "previewQueueValue": "1 build",
+      "latestLogs": "Latest logs",
+      "status": {
+        "Ready": "Ready",
+        "Building": "Building",
+        "Queued": "Queued"
+      },
+      "logs": {
+        "gitClone": "git clone completed",
+        "installDeps": "install dependencies",
+        "nextBuild": "next build started",
+        "promoted": "deployment promoted"
+      }
+    },
+    "benefits": {
+      "title": "Why choose our platform",
+      "description": "A streamlined developer workflow designed to get your applications deployed and monitored with minimal friction.",
+      "items": {
+        "gitConnected": {
+          "title": "Git-connected builds",
+          "description": "Automatically pull, build, and deploy from your GitHub repositories whenever commits land."
+        },
+        "logStream": {
+          "title": "Real-time log streams",
+          "description": "Observe build and container runtime logs instantly as they stream live from the environment."
+        },
+        "envIsolation": {
+          "title": "Environment isolation",
+          "description": "Easily configure custom environments, ports, and secure environment variables for your builds."
+        },
+        "controlRoom": {
+          "title": "Secure control room",
+          "description": "A clean, private developer dashboard to manage all your projects and server infrastructure."
+        },
+        "multiLocale": {
+          "title": "Multi-locale support",
+          "description": "Full localization out of the box, ready for international teams and global operations."
+        },
+        "optimized": {
+          "title": "Optimized delivery",
+          "description": "Minimal design built for speed, performance, high responsiveness, and developer clarity."
+        }
+      }
+    },
+    "workflow": {
+      "badge": "How it works",
+      "title": "Zero to live in three steps.",
+      "description": "A developer-first workflow that eliminates complex deployment pipelines so you can focus on building.",
+      "connect": {
+        "label": "1. Connect repository",
+        "value": "Link your GitHub account and select the repository you want to bring online."
+      },
+      "configure": {
+        "label": "2. Configure & build",
+        "value": "Define your branch, build path, and set environment variables securely."
+      },
+      "monitor": {
+        "label": "3. Monitor live logs",
+        "value": "Watch the build status update in real-time and inspect logs from your dashboard."
+      }
+    },
+    "features": {
+      "ariaLabel": "Key Features",
+      "gitIntegration": "Instant GitHub repository integration",
+      "statusTracking": "Deployment history and status tracking",
+      "logInspection": "Real-time terminal log inspection",
+      "secureDashboard": "Secure, authenticated developer shell",
+      "i18nRouting": "Localization-ready routing and headers",
+      "validationConfig": "Strict configuration validation and ports"
     }
   },
   "errors": {

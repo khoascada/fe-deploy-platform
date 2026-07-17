@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { Button, Typography } from '@components/ui';
 import { devError } from '@lib/utils/logger';
+import '@styles/globals.css';
 
 const SUPPORTED_LOCALES = new Set(['vi', 'en']);
 

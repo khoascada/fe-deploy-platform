@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   const { setLanguage: setAppLanguage } = useSetLanguage();
 
   const switchLocale = async (newLocale: Locale) => {
-    const languageCode = newLocale === 'vi' ? 'VN' : 'EN';
+    const languageCode = newLocale === 'vi' ? 'VI' : 'EN';
 
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
 

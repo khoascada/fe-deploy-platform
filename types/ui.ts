@@ -1,4 +1,4 @@
 export interface UI {
-  theme?: 'light' | 'dark';
-  language?: 'VN' | 'EN';
+  theme?: 'LIGHT' | 'DARK';
+  language?: 'VI' | 'EN';
 }

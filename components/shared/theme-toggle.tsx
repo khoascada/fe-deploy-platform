@@ -2,21 +2,26 @@
 
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
+import { Sun, Moon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
 import {
+  Button,
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuTrigger,
 } from '@components/ui';
-import { Button } from '@components/ui';
-import { Sun, Moon } from 'lucide-react';
+import { useIsAuthenticated } from '@features/auth';
+import { useSetTheme } from '@features/ui';
 import { devError } from '@lib/utils/logger';
-import { useTranslations } from 'next-intl';
 
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations('theme');
+  const isAuthenticated = useIsAuthenticated();
+  const { setTheme: setAppTheme } = useSetTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -35,6 +40,10 @@ export default function ThemeToggle() {
   const handleThemeChange = async (newTheme: 'light' | 'dark') => {
     try {
       setTheme(newTheme);
+
+      if (isAuthenticated) {
+        await setAppTheme({ theme: newTheme === 'light' ? 'LIGHT' : 'DARK' });
+      }
     } catch (error) {
       devError(error);
     }

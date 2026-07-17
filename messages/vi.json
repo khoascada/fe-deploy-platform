@@ -447,12 +447,25 @@
         "activeDeployment": "Cấu hình đang bị khóa khi deployment hoạt động. Hãy thử lại sau khi deployment kết thúc.",
         "autoDeployDescription": "Tự động deploy commit mới được push lên nhánh đã chọn.",
         "fields": {
-          "deployBranch": "Nhánh deploy", "rootDirectory": "Thư mục gốc", "dockerfilePath": "Đường dẫn Dockerfile",
-          "buildContext": "Build context", "containerPort": "Container port", "hostPort": "Host port", "autoDeploy": "Bật auto deploy"
+          "deployBranch": "Nhánh deploy",
+          "rootDirectory": "Thư mục gốc",
+          "dockerfilePath": "Đường dẫn Dockerfile",
+          "buildContext": "Build context",
+          "containerPort": "Container port",
+          "hostPort": "Host port",
+          "autoDeploy": "Bật auto deploy"
         },
         "placeholders": { "deployBranch": "Chọn một nhánh" },
-        "actions": { "edit": "Chỉnh sửa", "cancel": "Hủy", "save": "Lưu thay đổi", "saving": "Đang lưu..." },
-        "validation": { "deployBranchRequired": "Nhánh deploy là bắt buộc.", "invalidPort": "Hãy nhập số nguyên dương." },
+        "actions": {
+          "edit": "Chỉnh sửa",
+          "cancel": "Hủy",
+          "save": "Lưu thay đổi",
+          "saving": "Đang lưu..."
+        },
+        "validation": {
+          "deployBranchRequired": "Nhánh deploy là bắt buộc.",
+          "invalidPort": "Hãy nhập số nguyên dương."
+        },
         "toast": { "updated": "Đã cập nhật cấu hình project." }
       },
       "deleteProject": {
@@ -618,6 +631,99 @@
         "selectRepositoryFirst": "Hãy chọn repository trước để tải danh sách branch.",
         "refresh": "Làm mới danh sách branch"
       }
+    }
+  },
+  "landing": {
+    "header": {
+      "title": "Deploy Platform",
+      "subtitle": "Nền tảng deploy",
+      "signIn": "Đăng nhập",
+      "navAriaLabel": "Điều hướng chính"
+    },
+    "hero": {
+      "badge": "Nền tảng GitOps hiện đại",
+      "title": "Deploy dự án từ repository của bạn chỉ trong vài giây.",
+      "description": "Kết nối GitHub repository của bạn, cấu hình các tùy chọn, tự động build và giám sát ứng dụng với nhật ký thời gian thực và trạng thái môi trường trực quan.",
+      "startNow": "Bắt đầu ngay"
+    },
+    "snapshot": {
+      "title": "Phòng điều khiển deployment",
+      "subtitle": "Dự án, bản build và nhật ký trong một luồng quản lý trực quan.",
+      "live": "Hoạt động",
+      "buildStatus": "Trạng thái build",
+      "envSignals": "Tín hiệu môi trường",
+      "production": "Production",
+      "healthy": "Hoạt động tốt",
+      "previewQueue": "Hàng đợi preview",
+      "previewQueueValue": "1 bản build",
+      "latestLogs": "Nhật ký mới nhất",
+      "status": {
+        "Ready": "Sẵn sàng",
+        "Building": "Đang build",
+        "Queued": "Đã xếp hàng"
+      },
+      "logs": {
+        "gitClone": "git clone hoàn thành",
+        "installDeps": "cài đặt dependencies",
+        "nextBuild": "next build bắt đầu",
+        "promoted": "deployment đã được kích hoạt"
+      }
+    },
+    "benefits": {
+      "title": "Tại sao chọn nền tảng của chúng tôi",
+      "description": "Quy trình làm việc hợp lý dành cho lập trình viên giúp ứng dụng được deploy và giám sát với rào cản tối thiểu.",
+      "items": {
+        "gitConnected": {
+          "title": "Tự động build từ Git",
+          "description": "Tự động tải, build và deploy từ các GitHub repository của bạn ngay khi có commit mới."
+        },
+        "logStream": {
+          "title": "Nhật ký thời gian thực",
+          "description": "Theo dõi nhật ký build và nhật ký vận hành container ngay khi chúng đang diễn ra."
+        },
+        "envIsolation": {
+          "title": "Cô lập môi trường",
+          "description": "Dễ dàng cấu hình môi trường tùy chỉnh, cổng kết nối (port) và các biến môi trường bảo mật."
+        },
+        "controlRoom": {
+          "title": "Bảng quản lý bảo mật",
+          "description": "Một bảng điều khiển riêng tư, gọn gàng dành cho lập trình viên để quản lý dự án và hạ tầng máy chủ."
+        },
+        "multiLocale": {
+          "title": "Hỗ trợ đa ngôn ngữ",
+          "description": "Hỗ trợ đa ngôn ngữ sẵn có, sẵn sàng cho các đội ngũ phát triển và người dùng toàn cầu."
+        },
+        "optimized": {
+          "title": "Tối ưu hóa vận hành",
+          "description": "Thiết kế tối giản hướng đến tốc độ, hiệu năng cao và sự rõ ràng cho lập trình viên."
+        }
+      }
+    },
+    "workflow": {
+      "badge": "Cách hoạt động",
+      "title": "Đưa ứng dụng lên live qua 3 bước.",
+      "description": "Quy trình ưu tiên lập trình viên giúp loại bỏ các pipeline deploy phức tạp để bạn tập trung vào code.",
+      "connect": {
+        "label": "1. Kết nối Repository",
+        "value": "Liên kết tài khoản GitHub của bạn và chọn repository muốn đưa lên chạy trực tuyến."
+      },
+      "configure": {
+        "label": "2. Cấu hình & Build",
+        "value": "Xác định nhánh (branch), thư mục build và thiết lập các biến môi trường an toàn."
+      },
+      "monitor": {
+        "label": "3. Giám sát nhật ký",
+        "value": "Theo dõi trạng thái build cập nhật theo thời gian thực và kiểm tra log từ dashboard."
+      }
+    },
+    "features": {
+      "ariaLabel": "Tính năng chính",
+      "gitIntegration": "Kết nối repository GitHub tức thì",
+      "statusTracking": "Theo dõi lịch sử và trạng thái deployment",
+      "logInspection": "Kiểm tra nhật ký thời gian thực dạng terminal",
+      "secureDashboard": "Khung quản lý lập trình viên bảo mật, đã xác thực",
+      "i18nRouting": "Điều hướng và tiêu đề sẵn sàng đa ngôn ngữ",
+      "validationConfig": "Xác thực cấu hình và cổng (port) nghiêm ngặt"
     }
   },
   "errors": {
