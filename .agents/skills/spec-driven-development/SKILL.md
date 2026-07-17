@@ -55,29 +55,26 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
 2. **Commands** — Full executable commands with flags, not just tool names.
    ```
    Build: npm run build
-   Test: npm test -- --coverage
    Lint: npm run lint --fix
    Dev: npm run dev
    ```
 
-3. **Project Structure** — Where source code lives, where tests go, where docs belong.
+3. **Project Structure** — Where source code lives and where docs belong.
    ```
    src/           → Application source code
    src/components → React components
    src/lib        → Shared utilities
-   tests/         → Unit and integration tests
-   e2e/           → End-to-end tests
    docs/          → Documentation
    ```
 
 4. **Code Style** — One real code snippet showing your style beats three paragraphs describing it. Include naming conventions, formatting rules, and examples of good output.
 
-5. **Testing Strategy** — What framework, where tests live, coverage expectations, which test levels for which concerns.
+5. **Verification Strategy** — Which lightweight checks fit the work, such as type-check, lint, build, manual QA, or runtime validation.
 
 6. **Boundaries** — Three-tier system:
-   - **Always do:** Run tests before commits, follow naming conventions, validate inputs
+   - **Always do:** Run relevant verification before commits, follow naming conventions, validate inputs
    - **Ask first:** Database schema changes, adding dependencies, changing CI config
-   - **Never do:** Commit secrets, edit vendor directories, remove failing tests without approval
+   - **Never do:** Commit secrets, edit vendor directories, remove failing checks without approval
 
 **Spec template:**
 
@@ -99,8 +96,8 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
 ## Code Style
 [Example snippet + key conventions]
 
-## Testing Strategy
-[Framework, test locations, coverage requirements, test levels]
+## Verification Strategy
+[Relevant checks: type-check, lint, build, manual QA, runtime validation]
 
 ## Boundaries
 - Always: [...]
@@ -146,7 +143,7 @@ Break the plan into discrete, implementable tasks:
 
 - Each task should be completable in a single focused session
 - Each task has explicit acceptance criteria
-- Each task includes a verification step (test, build, manual check)
+- Each task includes a verification step (type-check, lint, build, manual check, or runtime validation)
 - Tasks are ordered by dependency, not by perceived importance
 - No task should require changing more than ~5 files
 
@@ -154,13 +151,13 @@ Break the plan into discrete, implementable tasks:
 ```markdown
 - [ ] Task: [Description]
   - Acceptance: [What must be true when done]
-  - Verify: [How to confirm — test command, build, manual check]
+  - Verify: [How to confirm — type-check, lint, build, manual check, or runtime validation]
   - Files: [Which files will be touched]
 ```
 
 ### Phase 4: Implement
 
-Execute tasks one at a time following `skills/incremental-implementation/SKILL.md` (`incremental-implementation`) and `skills/test-driven-development/SKILL.md` (`test-driven-development`). Use `skills/context-engineering/SKILL.md` (`context-engineering`) to load the right spec sections and source files at each step rather than flooding the agent with the entire spec.
+Execute tasks one at a time following `skills/incremental-implementation/SKILL.md` (`incremental-implementation`). Use `skills/context-engineering/SKILL.md` (`context-engineering`) to load the right spec sections and source files at each step rather than flooding the agent with the entire spec.
 
 ## Keeping the Spec Alive
 

@@ -19,7 +19,6 @@ Skill này mô tả coding conventions cho starter hiện tại. Hãy bám vào 
 | Server State | TanStack React Query 5 |
 | Forms | React Hook Form + Zod |
 | HTTP Client | Axios |
-| Testing | Vitest + Testing Library |
 | Storybook | Storybook 10 |
 
 ## Project Structure
@@ -145,19 +144,12 @@ Khi cần chia block:
 // ---- Handlers ----
 ```
 
-## Testing
-
-- Với logic thuần: ưu tiên unit test.
-- Với component có interaction: ưu tiên Testing Library.
-- Với pattern dùng lại nhiều nơi: thêm test khi risk regression đủ cao.
-
 ## Verification
 
 Sau thay đổi non-trivial, chạy bước verify phù hợp nhất với phạm vi sửa:
 
 - `npm run type-check`
 - `npm run lint`
-- `npm run test`
 - search validation bằng `rg`
 
 Không cần chạy tất cả mọi thứ nếu thay đổi chỉ là docs, nhưng phải có bằng chứng rằng rule mới không tự mâu thuẫn.

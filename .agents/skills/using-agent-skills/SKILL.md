@@ -108,7 +108,7 @@ Công việc của bạn là chính xác như phẫu thuật, không phải tự
 
 ### 6. Kiểm chứng, đừng đoán
 
-Mỗi skill đều có bước verification. Một task chưa được xem là hoàn tất cho tới khi verification pass. "Trông có vẻ đúng" không bao giờ là đủ, phải có bằng chứng như test pass, build output hoặc dữ liệu runtime.
+Mỗi skill đều có bước verification phù hợp với phạm vi task. "Trông có vẻ đúng" không bao giờ là đủ, nhưng verification có thể là type-check, lint, build, manual check, hoặc dữ liệu runtime; không mặc định bắt buộc viết test hay chạy test.
 
 ## Các failure mode cần tránh
 
